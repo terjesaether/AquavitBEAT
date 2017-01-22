@@ -1,0 +1,81 @@
+﻿@model IEnumerable<AquavitBEAT.Models.Song>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Songs</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Artist)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemixName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comment)
+        </th>
+        <th>
+            &nbsp;
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @foreach (var artist in item.Artist)
+                {
+                    <p>@Html.ActionLink(artist.ArtistName, "Details", "Artist", new { id = artist.ArtistId }, null)</p>
+
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RemixName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                <audio controls>
+                    <source src="@item.AudioUrl" />
+                </audio>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.SongId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.SongId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.SongId })
+            </td>
+        </tr>
+    }
+
+</table>
+@section scripts{
+    <script>
+        $(function () {
+            $("audio").on("play", function () {
+                $("audio").not(this).each(function (index, audio) {
+                    audio.pause();
+                });
+            });
+        });
+    </script>
+}

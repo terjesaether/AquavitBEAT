@@ -1,5 +1,8 @@
-﻿using System;
+﻿using AquavitBEAT.Migrations;
+using AquavitBEAT.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +19,9 @@ namespace AquavitBEAT
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AquavitBeatContext, Configuration>());
+            //Database.SetInitializer<AquavitBeatContext>(null);
         }
     }
 }

@@ -1,0 +1,128 @@
+﻿@model AquavitBEAT.Models.Song
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section Styles {
+    <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/jqueryuicss")
+}
+
+<h2>Create new song</h2>
+<div class="row">
+    <div class="col-md-6">
+
+        @using (Html.BeginForm("Create", "Songs", FormMethod.Post, new
+        {
+            enctype = "multipart/form-data",
+            @class = "song-form"
+        }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Artist, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownList("ArtistID", null, null, new { @class = "selectpicker form-control", id = "selectArtists", multiple = true })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RemixName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.RemixName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RemixName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control", id = "datepicker" } })
+                        @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AudioUrl, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @*@Html.EditorFor(model => model.AudioUrl, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <input type="file" name="audioFile" />
+                        @Html.ValidationMessageFor(model => model.AudioUrl, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Add new great track!" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="col-md-6 img-preview" id="output">
+        Bilde
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section scripts{
+    <script src="~/Scripts/bootstrap-select.js" type="text/javascript"></script>
+    @Scripts.Render("~/bundles/jqueryui")
+<script src="~/Scripts/custom/selectPicker.js" type="text/javascript"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            var selectPicker = $('.selectpicker');
+            //selectPicker.attr("multiple", true);
+
+            selectPicker.selectpicker({
+                liveSearch: true,
+                liveSearchStyle: 'contains',
+                //mobile: true,
+                title: 'Choose artist ...',
+                size: 10
+            });
+
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                changeYear: true
+
+            });
+
+        });
+
+        var loadFile = function (event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
+
+}

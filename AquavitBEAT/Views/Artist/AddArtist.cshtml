@@ -1,0 +1,181 @@
+﻿@model AquavitBEAT.Models.AddArtistViewModel
+
+@{
+    ViewBag.Title = "Add Artist";
+}
+
+<h2>Create new artist</h2>
+
+
+@using (Html.BeginForm("Form", "Api", FormMethod.Post,
+                                                                new
+                                                                {
+                                                                    enctype = "multipart/form-data",
+                                                                    @class = "artist-form",
+                                                                    id = "addArtistForm"
+                                                                }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Artist.ArtistName, htmlAttributes: new { @class = "control-label col-md-2 artist-form-required" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Artist.ArtistName, new { htmlAttributes = new { @class = "form-control artist-form-input", placeholder = "Artist name" } })
+                @Html.ValidationMessageFor(model => model.Artist.ArtistName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+
+
+
+            @Html.LabelFor(model => model.Artist.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Artist.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First name" } })
+                @Html.ValidationMessageFor(model => model.Artist.FirstName, "", new { @class = "text-danger" })
+            </div>
+
+
+
+
+            @Html.LabelFor(model => model.Artist.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Artist.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last name" } })
+                @Html.ValidationMessageFor(model => model.Artist.LastName, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+
+        <div class="form-group row">
+
+            @Html.LabelFor(model => model.Artist.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Artist.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Address" } })
+                @Html.ValidationMessageFor(model => model.Artist.Address, "", new { @class = "text-danger" })
+            </div>
+
+
+
+
+            @Html.LabelFor(model => model.Artist.Mail, htmlAttributes: new { @class = "control-label col-md-2 artist-form-required" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Artist.Mail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Artist.Mail, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.Artist.About, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+
+                @Html.TextAreaFor(model => model.Artist.About, new { @class = "form-control", rows = "5" })
+                @Html.ValidationMessageFor(model => model.Artist.About, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-4 col-md-push-2">
+                <div class="artist-file-preview">
+                    <img class="img-responsive" id="output" />
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="form-group row">
+
+            <div class="col-md-4 col-md-push-2">
+                <input type="file" class="control-label inputfile" id="file" name="file" accept="image/*" onchange="loadFile(event)" data-multiple-caption="{count} files selected">
+                <label for="file"><span class="glyphicon glyphicon-open"></span><strong>Choose a file</strong></label>
+                <div id="artist-file-preview col-md-6">
+
+                </div>
+            </div>
+
+        </div>
+        @{
+            var counter = 1;
+            var htmlString1 = new HtmlString("<div class='form-group row'>");
+            var htmlString2 = new HtmlString("</div>");}
+        
+            @foreach (var some in Model.SocialMediaList)
+            {
+
+                if (counter % 2 == 0)
+                {
+                    @htmlString1
+                }
+
+                    @Html.Label(some.Name, new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+
+                        @Html.TextBox(some.Name, null, new { @class = "form-control single-line", placeholder = some.Name, value = some.Prefix })
+                        @Html.ValidationMessageFor(model => some.Name, "", new { @class = "text-danger" })
+                    </div>
+                if (counter % 2 == 0)
+                {
+                    @htmlString2
+                }
+                {counter++;
+                }
+            }
+
+        
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create new artist" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+            }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/dropzonejs")
+<script src="~/Scripts/custom/fileInput.js" type="text/javascript"></script>
+    <script>
+
+        $(document).ready(function () {
+
+
+        });
+
+        //var loadFile = function (event) {
+        //    var output = document.getElementById('output');
+        //    output.src = URL.createObjectURL(event.target.files[0]);
+        //};
+
+        //var inputs = document.querySelectorAll('.inputfile');
+        //Array.prototype.forEach.call(inputs, function (input) {
+        //    var label = input.nextElementSibling,
+        //        labelVal = label.innerHTML;
+
+        //    input.addEventListener('change', function (e) {
+        //        var fileName = '';
+        //        if (this.files && this.files.length > 1)
+        //            fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+        //        else
+        //            fileName = e.target.value.split('\\').pop();
+
+        //        if (fileName)
+        //            label.querySelector('span').innerHTML = fileName;
+        //        else
+        //            label.innerHTML = labelVal;
+        //    });
+        //});
+    </script>
+
+}

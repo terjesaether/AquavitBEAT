@@ -1,0 +1,116 @@
+﻿$lightBlue : #6298b2;
+$lightGrey: #9babb2;
+
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans+Condensed|Open+Sans|Overpass|Quicksand');
+
+
+
+	/*font-family: 'Overpass', sans-serif;
+
+	font-family: 'Open Sans', sans-serif;
+
+	font-family: 'Fira Sans Condensed', sans-serif;
+
+	font-family: 'Quicksand', sans-serif;*/
+
+
+
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+	background: $lightGrey;
+	font-family:'Quicksand', sans-serif;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+h1, h2, h3, h4 {
+	font-family: 'Quicksand', sans-serif;
+}
+.white-text {
+    color: #fff;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+	/*max-width: 400px;*/
+	background: #e5e5e5;
+    border-radius: 0 0;
+}
+
+textarea {
+   resize:vertical;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+	font-size: 1em;
+	font-weight: 700;
+	padding: 10px;
+	color: white;
+	background-color: black;
+	display: inline-block;
+	cursor: pointer; /* "hand" cursor */
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+	background-color: red;
+}
+
+.inputfile:focus + label {
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}
+
+
+
+/*.artist-form-input {
+
+}*/
+
+.artist-form-required {
+	color: #ca2e2e;
+}
+.artist-form textarea, .song-form textarea {
+	max-height: 200px;
+}
+
+.artist-file-preview {
+    max-height: 200px;
+}
+
+#profileImgDropzone {
+	width: 400px;
+	height: 200px;
+	background: #808080;
+	cursor: pointer;
+}
+
+#artist-file-preview {
+	
+	max-height: 200px;
+	background:#e1e1e1;
+	overflow: hidden;
+	
+}
+
+.img-preview {
+	background-color: red;
+}
+
+

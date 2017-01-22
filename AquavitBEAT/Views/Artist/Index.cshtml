@@ -1,0 +1,25 @@
+﻿@model IEnumerable<AquavitBEAT.Models.Artist>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>AquavitBEAT artists</h1>
+
+<div class="row white-text">
+
+    @foreach (var artist in Model)
+    {
+        <div class="row">
+
+            @Html.ActionLink(artist.ArtistName, "Edit", "Artist", new { id = artist.ArtistId }, new { @class = "col-md-2" })
+
+            <div class="col-md-2">@artist.FirstName</div>
+            <div class="col-md-2">@artist.LastName</div>
+        </div>
+    }
+
+</div>
+
+
+
