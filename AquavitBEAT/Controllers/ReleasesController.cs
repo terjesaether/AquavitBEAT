@@ -179,33 +179,8 @@ namespace AquavitBEAT.Controllers
             //var release = vm.Release;
             var storagePath = "/images/releases/" + vm.Release.Title.ToString();
 
+            // Kjører UpdateAndCreate-metode:
             var success = AddOrUpdateRelease(vm.Release, httpRequest, ArtistId, SongId, FormatTypeId, true, false);
-
-            // lagrer på releasedate:
-
-            //List<string> formattedFilenames = new List<string>(); ;
-            //bool isSavedSuccessfully = true;
-
-            //if (httpRequest.Files.Count > 0)
-            //{
-
-            //    for (int i = 0; i < httpRequest.Files.Count; i++)
-            //    {
-            //        if (httpRequest.Files[i].FileName.ToString() != "")
-            //        {
-            //            formattedFilenames.Add(httpRequest.Files[i].FileName.ToString().Replace(" ", "_"));
-            //        }
-            //        else
-            //        {
-            //            formattedFilenames.Add("");
-            //        }
-
-            //    }
-
-            //    var fileOps = new FileOperations();
-
-            //    isSavedSuccessfully = fileOps.SaveUploadedFile(httpRequest, storagePath, formattedFilenames);
-            //}
 
             if (success)
             {
