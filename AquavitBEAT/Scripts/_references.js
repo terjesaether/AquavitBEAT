@@ -1,6 +1,7 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="bootstrap.js" />
 /// <reference path="bootstrap-select.min.js" />
+/// <reference path="custom/audioplayerfix.js" />
 /// <reference path="custom/fileinput.js" />
 /// <reference path="custom/selectpicker.js" />
 /// <reference path="dropzone/dropzone.min.js" />

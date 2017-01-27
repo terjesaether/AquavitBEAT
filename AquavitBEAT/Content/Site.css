@@ -23,6 +23,11 @@ h1, h2, h3, h4 {
 .white-text {
   color: #fff; }
 
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -33,6 +38,10 @@ textarea {
 
 textarea {
   resize: vertical; }
+
+.fixed-textarea {
+  resize: none;
+  min-height: 200px; }
 
 .inputfile {
   width: 0.1px;
@@ -67,10 +76,12 @@ textarea {
   color: #ca2e2e; }
 
 .artist-form textarea, .song-form textarea {
+  height: 200px;
   max-height: 200px; }
 
-.artist-file-preview {
-  max-height: 200px; }
+#artist-list a {
+  background: #fff;
+  margin: 2px; }
 
 #profileImgDropzone {
   width: 400px;
@@ -80,9 +91,19 @@ textarea {
 
 #artist-file-preview {
   max-height: 200px;
-  background: #e1e1e1;
   overflow: hidden; }
 
 .img-preview {
   background-color: red; }
+
+.sidebar {
+  position: absolute;
+  height: 500px; }
+
+.block {
+  display: block; }
+
+.artist-chbox-list:hover {
+  background: #e5e5e5;
+  cursor: pointer; }
 

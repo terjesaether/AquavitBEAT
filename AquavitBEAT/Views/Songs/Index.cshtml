@@ -36,9 +36,9 @@
     {
         <tr>
             <td>
-                @foreach (var artist in item.Artist)
+                @foreach (var artist in item.SongToArtists)
                 {
-                    <p>@Html.ActionLink(artist.ArtistName, "Details", "Artist", new { id = artist.ArtistId }, null)</p>
+                    <p>@Html.ActionLink(artist.Artist.ArtistName, "Details", "Artist", new { id = artist.ArtistId }, null)</p>
 
                 }
             </td>

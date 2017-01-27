@@ -23,6 +23,10 @@ namespace AquavitBEAT.Models
 
             ListOfArtists = getLists.GetListOfArtists();
             ListOfFormats = getLists.GetListOfArtists();
+            ListOfAllArtists = _db.Artists.ToList();
+            ArtistCheckBoxes = new List<CheckBoxViewModel>();
+            SongCheckBoxes = new List<CheckBoxViewModel>();
+
             //ListOfHasSongs = getLists.GetListOfHasSongs(Release);
             //ListOfHasArtwork = getLists.GetListOfHasArtwork(Release);
         }
@@ -30,6 +34,10 @@ namespace AquavitBEAT.Models
 
         public List<SelectListItem> ListOfArtists { get; set; }
         public List<SelectListItem> ListOfFormats { get; set; }
+        public List<Artist> ListOfAllArtists { get; set; }
+
+        public List<CheckBoxViewModel> ArtistCheckBoxes { get; set; }
+        public List<CheckBoxViewModel> SongCheckBoxes { get; set; }
         //public List<SelectListItem> ListOfHasSongs { get; set; }
         //public List<SelectListItem> ListOfHasArtwork { get; set; }
     }
@@ -53,6 +61,19 @@ namespace AquavitBEAT.Models
         //public List<SelectListItem> ListOfHasSongs { get; set; }
         //public List<SelectListItem> ListOfHasArtwork { get; set; }
     }
+
+    public class SongViewModel
+    {
+        public SongViewModel()
+        {
+            ArtistCheckBoxes = new List<CheckBoxViewModel>();
+        }
+        public Song Song { get; set; }
+        public List<CheckBoxViewModel> ArtistCheckBoxes { get; set; }
+        //public virtual SongToArtist SongsToArtists { get; set; }
+    }
+
+
 
 
 
@@ -128,5 +149,12 @@ namespace AquavitBEAT.Models
             }
             return list;
         }
+    }
+
+    public class CheckBoxViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public bool Checked { get; set; }
     }
 }

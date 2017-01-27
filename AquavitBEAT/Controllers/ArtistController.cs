@@ -1,4 +1,5 @@
 ﻿using AquavitBEAT.Models;
+using AquavitBEAT.Operations;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -8,6 +9,7 @@ namespace AquavitBEAT.Controllers
     {
         private AquavitBeatContext _db = new AquavitBeatContext();
         ArtistRepository artistRepo = new ArtistRepository();
+        AddAndEditOperations addAndEditOps = new AddAndEditOperations();
 
         // GET: Artist
         public ActionResult Index()
@@ -17,7 +19,7 @@ namespace AquavitBEAT.Controllers
         }
 
         [HttpGet]
-        [Route("Artist/AddArtist/", Name = "AddArtist")]
+        [Route("Artist/AddArtist/")]
         public ActionResult AddArtist()
         {
             AddArtistViewModel vm = new AddArtistViewModel(_db.SocialMedias.ToList());
@@ -28,10 +30,32 @@ namespace AquavitBEAT.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
+        [Route("Artist/AddArtist/")]
         public ActionResult AddArtist(AddArtistViewModel vm)
         {
+
+            var context = System.Web.HttpContext.Current;
+
+            var isSaved = addAndEditOps.AddOrUpdateArtist(vm, context, false, true);
+
+            if (isSaved)
+            {
+                return RedirectToAction("Index", "Artist");
+            }
+
             return View();
+        }
+
+        [HttpGet]
+        [Route("Artist/EditArtist/{id}")]
+        public ActionResult EditArtist(int id)
+        {
+            var artist = _db.Artists.Find(id);
+
+            ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
+
+            return View(artist);
         }
 
         public ActionResult AddSocialMedia(Artist artist)

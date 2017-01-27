@@ -13,7 +13,7 @@ namespace AquavitBEAT.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(AquavitBEAT.Models.AquavitBeatContext context)
+        protected override void Seed(AquavitBeatContext context)
         {
             //  This method will be called after migrating to the latest version.
 

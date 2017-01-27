@@ -1,4 +1,5 @@
 ﻿using AquavitBEAT.Models;
+using AquavitBEAT.Operations;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,9 +28,11 @@ namespace AquavitBEAT.Controllers.API
             return "value";
         }
 
-        // POST: api/Image
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Http.Route("api/form")]
         [ValidateAntiForgeryToken]
-        public IHttpActionResult Post()
+        public IHttpActionResult Post(AddArtistViewModel vm)
         {
             var storagePath = "/images/profiles/";
             bool isSavedSuccessfully = true;

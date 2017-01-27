@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AquavitBEAT.Models;
+using AquavitBEAT.Operations;
 
 namespace AquavitBEAT.Controllers
 {
     public class ReleasesController : Controller
     {
         private AquavitBeatContext _db = new AquavitBeatContext();
+        AddAndEditOperations addAndEdit = new AddAndEditOperations();
 
         // GET: Releases
         public ActionResult Index()
@@ -21,7 +23,7 @@ namespace AquavitBEAT.Controllers
         }
 
         // GET: Releases/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult ReleaseDetails(int? id)
         {
             if (id == null)
             {
@@ -52,83 +54,13 @@ namespace AquavitBEAT.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddRelease(AddReleaseViewModel vm, int[] ArtistId, int[] SongId, int[] FormatTypeId)
+        public ActionResult AddRelease(ReleaseViewModel vm, int[] ArtistId, int[] SongId, int[] FormatTypeId, string ReleaseTypeId)
         {
 
             //var httpRequest = System.Web.HttpContext.Current.Request;
             var httpRequest = System.Web.HttpContext.Current;
-            // lagrer på releasedate:
-            //var storagePath = "/images/releases/" + vm.Release.Title.ToString();
 
-
-            var success = AddOrUpdateRelease(vm.Release, httpRequest, ArtistId, SongId, FormatTypeId, false, true);
-
-            //List<string> formattedFilenames = new List<string>();
-            //bool isSavedSuccessfully = true;
-
-            //if (httpRequest.Files.Count > 0)
-            //{
-
-            //    for (int i = 0; i < httpRequest.Files.Count; i++)
-            //    {
-            //        if (httpRequest.Files[i].FileName.ToString() != "")
-            //        {
-            //            formattedFilenames.Add(httpRequest.Files[i].FileName.ToString().Replace(" ", "_"));
-            //        }
-            //        else
-            //        {
-            //            formattedFilenames.Add("");
-            //        }
-
-            //    }
-
-
-            //    var fileOps = new FileOperations();
-
-            //    isSavedSuccessfully = fileOps.SaveUploadedFile(httpRequest, storagePath, formattedFilenames);
-            //}
-
-            //if (isSavedSuccessfully)
-            //{
-
-            //    vm.Release.frontImageUrl = formattedFilenames[0];
-            //    vm.Release.backImageUrl = formattedFilenames[1];
-
-            //    foreach (var artistId in ArtistId)
-            //    {
-            //        vm.Release.Artists.Add(_db.Artists.Find(artistId));
-            //    }
-
-            //    foreach (var songId in SongId)
-            //    {
-            //        vm.Release.HasSongs.Add(_db.Songs.Find(songId));
-            //    }
-
-            //    foreach (var formatId in FormatTypeId)
-            //    {
-            //        var newFormat = _db.FormatsTypes.Find(formatId);
-            //        var newReleaseFormat = new ReleaseFormat
-            //        {
-            //            Format = newFormat,
-            //            FormatTypeId = newFormat.FormatTypeId,
-            //            ReleaseFormatId = newFormat.FormatTypeId
-            //        };
-            //        vm.Release.FormatTypes.Add(newReleaseFormat);
-            //    }
-            //    try
-            //    {
-            //        var release = vm.Release;
-            //        _db.Releases.Add(release);
-            //        _db.SaveChanges();
-            //        return RedirectToAction("Index");
-            //    }
-            //    catch (Exception e)
-            //    {
-
-            //        throw;
-            //    }
-
-            //}
+            var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, ArtistId, SongId, FormatTypeId, ReleaseTypeId, false, true);
 
             if (success)
             {
@@ -138,7 +70,6 @@ namespace AquavitBEAT.Controllers
             {
                 return View(vm);
             }
-
 
         }
 
@@ -164,6 +95,69 @@ namespace AquavitBEAT.Controllers
             ViewBag.FormatTypeId = new SelectList(_db.FormatsTypes, "FormatTypeId", "FormatTypeName");
             ViewBag.ReleaseTypeId = new SelectList(_db.ReleaseTypes, "ReleaseTypeId", "ReleaseTypeName");
             ViewBag.SongId = new SelectList(_db.Songs, "SongId", "Title");
+
+            var results = _db.Artists
+                .Select(r => new
+                {
+                    r.ArtistId,
+                    r.ArtistName,
+                    Checked = _db.ReleaseToArtist.Where(s => s.ReleaseId == id.Value && s.ArtistId == r.ArtistId)
+                    .Count() > 0
+
+                });
+
+            var CheckBoxes = new List<CheckBoxViewModel>();
+            foreach (var item in results)
+            {
+                CheckBoxes.Add(new CheckBoxViewModel
+                {
+                    Name = item.ArtistName,
+                    Id = item.ArtistId,
+                    Checked = item.Checked
+                });
+            }
+
+            var allSongs = _db.Songs
+                .Select(r => new
+                {
+                    r.SongId,
+                    r.Title,
+                    Checked = _db.SongToReleases.Where(s => s.ReleaseId == id.Value && s.SongId == r.SongId)
+                    .Count() > 0
+
+                });
+
+
+
+            var songsDropDown = new List<SelectListItem>();
+            var songsCheckBoxes = new List<CheckBoxViewModel>();
+            foreach (var item in allSongs)
+            {
+                songsCheckBoxes.Add(new CheckBoxViewModel
+                {
+                    Name = item.Title,
+                    Id = item.SongId,
+                    Checked = item.Checked
+                });
+            }
+
+            foreach (var item in allSongs)
+            {
+                songsDropDown.Add(new SelectListItem
+                {
+                    Text = item.Title,
+                    Value = item.SongId.ToString(),
+                    Selected = item.Checked
+                });
+            }
+
+            var songTo = _db.SongToReleases.ToList();
+
+            ViewBag.SongId = songsDropDown;
+
+            vm.ArtistCheckBoxes = CheckBoxes;
+            vm.SongCheckBoxes = songsCheckBoxes;
+
             return View(vm);
         }
 
@@ -172,15 +166,28 @@ namespace AquavitBEAT.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditRelease(ReleaseViewModel vm, int[] ArtistId, int[] SongId, int[] FormatTypeId)
+        public ActionResult EditRelease(ReleaseViewModel vm, int[] ArtistId, int[] SongId, int[] FormatTypeId, string ReleaseTypeId)
         {
+
             //var httpRequest = System.Web.HttpContext.Current.Request;
             var httpRequest = System.Web.HttpContext.Current;
-            //var release = vm.Release;
+
             var storagePath = "/images/releases/" + vm.Release.Title.ToString();
 
+            //var release = vm.Release;
+
+            //foreach (var chbx in vm.ArtistCheckBoxes)
+            //{
+            //    if (chbx.Checked)
+            //    {
+            //        release.Artists.Add(_db.Artists.Find(chbx.Id));
+            //    }
+
+            //}
+
+
             // Kjører UpdateAndCreate-metode:
-            var success = AddOrUpdateRelease(vm.Release, httpRequest, ArtistId, SongId, FormatTypeId, true, false);
+            var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, ArtistId, SongId, FormatTypeId, ReleaseTypeId, true, false);
 
             if (success)
             {
@@ -227,85 +234,6 @@ namespace AquavitBEAT.Controllers
             base.Dispose(disposing);
         }
 
-        private bool AddOrUpdateRelease(Release release, HttpContext context, int[] ArtistId, int[] SongId, int[] FormatTypeId, bool update, bool create)
-        {
-            var httpRequest = context.Request;
-            var storagePath = "/images/releases/" + release.Title.ToString();
-            List<string> formattedFilenames = new List<string>();
-            bool isSavedSuccessfully = true;
 
-
-            if (httpRequest.Files.Count > 0)
-            {
-
-                for (int i = 0; i < httpRequest.Files.Count; i++)
-                {
-                    if (httpRequest.Files[i].FileName.ToString() != "")
-                    {
-                        formattedFilenames.Add(httpRequest.Files[i].FileName.ToString().Replace(" ", "_"));
-                    }
-                    else
-                    {
-                        formattedFilenames.Add("");
-                    }
-
-                }
-
-                var fileOps = new FileOperations();
-
-                isSavedSuccessfully = fileOps.SaveUploadedFile(httpRequest, storagePath, formattedFilenames);
-            }
-
-            if (isSavedSuccessfully)
-            {
-
-                release.frontImageUrl = formattedFilenames[0];
-                release.backImageUrl = formattedFilenames[1];
-
-                foreach (var artistId in ArtistId)
-                {
-                    release.Artists.Add(_db.Artists.Find(artistId));
-                }
-
-                foreach (var songId in SongId)
-                {
-                    release.HasSongs.Add(_db.Songs.Find(songId));
-                }
-
-                foreach (var formatId in FormatTypeId)
-                {
-                    var newFormat = _db.FormatsTypes.Find(formatId);
-                    var newReleaseFormat = new ReleaseFormat
-                    {
-                        Format = newFormat,
-                        FormatTypeId = newFormat.FormatTypeId,
-                        ReleaseFormatId = newFormat.FormatTypeId
-                    };
-                    release.FormatTypes.Add(newReleaseFormat);
-                }
-                try
-                {
-                    if (create)
-                    {
-                        _db.Releases.Add(release);
-                        _db.SaveChanges();
-                        return true;
-                    }
-                    else if (update)
-                    {
-                        _db.Entry(release).State = EntityState.Modified;
-                        _db.SaveChanges();
-                        return true;
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    throw;
-                }
-
-            }
-            return false;
-        }
     }
 }

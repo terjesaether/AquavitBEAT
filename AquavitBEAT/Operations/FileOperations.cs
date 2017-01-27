@@ -4,10 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace AquavitBEAT.Models
+namespace AquavitBEAT.Operations
 {
     public class FileOperations
     {
+        // Returnerer om lagringen gikk ok
         public bool SaveUploadedFile(HttpRequest httpRequest, string storagePath, List<string> formattedFilenames)
         {
             storagePath = "~" + storagePath;

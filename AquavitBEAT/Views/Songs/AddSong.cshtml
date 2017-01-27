@@ -1,4 +1,4 @@
-﻿@model AquavitBEAT.Models.Song
+﻿@model AquavitBEAT.Models.SongViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -13,7 +13,7 @@
 <div class="row">
     <div class="col-md-6">
 
-        @using (Html.BeginForm("Create", "Songs", FormMethod.Post, new
+        @using (Html.BeginForm("AddSong", "Songs", FormMethod.Post, new
         {
             enctype = "multipart/form-data",
             @class = "song-form"
@@ -27,50 +27,51 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Artist, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.LabelFor(model => model.Song.Artist, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
                         @Html.DropDownList("ArtistID", null, null, new { @class = "selectpicker form-control", id = "selectArtists", multiple = true })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.LabelFor(model => model.Song.Title, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Song.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Song.Title, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.RemixName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.LabelFor(model => model.Song.RemixName, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.RemixName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.RemixName, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Song.RemixName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Song.RemixName, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.LabelFor(model => model.Song.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control", id = "datepicker" } })
-                        @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Song.ReleaseDate, new { htmlAttributes = new { @class = "form-control", id = "datepicker" } })
+                        @Html.ValidationMessageFor(model => model.Song.ReleaseDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.LabelFor(model => model.Song.Comment, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Song.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Song.Comment, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.AudioUrl, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.LabelFor(model => model.Song.AudioUrl, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @*@Html.EditorFor(model => model.AudioUrl, new { htmlAttributes = new { @class = "form-control" } })*@
-                        <input type="file" name="audioFile" />
-                        @Html.ValidationMessageFor(model => model.AudioUrl, "", new { @class = "text-danger" })
+                        @*@Html.EditorFor(model => model.AudioFile, new { htmlAttributes = new { @class = "form-control" } })*@
+                        
+                         <input type="file" name="audioFile" />
+                        @Html.ValidationMessageFor(model => model.Song.AudioUrl, "", new { @class = "text-danger" })
                     </div>
                 </div>
 

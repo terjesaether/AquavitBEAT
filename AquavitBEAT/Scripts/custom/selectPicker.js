@@ -7,7 +7,7 @@
                 liveSearch: true,
                 liveSearchStyle: 'contains',
                 //mobile: true,
-                title: 'Choose songs ...',
+                title: 'Choose ...',
                 size: 10
             });
 

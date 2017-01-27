@@ -1,6 +1,7 @@
 ﻿var loadFile = function (event) {
     var output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);
+    $('.file-upload-text').text("");
 };
 
 var inputs = document.querySelectorAll('.inputfile');

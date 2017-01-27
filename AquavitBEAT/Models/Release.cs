@@ -14,16 +14,20 @@ namespace AquavitBEAT.Models
             Artists = new List<Artist>();
             HasSongs = new List<Song>();
             HasArtworks = new List<Artwork>();
+            ReleasesToArtists = new List<ReleaseToArtist>();
+            Images = new List<UploadedImage>();
         }
 
-        [Required]
+        [Key]
         public int ReleaseId { get; set; }
 
-        [Required]
+        [Required, Display(Name = "Release Title")]
         public string Title { get; set; }
 
-        [DataType(DataType.Currency), Display(Name = "Price")]
+        [Display(Name = "Comment")]
+        public string Comment { get; set; }
 
+        [DataType(DataType.Currency), Display(Name = "Price")]
         public decimal Price { get; set; }
 
         [DataType(DataType.DateTime), Display(Name = "Release date")]
@@ -33,20 +37,24 @@ namespace AquavitBEAT.Models
         [Display(Name = "Release type")]
         public virtual ReleaseType ReleaseType { get; set; }
         //public virtual int ReleaseTypeId { get; set; }
-        public string frontImageUrl { get; set; }
-        public string backImageUrl { get; set; }
+        public string frontImageUrl { get; set; } // Fjernes 
+        public string backImageUrl { get; set; } // Fjernes
 
         [Display(Name = "Format type(s)")]
         public virtual List<ReleaseFormat> FormatTypes { get; set; }
 
         [Display(Name = "Artist(s)")]
         public virtual List<Artist> Artists { get; set; }
+        public virtual List<UploadedImage> Images { get; set; }
 
         [Display(Name = "Contains song(s)")]
         public virtual List<Song> HasSongs { get; set; }
 
         [Display(Name = "Artwork")]
         public virtual List<Artwork> HasArtworks { get; set; }
+
+        public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; } // Fjernes?
+        public virtual ICollection<SongToRelease> SongToReleases { get; set; }
     }
 
 
@@ -56,15 +64,15 @@ namespace AquavitBEAT.Models
 
     public class Artwork
     {
-        [Required]
+        [Key]
         public int ArtworkId { get; set; }
 
-        [Required, Display(Name = "Title")]
+        [Display(Name = "Title")]
         public string Title { get; set; }
         //public List<Release> InReleases { get; set; }
         public string Comment { get; set; }
 
-        [Required, Display(Name = "Type of artwork (EP, Single, Comp)")]
+        [Display(Name = "Type of artwork (EP, Single, Comp)")]
         public ReleaseType TypeOfArtwork { get; set; }
         public virtual Image Image { get; set; }
 
@@ -84,55 +92,14 @@ namespace AquavitBEAT.Models
         public string ImgUrl { get; set; }
     }
 
-    public class Artist
+    public class UploadedImage
     {
-        public Artist()
-        {
-            //SocialMediaInfo = new Dictionary<string, string>();
-            //HasArtworks = new List<Artwork>();
-            //HasReleases = new List<Release>();
-            //HasSongs = new List<Song>();
-            //SocialMediaTitle = new List<string>();
-            //SocialMediaAddress = new List<string>();
-        }
-        [Required]
-        public int ArtistId { get; set; }
-
-        [Required, Display(Name = "Artist name")]
-        public string ArtistName { get; set; }
-
-        [Display(Name = "First name")]
-        public string FirstName { get; set; }
-
-        [Display(Name = "Last name")]
-        public string LastName { get; set; }
-
-        public string FullName
-        {
-            get { return FirstName + " " + LastName; }
-        }
-
-        public string About { get; set; }
-
-        [Display(Name = "Email address")]
-        [Required(ErrorMessage = "The email address is required")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
-        public string Mail { get; set; }
-        public string Address { get; set; }
-        public string Country { get; set; }
-
-        [Display(Name = "Profile image")]
-        public string ProfileImgUrl { get; set; }
-
-        public virtual List<ArtistSocialMedia> SocialMedia { get; set; } = new List<ArtistSocialMedia>();
-
-
-        //[NotMapped]
-        //public Dictionary<string, string> SocialMediaInfo { get; set; } = new Dictionary<string, string>();
-        public virtual List<Song> HasSongs { get; set; } = new List<Song>();
-        public virtual List<Release> HasReleases { get; set; } = new List<Release>();
-        public virtual List<Artwork> HasArtworks { get; set; } = new List<Artwork>();
+        public int UploadedImageId { get; set; }
+        public string ImgUrl { get; set; }
+        public string Title { get; set; }
     }
+
+
 
     public class Group // Band lissom
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -29,10 +30,13 @@ namespace AquavitBEAT.Models
         [DataType(DataType.MultilineText)]
         public string Comment { get; set; }
 
-        [Required, Display(Name = "Audiofile:")]
+        [Display(Name = "Audiofile:")]
         public string AudioUrl { get; set; }
+
         public virtual List<Artist> Remixers { get; set; } = new List<Artist>();
         public virtual List<Release> InReleases { get; set; } = new List<Release>();
+
+        public virtual ICollection<SongToArtist> SongToArtists { get; set; } = new List<SongToArtist>();
 
     }
 }
