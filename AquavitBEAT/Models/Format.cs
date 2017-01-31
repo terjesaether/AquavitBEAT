@@ -9,8 +9,7 @@ namespace AquavitBEAT.Models
     // Vinyl, Streaming, Download
     public class FormatType
     {
-        //[Required]
-        [Key]
+
         public int FormatTypeId { get; set; }
 
         [Required, Display(Name = "Format type (Streaming, Vinyl, CD")]

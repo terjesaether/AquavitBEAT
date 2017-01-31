@@ -9,7 +9,7 @@
 body {
   padding-top: 50px;
   padding-bottom: 20px;
-  background: #9babb2;
+  background: #e5e5e5;
   font-family: 'Quicksand', sans-serif; }
 
 /* Set padding to keep content from hitting the edges */
@@ -80,7 +80,6 @@ textarea {
   max-height: 200px; }
 
 #artist-list a {
-  background: #fff;
   margin: 2px; }
 
 #profileImgDropzone {

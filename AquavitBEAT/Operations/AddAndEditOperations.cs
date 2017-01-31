@@ -24,6 +24,7 @@ namespace AquavitBEAT.Operations
                 release.ReleaseDate = vm.Release.ReleaseDate;
                 release.Comment = vm.Release.Comment;
                 //song.InReleases = vm.Song.InReleases;
+                release.FormatTypes = new List<ReleaseFormat>();
             }
             else
             {
@@ -35,7 +36,7 @@ namespace AquavitBEAT.Operations
             List<string> formattedFilenames = new List<string>();
             bool isSavedSuccessfully = true;
 
-            if (httpRequest.Files.Count > 0)
+            if (httpRequest.Files.Count > 0 && httpRequest.Files[0].ContentLength > 0)
             {
 
                 for (int i = 0; i < httpRequest.Files.Count; i++)
@@ -59,6 +60,26 @@ namespace AquavitBEAT.Operations
 
                 isSavedSuccessfully = fileOps.SaveUploadedFile(httpRequest, storagePath, formattedFilenames);
             }
+
+            if (FormatTypeId != null)
+            {
+
+                var formats = _db.FormatsTypes.ToList();
+                foreach (var id in FormatTypeId)
+                {
+                    if (formats.Select(f => f.FormatTypeId).Contains(id))
+                    {
+                        var newFormat = new ReleaseFormat
+                        {
+                            FormatTypeId = id,
+                            Format = formats.Where(f => f.FormatTypeId == id).SingleOrDefault()
+                        };
+                        release.FormatTypes.Add(newFormat);
+                    }
+
+                }
+            }
+
 
             if (isSavedSuccessfully)
             {
@@ -159,11 +180,29 @@ namespace AquavitBEAT.Operations
             return false;
         }
 
-        public bool AddOrUpdateArtist(AddArtistViewModel vm, HttpContext context, bool update, bool create)
+        public bool AddOrUpdateArtist(ArtistViewModel vm, HttpContext context, bool update, bool create)
         {
+
+            Artist artist;
+            if (vm.Artist.ArtistId != 0)
+            {
+                artist = _db.Artists.Find(vm.Artist.ArtistId);
+                artist.FirstName = vm.Artist.FirstName;
+                artist.LastName = vm.Artist.LastName;
+                artist.ArtistName = vm.Artist.ArtistName;
+                artist.About = vm.Artist.About;
+                artist.Address = vm.Artist.Address;
+                artist.Country = vm.Artist.Country;
+                //artist.SocialMedia = new List<ArtistSocialMedia>();
+
+            }
+            else
+            {
+                artist = new Artist();
+            }
+
             var storagePath = "/images/profiles/";
             bool isSavedSuccessfully = true;
-            Artist artist = vm.Artist;
             var httpRequest = context.Request;
             var fileOps = new FileOperations();
 
@@ -173,11 +212,13 @@ namespace AquavitBEAT.Operations
 
             foreach (var item in SocialMediaList)
             {
-                artist.SocialMedia.Add(new ArtistSocialMedia
+                var newSocMedia = new ArtistSocialMedia
                 {
                     Name = item.Name.ToString(),
-                    Address = HttpContext.Current.Request.Form[item.Name].ToString()
-                });
+                    Address = httpRequest.Form[item.Name].ToString()
+                };
+                artist.SocialMedia.Add(newSocMedia);
+
             }
 
             // Flere filenames siden savefile-funksjon tar i mot liste
@@ -187,9 +228,12 @@ namespace AquavitBEAT.Operations
 
             formattedFilenames.Add(formattedFilename);
 
-            isSavedSuccessfully = fileOps.SaveUploadedFile(httpRequest, storagePath, formattedFilenames);
+            if (httpRequest.Files.Count > 0 && httpRequest.Files[0].ContentLength > 0)
+            {
+                isSavedSuccessfully = fileOps.SaveUploadedFile(httpRequest, storagePath, formattedFilenames);
 
-            artist.ProfileImgUrl = storagePath + formattedFilename;
+                artist.ProfileImgUrl = storagePath + formattedFilename;
+            }
 
             try
             {
@@ -237,7 +281,7 @@ namespace AquavitBEAT.Operations
             bool isSavedSuccessfully = true;
             List<string> formattedFilenames = new List<string>();
 
-            string ext = Path.GetExtension(httpRequest.Files[0].FileName);
+            string extension = Path.GetExtension(httpRequest.Files[0].FileName);
 
             Artist addedArtist;
             if (ArtistID == null)
@@ -300,9 +344,9 @@ namespace AquavitBEAT.Operations
             {
                 audioFileName += _db.Artists.Find(artist).ArtistName.ToString().Replace(" ", "_") + "_";
             }
-            audioFileName += song.Title.ToString().Replace(" ", "_") + "_" + song.RemixName.ToString().Replace(" ", "_") + ext;
+            audioFileName += song.Title.ToString().Replace(" ", "_") + "_" + song.RemixName.ToString().Replace(" ", "_") + extension;
 
-            if (httpRequest.Files.Count > 0)
+            if (httpRequest.Files.Count > 0 && httpRequest.Files[0].ContentLength > 0)
             {
                 //formattedFilenames.Add(httpRequest.Files[0].FileName.ToString().Replace(" ", "_"));
                 formattedFilenames.Add(audioFileName);
@@ -310,11 +354,11 @@ namespace AquavitBEAT.Operations
                 var fileOps = new FileOperations();
 
                 isSavedSuccessfully = fileOps.SaveUploadedFile(httpRequest, storagePath, formattedFilenames);
+
+                song.AudioUrl = storagePath + "/" + formattedFilenames[0];
             }
             if (isSavedSuccessfully)
             {
-
-                song.AudioUrl = storagePath + "/" + formattedFilenames[0];
 
                 try
                 {

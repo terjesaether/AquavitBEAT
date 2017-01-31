@@ -22,7 +22,7 @@ namespace AquavitBEAT.Controllers
         [Route("Artist/AddArtist/")]
         public ActionResult AddArtist()
         {
-            AddArtistViewModel vm = new AddArtistViewModel(_db.SocialMedias.ToList());
+            ArtistViewModel vm = new ArtistViewModel(_db.SocialMedias.ToList());
 
             ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
 
@@ -32,7 +32,7 @@ namespace AquavitBEAT.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Artist/AddArtist/")]
-        public ActionResult AddArtist(AddArtistViewModel vm)
+        public ActionResult AddArtist(ArtistViewModel vm)
         {
 
             var context = System.Web.HttpContext.Current;
@@ -48,14 +48,39 @@ namespace AquavitBEAT.Controllers
         }
 
         [HttpGet]
-        [Route("Artist/EditArtist/{id}")]
+        [Route("Artist/Edit/{id}")]
         public ActionResult EditArtist(int id)
         {
             var artist = _db.Artists.Find(id);
+            ArtistViewModel vm = new ArtistViewModel(_db.SocialMedias.ToList());
+            vm.Artist = artist;
 
             ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
 
-            return View(artist);
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Artist/Edit/")]
+        public ActionResult EditArtist(ArtistViewModel vm)
+        {
+            //var artist = _db.Artists.Find(id);
+
+            var context = System.Web.HttpContext.Current;
+
+            var isSaved = addAndEditOps.AddOrUpdateArtist(vm, context, true, false);
+
+            if (isSaved)
+            {
+                return RedirectToAction("Index", "Artist");
+            }
+
+            ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
+
+            vm.SocialMediaList = _db.SocialMedias.ToList();
+
+            return View(vm);
         }
 
         public ActionResult AddSocialMedia(Artist artist)
@@ -66,15 +91,18 @@ namespace AquavitBEAT.Controllers
         [Route("Artist/{id}", Name = "ArtistDetails")]
         public ActionResult Details(int? id)
         {
-            //var vm = new AddArtistViewModel(_db.SocialMedias.ToList());
+            var vm = new ArtistViewModel(_db.SocialMedias.ToList());
             var artist = _db.Artists.Find(id);
+            vm.Artist = artist;
+            vm.SongToArtists = _db.SongToArtists.Where(s => s.ArtistId == id.Value).ToList();
+            vm.ReleaseToArtists = _db.ReleaseToArtist.Where(r => r.ArtistId == id.Value).ToList();
 
             if (id == null)
             {
                 return HttpNotFound();
             }
 
-            return View(_db.Artists.Find(id));
+            return View(vm);
         }
     }
 }

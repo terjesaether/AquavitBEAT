@@ -249,7 +249,6 @@
     <Compile Include="Migrations\AquavitBEATDbInit.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AddArtistViewModel.cs" />
     <Compile Include="Models\AquavitBeatContext.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\ArtistRepository.cs" />
@@ -470,6 +469,8 @@
     <Content Include="Views\Releases\EditRelease.cshtml" />
     <Content Include="Views\Releases\Index.cshtml" />
     <Content Include="Views\Releases\AddRelease.cshtml" />
+    <Content Include="Views\Artist\EditArtist.cshtml" />
+    <Content Include="Views\Artist\_ListSocialMedia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

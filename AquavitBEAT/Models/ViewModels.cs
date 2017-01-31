@@ -73,7 +73,26 @@ namespace AquavitBEAT.Models
         //public virtual SongToArtist SongsToArtists { get; set; }
     }
 
+    public class ArtistViewModel
+    {
+        private AquavitBeatContext _db = new AquavitBeatContext();
+        public ArtistViewModel()
+        {
+            SocialMediaList = new List<SocialMedia>();
+            SongToArtists = new List<SongToArtist>();
+            ReleaseToArtists = new List<ReleaseToArtist>();
+        }
+        public ArtistViewModel(List<SocialMedia> socialMediaList)
+        {
+            SocialMediaList = socialMediaList;
+        }
+        public Artist Artist { get; set; }
+        public List<SocialMedia> SocialMediaList { get; set; }
+        public List<SongToArtist> SongToArtists { get; set; }
+        public List<ReleaseToArtist> ReleaseToArtists { get; set; }
 
+
+    }
 
 
 

@@ -6,7 +6,7 @@
 
 <h1>AquavitBEAT artists</h1>
 
-<div class="row white-text" id="artist-list">
+<div class="white-text" id="artist-list">
 
     @foreach (var artist in Model)
     {
@@ -14,8 +14,13 @@
 
             @Html.ActionLink(artist.ArtistName, "Details", "Artist", new { id = artist.ArtistId }, new { @class = "col-md-2" })
 
-            <div class="col-md-2">@artist.FirstName</div>
-            <div class="col-md-2">@artist.LastName</div>
+            <div class="col-md-2">@artist.FirstName&nbsp;@artist.LastName</div>
+
+            <div class="col-md-2">@artist.Address</div>
+            <div class="col-md-2"><a href="mailto:@artist.Mail">@artist.Mail</a></div>
+            <div class="col-md-2">@artist.About</div>
+            <div class="col-md-1">@artist.Country</div>
+            <div class="col-md-1">@Html.ActionLink("Edit","Edit", new { id = artist.ArtistId})</div>
         </div>
     }
 

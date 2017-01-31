@@ -32,7 +32,7 @@ namespace AquavitBEAT.Controllers.API
         [System.Web.Mvc.HttpPost]
         [System.Web.Http.Route("api/form")]
         [ValidateAntiForgeryToken]
-        public IHttpActionResult Post(AddArtistViewModel vm)
+        public IHttpActionResult Post(ArtistViewModel vm)
         {
             var storagePath = "/images/profiles/";
             bool isSavedSuccessfully = true;

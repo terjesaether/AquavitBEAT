@@ -1,5 +1,6 @@
 ﻿$lightBlue : #6298b2;
 $lightGrey: #9babb2;
+$lighterGrey: #e5e5e5;
 
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans+Condensed|Open+Sans|Overpass|Quicksand');
 
@@ -18,7 +19,7 @@ $lightGrey: #9babb2;
 body {
 	padding-top: 50px;
 	padding-bottom: 20px;
-	background: $lightGrey;
+	background: $lighterGrey;
 	font-family:'Quicksand', sans-serif;
 }
 
@@ -103,7 +104,7 @@ textarea {
 	max-height: 200px;
 }
 #artist-list a {
-    background: #fff;
+    
     margin: 2px;
 }
 

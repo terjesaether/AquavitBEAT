@@ -1,4 +1,4 @@
-﻿@model AquavitBEAT.Models.AddArtistViewModel
+﻿@model AquavitBEAT.Models.ArtistViewModel
 
 @{
     ViewBag.Title = "Add Artist";
@@ -108,35 +108,7 @@
 
         </div>
 
-        @{
-            var counter = 1;
-            var htmlString1 = new HtmlString("<div class='form-group row'>");
-            var htmlString2 = new HtmlString("</div>");}
-        
-            @foreach (var some in Model.SocialMediaList)
-            {
-
-                if (counter % 2 == 0)
-                {
-                    @htmlString1
-                }
-
-                    @Html.Label(some.Name, new { @class = "control-label col-md-2" })
-                    <div class="col-md-4">
-
-                        @Html.TextBox(some.Name, null, new { @class = "form-control single-line", placeholder = some.Name, value = some.Prefix })
-                        @Html.ValidationMessageFor(model => some.Name, "", new { @class = "text-danger" })
-                    </div>
-                if (counter % 2 == 0)
-                {
-                    @htmlString2
-                }
-                {counter++;
-                }
-            }
-
-        
-
+        @Html.Partial("_ListSocialMedia", Model)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

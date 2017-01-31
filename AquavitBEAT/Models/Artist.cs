@@ -16,6 +16,7 @@ namespace AquavitBEAT.Models
             //HasSongs = new List<Song>();
             //SocialMediaTitle = new List<string>();
             //SocialMediaAddress = new List<string>();
+            SocialMedia = new List<ArtistSocialMedia>();
         }
         [Required]
         public int ArtistId { get; set; }
@@ -46,7 +47,7 @@ namespace AquavitBEAT.Models
         [Display(Name = "Profile image")]
         public string ProfileImgUrl { get; set; }
 
-        public virtual List<ArtistSocialMedia> SocialMedia { get; set; } = new List<ArtistSocialMedia>();
+        public virtual List<ArtistSocialMedia> SocialMedia { get; set; }
 
 
         //[NotMapped]

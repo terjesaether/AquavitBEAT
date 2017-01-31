@@ -1,89 +1,111 @@
-﻿@model AquavitBEAT.Models.Artist
+﻿@model AquavitBEAT.Models.ArtistViewModel
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>@Model.ArtistName</h2>
+<h2>@Model.Artist.ArtistName</h2>
 
-<div>
-
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ArtistName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ArtistName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Mail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.About)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.About)
-        </dd>
-
+<div class="row">
+    <div class="col-md-6">
         
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Artist.ArtistName)
+            </dt>
 
-    </dl>
+            <dd>
+                @Html.DisplayFor(model => model.Artist.ArtistName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Artist.FirstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Artist.FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Artist.LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Artist.LastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Artist.Mail)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Artist.Mail)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Artist.Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Artist.Address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Artist.Country)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Artist.Country)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Artist.About)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Artist.About)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Artist.SocialMedia)
+            </dt>
+
+            <dd>
+                @foreach (var some in Model.Artist.SocialMedia)
+                {
+                    if (some.Address != "")
+                    {
+                        <p>@some.Name: @some.Address</p>
+                    }
+
+
+                }
+            </dd>
+
+        </dl>
+
+        <div class="col-md-6">
+            @foreach (var item in Model.SongToArtists)
+            {
+                <p>@Html.ActionLink(item.Song.Title, "Edit", "Songs", new { id = item.SongId }, null)</p>
+            }
+        </div>
+
+        <div class="col-md-6">
+            @foreach (var item in Model.ReleaseToArtists)
+            {
+                <p>@Html.ActionLink(item.Release.Title, "EditRelease", "Releases", new { id = item.ReleaseId }, null)</p>
+            }
+        </div>
+
+    </div> @*END COL*@
+    <div class="col-md-6">
+
+        <img src="@Model.Artist.ProfileImgUrl" alt="@Model.Artist.ArtistName" />
+
+    </div>
 </div>
-<div>
-
-    @foreach (var some in Model.SocialMedia)
-    {
-        if (some.Address != "")
-        {
-            <p>@some.Name: @some.Address</p>
-        }
 
 
-    }
-
-</div>
-<img src="@Model.ProfileImgUrl" alt="@Model.ArtistName" />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ArtistId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Artist.ArtistId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

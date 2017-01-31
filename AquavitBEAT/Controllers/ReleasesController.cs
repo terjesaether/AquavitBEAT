@@ -74,6 +74,8 @@ namespace AquavitBEAT.Controllers
         }
 
         // GET: Releases/Edit/5
+        [HttpGet]
+        [Route("Releases/Edit/{id}")]
         public ActionResult EditRelease(int? id)
         {
             if (id == null)
@@ -166,6 +168,7 @@ namespace AquavitBEAT.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Releases/Edit")]
         public ActionResult EditRelease(ReleaseViewModel vm, int[] ArtistId, int[] SongId, int[] FormatTypeId, string ReleaseTypeId)
         {
 
