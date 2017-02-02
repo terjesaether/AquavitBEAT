@@ -1,10 +1,11 @@
-﻿$lightBlue : #6298b2;
+﻿
+$lightBlue : #6298b2;
 $lightGrey: #9babb2;
-$lighterGrey: #e5e5e5;
+$lighterGrey: #f3fbff;
 
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans+Condensed|Open+Sans|Overpass|Quicksand');
 
-
+@import 'bootstrap-sass/assets/stylesheets/bootstrap';
 
 	/*font-family: 'Overpass', sans-serif;
 
@@ -21,6 +22,7 @@ body {
 	padding-bottom: 20px;
 	background: $lighterGrey;
 	font-family:'Quicksand', sans-serif;
+    color: #fff;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -32,8 +34,18 @@ body {
 h1, h2, h3, h4 {
 	font-family: 'Quicksand', sans-serif;
 }
+h4 {
+    font-weight: bold;
+}
 .white-text {
     color: #fff;
+}
+.dark-back {
+    background: #000000;
+}
+
+a {
+    color: #ca2e2e;
 }
 
 .center-block {
@@ -42,13 +54,43 @@ h1, h2, h3, h4 {
   margin-right: auto;
 }
 
+.margin-1 {
+    margin: 10px;
+}
+.padding-1 {
+    padding: 10px;
+}
+
+.bottom-air-1 {
+    margin-bottom: 20px;
+}
+.on-line {
+    
+    display:inline;
+}
+
+.list-view {
+    border-bottom: dashed #9babb2 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-height: 80px;
+}
+.list-view:nth-child(odd) {
+    /*background: #2c2c2c;*/
+}
+
+.scroll-box {
+    max-height: 600px;
+    overflow: auto;
+}
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
 	/*max-width: 400px;*/
-	background: #e5e5e5;
+	/*background: #e5e5e5;*/
     border-radius: 0 0;
+    background: #6298b2;
 }
 
 textarea {
@@ -74,7 +116,7 @@ textarea {
 	font-weight: 700;
 	padding: 10px;
 	color: white;
-	background-color: black;
+	background-color: #6298b2;
 	display: inline-block;
 	cursor: pointer; /* "hand" cursor */
 }
@@ -85,7 +127,7 @@ textarea {
 }
 
 .inputfile:focus + label {
-	outline: 1px dotted #000;
+	outline: 1px dotted #ca2e2e;
 	outline: -webkit-focus-ring-color auto 5px;
 }
 
@@ -140,5 +182,48 @@ textarea {
     background: #e5e5e5;
     cursor: pointer;
 }
+
+.main-page {
+    background-image: url(/images/ab_frontpage_bgr_w_logo.jpg);
+    background-color: #9babb2;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 0;
+}
+.main-page .navbar {
+    height: 200px;
+    background-color: none;
+    border: none;
+    border-radius: 0;
+    padding-top: 20px;
+}
+.main-page .nav > li  a {
+    color: $lightBlue;
+}
+.main-page .nav > li  a:hover {
+    color: #000000;
+}
+.nav > li a {
+    background: none;
+    text-transform: uppercase;
+    font-size: 1.4em;
+}
+.nav > li a:hover, .nav > li a:visited, .nav > li a:active {
+    background: none;
+}
+.dropdown-menu > li a {
+    font-size: 1em;
+}
+.dropdown-menu > li a:hover {
+    background: #808080;
+}
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background: none;
+}
+.dropdown:visited .dropdown-toggle {
+    background: none;
+}
+
+
 
 

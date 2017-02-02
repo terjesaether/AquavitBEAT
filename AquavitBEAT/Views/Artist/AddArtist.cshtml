@@ -79,7 +79,7 @@
 
             <div class="col-md-4 col-md-push-2">
                 <div id="artist-file-preview">
-                    <img class="img-responsive center-block" id="output" />
+                    <img class="img-responsive center-block img-rounded" id="output" />
                 </div>
             </div>
 
@@ -90,10 +90,8 @@
 
             <div class="col-md-4 col-md-push-2">
                 <input type="file" class="control-label inputfile" id="file" name="file" accept="image/*" onchange="loadFile(event)" data-multiple-caption="{count} files selected">
-                <label  for="file"><span class="glyphicon glyphicon-open"></span><strong><span class="file-upload-text">Choose a profile image</span></strong></label>
-                @*<div id="artist-file-preview col-md-6">
-
-                </div>*@
+                <label  for="file"><span class="glyphicon glyphicon-upload"></span><span id="file-upload-text"><strong>&nbsp;Choose a profile image</strong></span></label>
+               
             </div>
 
         </div>

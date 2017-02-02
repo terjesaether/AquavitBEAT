@@ -4,70 +4,37 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Songs</h2>
+<h1>AquavitBEAT songs <a href="/Songs/Add"><span class="glyphicon glyphicon-plus"></span></a></h1> 
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Artist)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RemixName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comment)
-        </th>
-        <th>
-            &nbsp;
-        </th>
-        <th></th>
-    </tr>
+</p>*@
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @foreach (var artist in item.SongToArtists)
-                {
-                    <p>@Html.ActionLink(artist.Artist.ArtistName, "Details", "Artist", new { id = artist.ArtistId }, null)</p>
 
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RemixName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comment)
-            </td>
-            <td>
-                <audio controls>
-                    <source src="@item.AudioUrl" />
-                </audio>
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.SongId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.SongId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.SongId })
-            </td>
-        </tr>
-    }
+@foreach (var item in Model)
+{
+    
+<div class="row list-view">
+    <div class="col-md-2"><a href="/Song/@item.SongId">@item.Title</a></div>
+    <div class="col-md-2">
+        @foreach (var artist in item.SongToArtists)
+        {
+            <p>@Html.ActionLink(artist.Artist.ArtistName, "ArtistDetails", "Artist", new { id = artist.ArtistId }, null)</p>
 
-</table>
+        }
+    </div>
+    
+    <div class="col-md-1">@Html.DisplayFor(modelItem => item.RemixName)</div>
+    <div class="col-md-1">@Html.DisplayFor(modelItem => item.ReleaseDate)</div>
+    <div class="col-md-2">@Html.DisplayFor(modelItem => item.Comment)</div>
+    <div class="col-md-3"><audio controls>
+    <source src="@item.AudioUrl" />
+</audio></div>
+    <div class="col-md-1">@Html.ActionLink("Edit", "Edit", new { id = item.SongId })</div>
+    </div>
+
+}
+
 @section scripts{
     <script>
         $(function () {

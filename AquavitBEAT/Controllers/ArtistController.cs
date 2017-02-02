@@ -19,7 +19,7 @@ namespace AquavitBEAT.Controllers
         }
 
         [HttpGet]
-        [Route("Artist/AddArtist/")]
+        [Route("Artist/Add")]
         public ActionResult AddArtist()
         {
             ArtistViewModel vm = new ArtistViewModel(_db.SocialMedias.ToList());
@@ -31,7 +31,7 @@ namespace AquavitBEAT.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Artist/AddArtist/")]
+        [Route("Artist/Add")]
         public ActionResult AddArtist(ArtistViewModel vm)
         {
 
@@ -88,8 +88,8 @@ namespace AquavitBEAT.Controllers
             return View();
         }
 
-        [Route("Artist/{id}", Name = "ArtistDetails")]
-        public ActionResult Details(int? id)
+        [Route("Artist/{id}")]
+        public ActionResult ArtistDetails(int? id)
         {
             var vm = new ArtistViewModel(_db.SocialMedias.ToList());
             var artist = _db.Artists.Find(id);

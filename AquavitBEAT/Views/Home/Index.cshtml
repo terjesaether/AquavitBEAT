@@ -1,27 +1,17 @@
 ﻿@model IEnumerable<AquavitBEAT.Models.Artist>
 @{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
 }
 @section Styles {
-    <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+    
 }
 
-<div class="jumbotron">
-    @foreach (var artist in Model)
-    {
-        <div class="col-md-4"><p class="text-center">@artist.ArtistName</p></div>
-        @Html.DropDownList("ArtistID", null, null, new { @class = "form-control", id = "selectArtists" })
-    }
-</div>
 
 <div class="row">
     
 </div>
 
 @section scripts{
-    <script>
-        $('select').change(function () {
-            alert("changed " + this.selectedIndex);
-        });
-    </script>
+   
 }

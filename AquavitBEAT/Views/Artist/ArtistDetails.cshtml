@@ -4,10 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>@Model.Artist.ArtistName</h2>
+<h2>@Model.Artist.ArtistName <a href="/Artist/Edit/@Model.Artist.ArtistId"><span class="glyphicon glyphicon-pencil"></span></a></h2>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-3">
         
         <dl class="dl-horizontal">
             <dt>
@@ -75,33 +75,50 @@
                     {
                         <p>@some.Name: @some.Address</p>
                     }
-
-
                 }
             </dd>
 
         </dl>
-
-        <div class="col-md-6">
-            @foreach (var item in Model.SongToArtists)
-            {
-                <p>@Html.ActionLink(item.Song.Title, "Edit", "Songs", new { id = item.SongId }, null)</p>
-            }
-        </div>
-
-        <div class="col-md-6">
-            @foreach (var item in Model.ReleaseToArtists)
-            {
-                <p>@Html.ActionLink(item.Release.Title, "EditRelease", "Releases", new { id = item.ReleaseId }, null)</p>
-            }
-        </div>
+    
 
     </div> @*END COL*@
-    <div class="col-md-6">
 
-        <img src="@Model.Artist.ProfileImgUrl" alt="@Model.Artist.ArtistName" />
+   
+
+    <div class="col-md-3">
+
+        <img class="img-responsive" src="@Model.Artist.ProfileImgUrl" alt="@Model.Artist.ArtistName" />
 
     </div>
+    <div class="col-md-3 scroll-box">
+        <h4>@Model.Artist.ArtistName has these songs:</h4>
+        @foreach (var item in Model.SongToArtists)
+            {
+            <p>@Html.ActionLink(item.Song.Title, "SongDetails", "Songs", new { id = item.SongId }, null)</p>
+            <audio controls>
+                <source src="@item.Song.AudioUrl" />
+            </audio>
+        }
+    </div>
+
+    <div class="col-md-3">
+        <h4>@Model.Artist.ArtistName has these releases:</h4>
+        @foreach (var item in Model.ReleaseToArtists)
+            {
+            <p>@Html.ActionLink(item.Release.Title, "ReleaseDetails", "Releases", new { id = item.ReleaseId }, null)</p>
+            
+        }
+    </div>
+
+</div>
+<div class="row">
+
+    
+
+    
+
+
+
 </div>
 
 

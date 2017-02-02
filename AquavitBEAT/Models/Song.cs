@@ -38,5 +38,10 @@ namespace AquavitBEAT.Models
 
         public virtual ICollection<SongToArtist> SongToArtists { get; set; } = new List<SongToArtist>();
 
+        public string GetFullSongName()
+        {
+            return Title + " (" + RemixName + ")";
+        }
+
     }
 }

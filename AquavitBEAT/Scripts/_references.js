@@ -1,4 +1,6 @@
 ﻿/// <autosync enabled="true" />
+/// <reference path="../content/bootstrap-sass/assets/javascripts/bootstrap.js" />
+/// <reference path="../content/bootstrap-sass/assets/javascripts/bootstrap-sprockets.js" />
 /// <reference path="bootstrap.js" />
 /// <reference path="bootstrap-select.min.js" />
 /// <reference path="custom/audioplayerfix.js" />

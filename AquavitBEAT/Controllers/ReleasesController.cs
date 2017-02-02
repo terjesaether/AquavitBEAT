@@ -23,6 +23,8 @@ namespace AquavitBEAT.Controllers
         }
 
         // GET: Releases/Details/5
+        [HttpGet]
+        [Route("Releases/{id}")]
         public ActionResult ReleaseDetails(int? id)
         {
             if (id == null)
@@ -36,17 +38,23 @@ namespace AquavitBEAT.Controllers
             }
             return View(release);
         }
-        //[Route("Releases/AddRelease")]
+        [Route("Releases/Add")]
         [HttpGet]
         // GET: Releases/Create
         public ActionResult AddRelease()
         {
 
-            ViewBag.ArtistId = new SelectList(_db.Artists, "ArtistId", "ArtistName");
             ViewBag.FormatTypeId = new SelectList(_db.FormatsTypes, "FormatTypeId", "FormatTypeName");
             ViewBag.ReleaseTypeId = new SelectList(_db.ReleaseTypes, "ReleaseTypeId", "ReleaseTypeName");
             ViewBag.SongId = new SelectList(_db.Songs, "SongId", "Title");
-            return View();
+
+            var vm = new ReleaseViewModel();
+            vm.Release = new Release();
+
+            vm.Release.ReleaseDate = DateTime.Now;
+            vm.Release.Price = 10;
+
+            return View(vm);
         }
 
         // POST: Releases/Create
@@ -54,13 +62,21 @@ namespace AquavitBEAT.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddRelease(ReleaseViewModel vm, int[] ArtistId, int[] SongId, int[] FormatTypeId, string ReleaseTypeId)
+        [Route("Releases/Add")]
+
+        public ActionResult AddRelease(ReleaseViewModel vm, int[] SongId, int[] FormatTypeId, string ReleaseTypeId)
         {
 
-            //var httpRequest = System.Web.HttpContext.Current.Request;
+            var formats = Request.Form["Release.FormatTypes"].Split(',');
+            ReleaseTypeId = Request.Form["Release.ReleaseType"];
+            var songs = Request.Form["Release.SongToReleases"].Split(',');
+
+            FormatTypeId = Array.ConvertAll(formats, int.Parse);
+            SongId = Array.ConvertAll(songs, int.Parse);
+
             var httpRequest = System.Web.HttpContext.Current;
 
-            var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, ArtistId, SongId, FormatTypeId, ReleaseTypeId, false, true);
+            var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, null, false, true);
 
             if (success)
             {
@@ -93,42 +109,16 @@ namespace AquavitBEAT.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.ArtistId = new SelectList(_db.Artists, "ArtistId", "ArtistName");
-            ViewBag.FormatTypeId = new SelectList(_db.FormatsTypes, "FormatTypeId", "FormatTypeName");
-            ViewBag.ReleaseTypeId = new SelectList(_db.ReleaseTypes, "ReleaseTypeId", "ReleaseTypeName");
-            ViewBag.SongId = new SelectList(_db.Songs, "SongId", "Title");
-
-            var results = _db.Artists
-                .Select(r => new
-                {
-                    r.ArtistId,
-                    r.ArtistName,
-                    Checked = _db.ReleaseToArtist.Where(s => s.ReleaseId == id.Value && s.ArtistId == r.ArtistId)
-                    .Count() > 0
-
-                });
-
-            var CheckBoxes = new List<CheckBoxViewModel>();
-            foreach (var item in results)
-            {
-                CheckBoxes.Add(new CheckBoxViewModel
-                {
-                    Name = item.ArtistName,
-                    Id = item.ArtistId,
-                    Checked = item.Checked
-                });
-            }
 
             var allSongs = _db.Songs
                 .Select(r => new
                 {
                     r.SongId,
                     r.Title,
+                    r.RemixName,
                     Checked = _db.SongToReleases.Where(s => s.ReleaseId == id.Value && s.SongId == r.SongId)
                     .Count() > 0
-
                 });
-
 
 
             var songsDropDown = new List<SelectListItem>();
@@ -143,11 +133,12 @@ namespace AquavitBEAT.Controllers
                 });
             }
 
+            // Lager dropdown med valgt verdi:
             foreach (var item in allSongs)
             {
                 songsDropDown.Add(new SelectListItem
                 {
-                    Text = item.Title,
+                    Text = item.Title + " (" + item.RemixName + ")",
                     Value = item.SongId.ToString(),
                     Selected = item.Checked
                 });
@@ -156,8 +147,10 @@ namespace AquavitBEAT.Controllers
             var songTo = _db.SongToReleases.ToList();
 
             ViewBag.SongId = songsDropDown;
+            ViewBag.ReleaseTypeId = vm.GetSelectedReleaseType();
+            ViewBag.FormatTypeId = vm.GetReleasesAndSelectedFormats();
 
-            vm.ArtistCheckBoxes = CheckBoxes;
+            //vm.ArtistCheckBoxes = CheckBoxes;
             vm.SongCheckBoxes = songsCheckBoxes;
 
             return View(vm);
@@ -169,28 +162,17 @@ namespace AquavitBEAT.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Releases/Edit")]
-        public ActionResult EditRelease(ReleaseViewModel vm, int[] ArtistId, int[] SongId, int[] FormatTypeId, string ReleaseTypeId)
+        public ActionResult EditRelease(ReleaseViewModel vm, int[] SongId, int[] FormatTypeId, string ReleaseTypeId)
         {
 
-            //var httpRequest = System.Web.HttpContext.Current.Request;
-            var httpRequest = System.Web.HttpContext.Current;
+            HttpContext httpRequest = System.Web.HttpContext.Current;
 
-            var storagePath = "/images/releases/" + vm.Release.Title.ToString();
+            string storagePath = "/images/releases/" + vm.Release.Title.ToString();
 
-            //var release = vm.Release;
-
-            //foreach (var chbx in vm.ArtistCheckBoxes)
-            //{
-            //    if (chbx.Checked)
-            //    {
-            //        release.Artists.Add(_db.Artists.Find(chbx.Id));
-            //    }
-
-            //}
-
+            string deleteCovers = Request.Form["deleteCovers"];
 
             // Kjører UpdateAndCreate-metode:
-            var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, ArtistId, SongId, FormatTypeId, ReleaseTypeId, true, false);
+            var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, deleteCovers, true, false);
 
             if (success)
             {

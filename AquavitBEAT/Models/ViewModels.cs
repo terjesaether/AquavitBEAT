@@ -17,14 +17,14 @@ namespace AquavitBEAT.Models
     public class ReleaseViewModel
     {
         private AquavitBeatContext _db = new AquavitBeatContext();
+        private GetSelectLists getLists = new GetSelectLists();
         public ReleaseViewModel()
         {
-            var getLists = new GetSelectLists();
 
-            ListOfArtists = getLists.GetListOfArtists();
-            ListOfFormats = getLists.GetListOfArtists();
+            //ItemsListOfAllArtists = getLists.GetListOfArtists();
+            //ItemsListOfAllFormats = getLists.GetListOfAllFormats();
             ListOfAllArtists = _db.Artists.ToList();
-            ArtistCheckBoxes = new List<CheckBoxViewModel>();
+            //ArtistCheckBoxes = new List<CheckBoxViewModel>(); // Slett?
             SongCheckBoxes = new List<CheckBoxViewModel>();
 
             //ListOfHasSongs = getLists.GetListOfHasSongs(Release);
@@ -32,14 +32,85 @@ namespace AquavitBEAT.Models
         }
         public Release Release { get; set; }
 
-        public List<SelectListItem> ListOfArtists { get; set; }
-        public List<SelectListItem> ListOfFormats { get; set; }
+        public List<SelectListItem> ItemsListOfAllReleaseTypes { get { return getLists.GetListOfAllReleaseTypes(); } }
+        public List<SelectListItem> ItemsListOfAllSongs { get { return getLists.GetListOfAllSongs(); } }
+        public List<SelectListItem> ItemsListOfAllArtists { get { return getLists.GetListOfAllArtists(); } }
+        public List<SelectListItem> ItemsListOfAllFormats { get { return getLists.GetListOfAllFormats(); } }
         public List<Artist> ListOfAllArtists { get; set; }
 
-        public List<CheckBoxViewModel> ArtistCheckBoxes { get; set; }
+        //public List<CheckBoxViewModel> ArtistCheckBoxes { get; set; } // Slett?
         public List<CheckBoxViewModel> SongCheckBoxes { get; set; }
         //public List<SelectListItem> ListOfHasSongs { get; set; }
         //public List<SelectListItem> ListOfHasArtwork { get; set; }
+
+        public List<SelectListItem> GetReleasesAndSelectedFormats()
+        {
+            if (Release != null)
+            {
+                var allFormats = _db.FormatsTypes.ToList();
+                var sortedFormats = new List<SelectListItem>();
+                bool selected = false;
+                foreach (var item in allFormats)
+                {
+                    if (Release.FormatTypes.Select(f => f.FormatTypeId).Contains(item.FormatTypeId))
+                    {
+                        selected = true;
+                    }
+                    else
+                    {
+                        selected = false;
+                    }
+                    sortedFormats.Add(new SelectListItem
+                    {
+                        Text = item.FormatTypeName,
+                        Value = item.FormatTypeId.ToString(),
+                        Selected = selected
+                    }
+                        );
+
+                }
+                return sortedFormats;
+            }
+            return null;
+        }
+        public List<SelectListItem> GetSelectedReleaseType()
+        {
+            if (Release.ReleaseType == null)
+            {
+                Release.ReleaseType = new ReleaseType
+                {
+                    ReleaseTypeId = 1,
+                    ReleaseTypeName = _db.ReleaseTypes.Where(r => r.ReleaseTypeId == 1).ToString()
+                };
+            }
+            if (Release != null)
+            {
+                var allTypes = _db.ReleaseTypes.ToList();
+                var sortedTypes = new List<SelectListItem>();
+                bool selected = false;
+                foreach (var item in allTypes)
+                {
+                    if (Release.ReleaseType.ReleaseTypeId == item.ReleaseTypeId)
+                    {
+                        selected = true;
+                    }
+                    else
+                    {
+                        selected = false;
+                    }
+                    sortedTypes.Add(new SelectListItem
+                    {
+                        Text = item.ReleaseTypeName,
+                        Value = item.ReleaseTypeId.ToString(),
+                        Selected = selected
+                    }
+                        );
+
+                }
+                return sortedTypes;
+            }
+            return null;
+        }
     }
 
     public class AddReleaseViewModel
@@ -49,8 +120,8 @@ namespace AquavitBEAT.Models
         {
             var getLists = new GetSelectLists();
 
-            ListOfArtists = getLists.GetListOfArtists();
-            ListOfFormats = getLists.GetListOfArtists();
+            ListOfArtists = getLists.GetListOfAllArtists();
+            ListOfFormats = getLists.GetListOfAllArtists();
             //ListOfHasSongs = getLists.GetListOfHasSongs(Release);
             //ListOfHasArtwork = getLists.GetListOfHasArtwork(Release);
         }
@@ -100,7 +171,7 @@ namespace AquavitBEAT.Models
     {
         private AquavitBeatContext _db = new AquavitBeatContext();
 
-        public List<SelectListItem> GetListOfArtists()
+        public List<SelectListItem> GetListOfAllArtists()
         {
 
             var listOfAll = _db.Artists.ToList();
@@ -118,17 +189,52 @@ namespace AquavitBEAT.Models
             return list;
 
         }
-        public List<SelectListItem> GetListOfFormats()
+        public List<SelectListItem> GetListOfAllFormats()
         {
             var listOfAll = _db.FormatsTypes.ToList();
             var list = new List<SelectListItem>();
 
             foreach (var item in listOfAll)
             {
+
                 list.Add(new SelectListItem
                 {
                     Text = item.FormatTypeName,
-                    Value = item.FormatTypeName.ToString()
+                    Value = item.FormatTypeId.ToString()
+                });
+
+            }
+            return list;
+        }
+        public List<SelectListItem> GetListOfAllSongs()
+        {
+            var listOfAll = _db.Songs.ToList();
+            var list = new List<SelectListItem>();
+
+            foreach (var item in listOfAll)
+            {
+
+                list.Add(new SelectListItem
+                {
+                    Text = item.Title + " (" + item.RemixName + ")",
+                    Value = item.SongId.ToString()
+                });
+
+            }
+            return list;
+        }
+        public List<SelectListItem> GetListOfAllReleaseTypes()
+        {
+            var listOfAll = _db.ReleaseTypes.ToList();
+            var list = new List<SelectListItem>();
+
+            foreach (var item in listOfAll)
+            {
+
+                list.Add(new SelectListItem
+                {
+                    Text = item.ReleaseTypeName,
+                    Value = item.ReleaseTypeId.ToString()
                 });
 
             }

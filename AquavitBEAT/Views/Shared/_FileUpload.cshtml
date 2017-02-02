@@ -1,0 +1,9 @@
+﻿<div class="form-group">
+    <div class="col-md-4 col-md-push-2">
+        <input type="file" class="control-label inputfile" id="file" name="imageFront" accept="image/*" onchange="loadFile(event)" data-multiple-caption="{count} files selected" multiple>
+        <label for="file"><span class="glyphicon glyphicon-open"></span><strong>Choose a cover image</strong></label>
+        <div id="output col-md-6">
+            <img src="" alt="@Model.Release.Title" class="img-responsive img-rounded center-block" id="output" />
+        </div>
+    </div>
+</div>

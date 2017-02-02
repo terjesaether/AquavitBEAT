@@ -14,6 +14,7 @@ namespace AquavitBEAT.Controllers
 
             ViewBag.ArtistID = new SelectList(_db.Artists, "ArtistID", "ArtistName");
             ViewBag.Title = "Home Page";
+            ViewBag.Background = "main-page";
 
             return View(artists);
         }

@@ -13,10 +13,11 @@ namespace AquavitBEAT.Operations
         private AquavitBeatContext _db = new AquavitBeatContext();
 
 
-        public bool AddOrUpdateRelease(ReleaseViewModel vm, HttpContext context, int[] ArtistId, int[] SongId, int[] FormatTypeId, string ReleaseTypeId, bool update, bool create)
+        public bool AddOrUpdateRelease(ReleaseViewModel vm, HttpContext context, int[] SongId, int[] FormatTypeId, string ReleaseTypeId, string deleteCovers, bool update, bool create)
         {
+            var httpRequest = context.Request;
             Release release;
-            if (vm.Release.ReleaseId != 0)
+            if (vm.Release.ReleaseId > 0)
             {
                 release = _db.Releases.Find(vm.Release.ReleaseId);
                 release.Title = vm.Release.Title;
@@ -24,26 +25,101 @@ namespace AquavitBEAT.Operations
                 release.ReleaseDate = vm.Release.ReleaseDate;
                 release.Comment = vm.Release.Comment;
                 //song.InReleases = vm.Song.InReleases;
-                release.FormatTypes = new List<ReleaseFormat>();
+                release.FormatTypes.Clear();
+                release.HasSongs.Clear();
+                release.Artists.Clear();
+
+                //release.SongToReleases.Clear();
+                //release.ReleasesToArtists.Clear();
+
+                if (deleteCovers == "on")
+                {
+                    release.Images.Clear();
+                }
             }
             else
             {
                 release = new Release();
             }
 
-            var httpRequest = context.Request;
-            var storagePath = "/images/releases/" + release.Title.ToString();
+
+            var storagePath = "/images/releases/" + release.Title.ToString().Replace(" ", "_") + "/";
+            //var storagePath = "/images/releases/";
             List<string> formattedFilenames = new List<string>();
             bool isSavedSuccessfully = true;
+            var fileOps = new FileOperations();
 
+            foreach (var item in _db.SongToReleases)
+            {
+                if (item.ReleaseId == release.ReleaseId)
+                {
+                    _db.Entry(item).State = EntityState.Deleted;
+                }
+            }
+
+            // SANGER
+            foreach (var songId in SongId)
+            {
+                if (songId > 0)
+                {
+                    var song = _db.Songs.Find(songId);
+                    release.HasSongs.Add(song);
+                    release.SongToReleases.Add(new SongToRelease
+                    {
+                        Release = release,
+                        ReleaseId = release.ReleaseId,
+                        Song = _db.Songs.Find(songId),
+                        SongId = songId
+                    });
+                    foreach (var artist in song.Artist)
+                    {
+                        if (!release.Artists.Contains(artist))
+                        {
+                            release.Artists.Add(artist);
+                        }
+                    }
+                }
+            }
+
+            // FORMATER:
+            if (FormatTypeId != null)
+            {
+                var formats = _db.FormatsTypes.ToList();
+                foreach (var id in FormatTypeId)
+                {
+                    if (formats.Select(f => f.FormatTypeId).Contains(id))
+                    {
+                        var newReleaseFormat = new ReleaseFormat
+                        {
+                            FormatTypeId = id,
+                            Format = formats.Where(f => f.FormatTypeId == id).SingleOrDefault()
+                        };
+                        release.FormatTypes.Add(newReleaseFormat);
+                    }
+                }
+            }
+
+
+            release.ReleaseType = _db.ReleaseTypes.Find(Convert.ToInt32(ReleaseTypeId));
+
+            // IMAGES:
+            var tempFileName = "";
+            var imgIndex = release.Images.Count;
             if (httpRequest.Files.Count > 0 && httpRequest.Files[0].ContentLength > 0)
             {
-
                 for (int i = 0; i < httpRequest.Files.Count; i++)
                 {
                     if (httpRequest.Files[i].FileName.ToString() != "")
                     {
-                        formattedFilenames.Add(httpRequest.Files[i].FileName.ToString().Replace(" ", "_"));
+
+                        string extension = Path.GetExtension(httpRequest.Files[i].FileName.ToString());
+
+                        tempFileName = release.Title.ToString().Replace(" ", "_") + "_" + imgIndex + extension;
+
+                        //tempFileName = Path.GetFileNameWithoutExtension(httpRequest.Files[i].FileName.ToString().Replace(" ", "_")) + "_" + i + extension;
+
+                        formattedFilenames.Add(tempFileName);
+
                     }
                     else
                     {
@@ -52,108 +128,19 @@ namespace AquavitBEAT.Operations
 
                     release.Images.Add(new UploadedImage
                     {
-                        ImgUrl = formattedFilenames[i]
+                        ImgUrl = storagePath + formattedFilenames[i],
+                        Title = release.Title + "_" + i
                     });
+                    imgIndex++;
                 }
 
-                var fileOps = new FileOperations();
 
                 isSavedSuccessfully = fileOps.SaveUploadedFile(httpRequest, storagePath, formattedFilenames);
-            }
-
-            if (FormatTypeId != null)
-            {
-
-                var formats = _db.FormatsTypes.ToList();
-                foreach (var id in FormatTypeId)
-                {
-                    if (formats.Select(f => f.FormatTypeId).Contains(id))
-                    {
-                        var newFormat = new ReleaseFormat
-                        {
-                            FormatTypeId = id,
-                            Format = formats.Where(f => f.FormatTypeId == id).SingleOrDefault()
-                        };
-                        release.FormatTypes.Add(newFormat);
-                    }
-
-                }
             }
 
 
             if (isSavedSuccessfully)
             {
-
-                foreach (var songId in SongId)
-                {
-                    if (songId > 0)
-                    {
-                        var song = _db.Songs.Find(songId);
-                        release.HasSongs.Add(song);
-                        foreach (var artist in song.Artist)
-                        {
-                            if (!release.Artists.Contains(artist))
-                            {
-                                release.Artists.Add(artist);
-                                release.ReleasesToArtists.Add(new ReleaseToArtist
-                                {
-                                    Artist = artist,
-                                    Release = release,
-                                    ArtistId = artist.ArtistId,
-                                    ReleaseId = release.ReleaseId
-                                });
-                            }
-
-                        }
-                    }
-
-                }
-
-                //Ops!Må laste inn artistene som allerede finnes i Sangene
-                //var newArtists = new List<Artist>();
-                //foreach (var songs in release.HasSongs)
-                //{
-                //    foreach (var artist in songs.Artist)
-                //    {
-                //        if (!newArtists.Contains(artist))
-                //        {
-                //            newArtists.Add(artist);
-                //        }
-                //    }
-
-                //    //release.Artists.Add(_db.Artists.Find(artist));
-                //}
-                ////release.Artists = release.HasSongs
-                ////    .SelectMany(s => s.Artist)
-                ////    .ToList();
-
-                //release.ReleasesToArtists = release.HasSongs
-                //    .Select(s => new ReleaseToArtist
-                //    {
-                //        Artist = s.Artist.Single(),
-                //        Release = release,
-                //        ArtistId = s.Artist.Select(a => a.ArtistId).Single(),
-                //        ReleaseId = release.ReleaseId
-                //    }).
-                //    ToList();
-
-
-
-
-                foreach (var formatId in FormatTypeId)
-                {
-                    var newFormat = _db.FormatsTypes.Find(formatId);
-                    var newReleaseFormat = new ReleaseFormat
-                    {
-                        Format = newFormat,
-                        FormatTypeId = newFormat.FormatTypeId,
-                        ReleaseFormatId = newFormat.FormatTypeId
-                    };
-                    release.FormatTypes.Add(newReleaseFormat);
-                }
-
-                release.ReleaseType = _db.ReleaseTypes.Find(Convert.ToInt32(ReleaseTypeId));
-
 
                 try
                 {
@@ -165,6 +152,7 @@ namespace AquavitBEAT.Operations
                     }
                     else if (update)
                     {
+
                         _db.Entry(release).State = EntityState.Modified;
                         _db.SaveChanges();
                         return true;
@@ -321,7 +309,7 @@ namespace AquavitBEAT.Operations
                 }
             }
 
-            // Hvis det er create, dvs man henter fra drop down
+            // Hvis det er create, dvs man henter fra dropdown
             else if (ArtistID != null)
             {
                 foreach (var artistId in ArtistID)

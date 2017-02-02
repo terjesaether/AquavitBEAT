@@ -25,7 +25,8 @@ namespace AquavitBEAT.Controllers
         }
 
         // GET: Songs/Details/5
-        public ActionResult Details(int? id)
+        [Route("Song/{id}")]
+        public ActionResult SongDetails(int? id)
         {
             if (id == null)
             {

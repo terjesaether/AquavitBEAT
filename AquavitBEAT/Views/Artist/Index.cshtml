@@ -4,23 +4,42 @@
     ViewBag.Title = "Index";
 }
 
-<h1>AquavitBEAT artists</h1>
+<h1>AquavitBEAT artists <a href="/Artist/Add"><span class="glyphicon glyphicon-plus"></span></a></h1>
 
-<div class="white-text" id="artist-list">
+<div class="row">
+    <div class="col-md-3"><h4>Artist Name</h4></div>
+    <div class="col-md-2"><h4>Real Name</h4></div>
+    <div class="col-md-2"><h4>Address</h4></div>
+    <div class="col-md-2"><h4>Mail</h4></div>
+    <div class="col-md-1"><h4>Country</h4></div>
+    <div class="col-md-2"><h4>About</h4></div>
+</div>
+
+<div class="" id="artist-list">
 
     @foreach (var artist in Model)
     {
-        <div class="row">
+        <div class="row list-view">
+            <div class="col-md-1"><img src="@artist.ProfileImgUrl" alt="@artist.ArtistName" class="img-responsive" /></div>
+            <div class="col-md-2">
+                <a class="glyphicon glyphicon-pencil" href="/Artist/Edit/@artist.ArtistId"></a>
+               
+                
+                <a href="/Artist/@artist.ArtistId">@artist.ArtistName</a>
+                
+            </div>
 
-            @Html.ActionLink(artist.ArtistName, "Details", "Artist", new { id = artist.ArtistId }, new { @class = "col-md-2" })
 
             <div class="col-md-2">@artist.FirstName&nbsp;@artist.LastName</div>
 
             <div class="col-md-2">@artist.Address</div>
             <div class="col-md-2"><a href="mailto:@artist.Mail">@artist.Mail</a></div>
-            <div class="col-md-2">@artist.About</div>
+
             <div class="col-md-1">@artist.Country</div>
-            <div class="col-md-1">@Html.ActionLink("Edit","Edit", new { id = artist.ArtistId})</div>
+            <div class="col-md-2">@artist.About</div>
+
+
+
         </div>
     }
 

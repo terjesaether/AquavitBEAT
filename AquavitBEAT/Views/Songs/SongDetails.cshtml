@@ -1,15 +1,19 @@
 ﻿@model AquavitBEAT.Models.Song
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = Model.Title;
 }
 
-<h2>Delete</h2>
+<div class="row bottom-air-1">
+    <h2>@Model.Title</h2>
+    <audio controls>
+        <source src="@Model.AudioUrl" />
+    </audio>
+</div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Song</h4>
-    <hr />
+<div class="white-text dark-back">
+    
+    
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Title)
@@ -43,13 +47,7 @@
             @Html.DisplayFor(model => model.Comment)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AudioUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AudioUrl)
-        </dd>
+        
 
     </dl>
 
@@ -58,7 +56,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

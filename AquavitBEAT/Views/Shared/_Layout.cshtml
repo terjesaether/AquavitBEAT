@@ -9,7 +9,7 @@
     @Styles.Render("~/Content/dropzonecss")
     @RenderSection("styles", required:false)
 </head>
-<body>
+<body class="dark-back">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -27,9 +27,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Artists<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-
-                            <li>@Html.ActionLink("Add Artist", "AddArtist", "Artist", new { area = "" }, new { @class = "" })</li>
                             <li>@Html.ActionLink("View Artists", "Index", "Artist", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Add Artist", "AddArtist", "Artist", new { area = "" }, new { @class = "" })</li>
+                            
                             <li role="separator" class="divider"></li>
                             <li><a href="#">Separated link</a></li>
                             <li role="separator" class="divider"></li>
@@ -40,22 +40,20 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Songs<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Add Songs", "AddSong", "Songs", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("View Songs", "Index", "Songs", new { area = "" }, null)</li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
+                            <li>@Html.ActionLink("Add Songs", "AddSong", "Songs", new { area = "" }, null)</li>
+
+                            
                         </ul>
                     </li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Releases<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Add Release", "AddRelease", "Releases", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("View Releases", "Index", "Releases", new { area = "" }, null)</li>
-                            
+                            <li>@Html.ActionLink("Add Release", "AddRelease", "Releases", new { area = "" }, null)</li>
+
+
                         </ul>
                     </li>
 
@@ -67,9 +65,9 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
+        
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - AquavitBEAT</p>
         </footer>
     </div>
 
