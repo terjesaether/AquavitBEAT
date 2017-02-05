@@ -37,8 +37,34 @@ namespace AquavitBEAT.Models
         [Display(Name = "Release type")]
         public virtual ReleaseType ReleaseType { get; set; }
         //public virtual int ReleaseTypeId { get; set; }
-        public string frontImageUrl { get; set; } // Fjernes 
-        public string backImageUrl { get; set; } // Fjernes
+        public string frontImageUrl
+        {
+            get
+            {
+                if (Images.Count > 0 && Images[0] != null)
+                {
+                    return Images[0].ImgUrl;
+                };
+                return "";
+            }
+
+        }
+
+        public string backImageUrl
+        {
+            get
+            {
+                if (Images.Count > 1 && Images[1] != null)
+                {
+                    return Images[1].ImgUrl;
+                };
+                return "";
+            }
+
+        }
+
+
+
 
         [Display(Name = "Format type(s)")]
         public virtual List<ReleaseFormat> FormatTypes { get; set; }

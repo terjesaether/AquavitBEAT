@@ -162,7 +162,48 @@ namespace AquavitBEAT.Models
         public List<SongToArtist> SongToArtists { get; set; }
         public List<ReleaseToArtist> ReleaseToArtists { get; set; }
 
+    }
 
+    public class FrontPageReleaseBox
+    {
+        public FrontPageReleaseBox(Release release)
+        {
+            _release = release;
+        }
+
+        private Release _release { get; set; }
+
+        public string audioPlayerId { get { return "audio_" + _release.ReleaseId; } }
+        public int ReleaseId { get { return _release.ReleaseId; } }
+        public string Title { get { return _release.Title; } }
+        public string ReleaseDate { get { return _release.ReleaseDate.ToShortDateString(); } }
+        public string frontImageUrl { get { return _release.frontImageUrl; } }
+
+        public List<string> FormatTypes
+        { get { return _release.FormatTypes.Select(f => f.Format.FormatTypeName).ToList(); } }
+
+        public string ArtistNames
+        {
+            get
+            {
+                return string.Join(" // ", _release.Artists.Select(a => a.ArtistName));
+
+            }
+
+        }
+        public string FeaturedSong
+        {
+            get { return _release.HasSongs[0].AudioUrl; }
+
+        }
+
+        //public ReleaseToArtist ReleaseToArtist { get; set; }
+        //public SongToRelease SongToRelease { get; set; }
+    }
+
+    public class FrontPageViewModel
+    {
+        public List<FrontPageReleaseBox> FrontPageReleaseBox { get; set; } = new List<Models.FrontPageReleaseBox>();
     }
 
 

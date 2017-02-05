@@ -1,17 +1,94 @@
-﻿@model IEnumerable<AquavitBEAT.Models.Artist>
+﻿@model AquavitBEAT.Models.FrontPageViewModel
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_LayoutPublic.cshtml";
 }
 @section Styles {
-    
+    <link href="~/Scripts/miniaudioplayer/css/jQuery.mb.miniAudioPlayer.min.css" rel="stylesheet" type="text/css" />
 }
 
 
-<div class="row">
-    
+<h1><a id="m1" class="audio" href="/audio/song.mp3">California dreamin</a></h1>
+
+<div class="row frontpage-first-row">
+    @foreach (var release in Model.FrontPageReleaseBox)
+    {
+        <div class="col-md-3 frontpage-box">
+            <div class="frontpage-inner-box">
+                <h1>
+                    @release.ArtistNames
+                </h1>
+                <h2>@release.Title</h2>
+                <img src="@release.frontImageUrl" alt="@release.Title" class="img-responsive" />
+                <div class="front-page-formats">
+                    @foreach (var format in release.FormatTypes)
+                {
+                        <span>@format</span>
+
+                    }
+                </div>
+                <div class="audio" id="@release.ReleaseId">
+
+                    <audio id="@release.audioPlayerId" class="audioPlayer">
+                        <source src="@release.FeaturedSong" />
+                    </audio>
+                    <span id="button_@release.ReleaseId" class="glyphicon glyphicon-play"></span>
+                </div>
+                <p>Release: @release.ReleaseDate</p>
+                <p>Read more >>></p>
+            </div>
+        </div>
+    }
 </div>
 
+
 @section scripts{
-   
+    @*<script src="~/Scripts/miniaudioplayer/jquery.jplayer.min.js" type="text/javascript"></script>*@
+        <script src="~/Scripts/miniaudioplayer/jquery.mb.miniAudioPlayer.min.js" type="text/javascript"></script>
+        @*<script src="~/Scripts/miniaudioplayer/jquery.metadata.js" type="text/javascript"></script>*@
+
+    <script>
+
+        //$('.audio').click(function () {
+
+        //    //$("audio").on("play", function () {
+        //    //    $("audio").not(this).each(function (index, audio) {
+        //    //        audio.pause();
+        //    //    });
+        //    //});
+
+            
+        //    var player = this.querySelector('audio');
+
+        //    if (player.playing) {
+        //        player.pause();
+        //    } 
+        //    else {
+        //        player.play();
+        //    }
+               
+            
+        //});
+
+
+
+        //document.addEventListener('play', function (e) {
+        //    var audios = document.getElementsByTagName('audio');
+        //    for (var i = 0, len = audios.length; i < len; i++) {
+        //        if (audios[i] != e.target) {
+        //            audios[i].pause();
+        //        }
+        //    }
+        //}, true);
+
+
+        $(".audio").mb_miniPlayer(
+    {
+        playAlone: true,
+        skin: 'black'
+    }
+    );
+
+
+    </script>
 }

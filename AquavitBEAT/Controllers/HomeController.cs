@@ -12,11 +12,23 @@ namespace AquavitBEAT.Controllers
         {
             var artists = _db.Artists.ToList();
 
-            ViewBag.ArtistID = new SelectList(_db.Artists, "ArtistID", "ArtistName");
-            ViewBag.Title = "Home Page";
-            ViewBag.Background = "main-page";
+            var vm = new FrontPageViewModel();
+            ViewBag.Bodyclass = "front-page";
 
-            return View(artists);
+
+            var releases = _db.Releases
+                .Take(6)
+                .OrderByDescending(d => d.ReleaseDate)
+                .ToList();
+
+            foreach (var release in releases)
+            {
+                var newBox = new FrontPageReleaseBox(release);
+                vm.FrontPageReleaseBox.Add(newBox);
+            }
+
+
+            return View(vm);
         }
 
         public ActionResult About()
