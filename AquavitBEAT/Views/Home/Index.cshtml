@@ -8,7 +8,6 @@
 }
 
 
-<h1><a id="m1" class="audio" href="/audio/song.mp3">California dreamin</a></h1>
 
 <div class="row frontpage-first-row">
     @foreach (var release in Model.FrontPageReleaseBox)
@@ -27,15 +26,17 @@
 
                     }
                 </div>
-                <div class="audio" id="@release.ReleaseId">
+                <div class="player-wrapper">
 
-                    <audio id="@release.audioPlayerId" class="audioPlayer">
+                    <a id="@release.ReleaseId" class="audio" href="@release.FeaturedSongUrl">@release.FeaturedSongTitle</a>
+
+                    @*<audio id="@release.audioPlayerId" class="audioPlayer">
                         <source src="@release.FeaturedSong" />
-                    </audio>
-                    <span id="button_@release.ReleaseId" class="glyphicon glyphicon-play"></span>
+                    </audio>*@
+                    
                 </div>
-                <p>Release: @release.ReleaseDate</p>
-                <p>Read more >>></p>
+                <p class="frontpage-box-releasedate">Release: @release.ReleaseDate</p>
+                <p>@Html.ActionLink("Read more >>>", "Release", new { id = release.ReleaseId})</p>
             </div>
         </div>
     }
@@ -49,38 +50,7 @@
 
     <script>
 
-        //$('.audio').click(function () {
-
-        //    //$("audio").on("play", function () {
-        //    //    $("audio").not(this).each(function (index, audio) {
-        //    //        audio.pause();
-        //    //    });
-        //    //});
-
-            
-        //    var player = this.querySelector('audio');
-
-        //    if (player.playing) {
-        //        player.pause();
-        //    } 
-        //    else {
-        //        player.play();
-        //    }
-               
-            
-        //});
-
-
-
-        //document.addEventListener('play', function (e) {
-        //    var audios = document.getElementsByTagName('audio');
-        //    for (var i = 0, len = audios.length; i < len; i++) {
-        //        if (audios[i] != e.target) {
-        //            audios[i].pause();
-        //        }
-        //    }
-        //}, true);
-
+        
 
         $(".audio").mb_miniPlayer(
     {

@@ -6005,7 +6005,8 @@ textarea {
 
 .front-page-formats {
   padding-top: 6px;
-  padding-bottom: 6px; }
+  padding-bottom: 6px;
+  margin-bottom: 10px; }
 
 .frontpage-box p, .frontpage-box span {
   padding: 4px;
@@ -6023,8 +6024,8 @@ textarea {
   display: block;
   cursor: pointer; }
 
-.frontpage-box .audio:hover {
-  background: #e5e5e5; }
+.frontpage-box-releasedate {
+  color: #000; }
 
 .nav > li a {
   background: none;

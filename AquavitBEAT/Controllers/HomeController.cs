@@ -8,6 +8,8 @@ namespace AquavitBEAT.Controllers
     {
         private AquavitBeatContext _db = new AquavitBeatContext();
 
+
+
         public ActionResult Index()
         {
             var artists = _db.Artists.ToList();
@@ -41,6 +43,15 @@ namespace AquavitBEAT.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+        public ActionResult Release(int id)
+        {
+            var release = _db.Releases.Find(id);
+
+            ViewBag.Title2 = release.Title;
+            ViewBag.Bodyclass = "front-page";
 
             return View();
         }

@@ -191,9 +191,14 @@ namespace AquavitBEAT.Models
             }
 
         }
-        public string FeaturedSong
+        public string FeaturedSongUrl
         {
             get { return _release.HasSongs[0].AudioUrl; }
+
+        }
+        public string FeaturedSongTitle
+        {
+            get { return _release.HasSongs[0].Title; }
 
         }
 
