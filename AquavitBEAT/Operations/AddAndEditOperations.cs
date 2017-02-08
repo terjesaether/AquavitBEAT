@@ -24,12 +24,11 @@ namespace AquavitBEAT.Operations
                 release.Price = vm.Release.Price;
                 release.ReleaseDate = vm.Release.ReleaseDate;
                 release.Comment = vm.Release.Comment;
-                //song.InReleases = vm.Song.InReleases;
                 release.FormatTypes.Clear();
                 release.HasSongs.Clear();
                 release.Artists.Clear();
-
-                //release.SongToReleases.Clear();
+                release.SongToReleases.Clear();
+                release.BuyOrStreamLinks.Clear();
                 //release.ReleasesToArtists.Clear();
 
                 if (deleteCovers == "on")
@@ -39,12 +38,54 @@ namespace AquavitBEAT.Operations
             }
             else
             {
-                release = new Release();
+                //release = new Release();
+                release = vm.Release;
+            }
+
+            // FORMATER:
+            //foreach (var format in vm.Release.FormatTypes)
+            //{
+            //    var newFormat = new ReleaseFormat
+            //    {
+            //        Format = format,
+            //        FormatTypeId = format.FormatTypeId,
+            //        BuyUrl = httpRequest.Form[format.FormatTypeName]
+            //    };
+            //    release.FormatTypes.Add(newFormat);
+            //}
+            //var counter = 0;
+            //foreach (var format in release.FormatTypes2)
+            //{
+
+            //    for (int i = 0; i < format.BuyUrls.Count; i++)
+            //    {
+            //        //var test = httpRequest.Form[format.FormatName.ToString() + "_0".ToString()];
+
+            //        format.BuyUrls.Add(new BuyUrl
+            //        {
+            //            BuyLink = httpRequest.Form[(format.FormatName.ToString() + "_" + i).ToString()],
+            //            UrlName = "Test"
+            //        });
+            //    }
+
+            //    //counter++;
+            //}
+
+            foreach (var b in vm.ListOfAllBuyOrStreamSites)
+            {
+                var newB = new BuyOrStreamLink
+                {
+                    LinkUrl = httpRequest.Form[b.Name],
+                    FormatName = b.Format,
+                    LinkTitle = httpRequest.Form[b.Name + "_title"],
+                    Release = release
+                };
+                release.BuyOrStreamLinks.Add(newB);
             }
 
 
+
             var storagePath = "/images/releases/" + release.Title.ToString().Replace(" ", "_") + "/";
-            //var storagePath = "/images/releases/";
             List<string> formattedFilenames = new List<string>();
             bool isSavedSuccessfully = true;
             var fileOps = new FileOperations();
@@ -56,6 +97,8 @@ namespace AquavitBEAT.Operations
                     _db.Entry(item).State = EntityState.Deleted;
                 }
             }
+
+
 
             // SANGER
             foreach (var songId in SongId)
@@ -81,7 +124,7 @@ namespace AquavitBEAT.Operations
                 }
             }
 
-            // FORMATER:
+            // FORMATER: (Bare som navn)
             if (FormatTypeId != null)
             {
                 var formats = _db.FormatsTypes.ToList();
@@ -172,6 +215,7 @@ namespace AquavitBEAT.Operations
         {
 
             Artist artist;
+
             if (vm.Artist.ArtistId != 0)
             {
                 artist = _db.Artists.Find(vm.Artist.ArtistId);
@@ -181,12 +225,12 @@ namespace AquavitBEAT.Operations
                 artist.About = vm.Artist.About;
                 artist.Address = vm.Artist.Address;
                 artist.Country = vm.Artist.Country;
-                //artist.SocialMedia = new List<ArtistSocialMedia>();
-
+                artist.SocialMedia.Clear();
             }
             else
             {
-                artist = new Artist();
+                //artist = new Artist();
+                artist = vm.Artist;
             }
 
             var storagePath = "/images/profiles/";
@@ -196,18 +240,30 @@ namespace AquavitBEAT.Operations
 
             //artist.ProfileImgUrl = storagePath + httpRequest.Files[0].FileName;
 
-            var SocialMediaList = _db.SocialMedias.ToList();
 
-            foreach (var item in SocialMediaList)
+            foreach (var item in vm.SocialMediaList)
             {
                 var newSocMedia = new ArtistSocialMedia
                 {
                     Name = item.Name.ToString(),
-                    Address = httpRequest.Form[item.Name].ToString()
+                    Url = httpRequest.Form[item.Name].ToString(),
+                    Artist = artist
                 };
+
                 artist.SocialMedia.Add(newSocMedia);
 
             }
+
+            //for (int i = 0; i < artist.SocialMedia.Count; i++)
+            //{
+            //    string name = artist.SocialMedia[i].Name.ToString();
+            //    artist.SocialMedia[i].Url = httpRequest.Form[name].ToString();
+            //    if (update)
+            //    {
+            //        artist.SocialMedia[i].ArtistSocialMediaId = int.Parse(httpRequest.Form[name + "_id"]);
+            //    }
+
+            //}
 
             // Flere filenames siden savefile-funksjon tar i mot liste
             var formattedFilenames = new List<string>();
@@ -261,7 +317,7 @@ namespace AquavitBEAT.Operations
             }
             else
             {
-                song = new Song();
+                song = vm.Song;
             }
 
             var httpRequest = context.Request;
@@ -365,10 +421,8 @@ namespace AquavitBEAT.Operations
                 }
                 catch (Exception e)
                 {
-
                     return false;
                 }
-
             }
             return false;
         }

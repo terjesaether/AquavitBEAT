@@ -71,9 +71,9 @@
             <dd>
                 @foreach (var some in Model.Artist.SocialMedia)
                 {
-                    if (some.Address != "")
+                    if (some.Url != "")
                     {
-                        <p>@some.Name: @some.Address</p>
+                        <p>@some.Name: @some.Url</p>
                     }
                 }
             </dd>

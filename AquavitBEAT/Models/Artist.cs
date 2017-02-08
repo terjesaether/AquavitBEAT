@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -8,13 +9,14 @@ namespace AquavitBEAT.Models
 {
     public class Artist
     {
+        private AquavitBeatContext _db = new AquavitBeatContext();
         public Artist()
         {
             //SocialMediaInfo = new Dictionary<string, string>();
-            //HasArtworks = new List<Artwork>();
-            //HasReleases = new List<Release>();
-            //HasSongs = new List<Song>();
-            //SocialMediaTitle = new List<string>();
+            HasArtworks = new List<Artwork>();
+            HasReleases = new List<Release>();
+            HasSongs = new List<Song>();
+
             //SocialMediaAddress = new List<string>();
             SocialMedia = new List<ArtistSocialMedia>();
         }
@@ -52,11 +54,27 @@ namespace AquavitBEAT.Models
 
         //[NotMapped]
         //public Dictionary<string, string> SocialMediaInfo { get; set; } = new Dictionary<string, string>();
-        public virtual List<Song> HasSongs { get; set; } = new List<Song>();
-        public virtual List<Release> HasReleases { get; set; } = new List<Release>();
-        public virtual List<Artwork> HasArtworks { get; set; } = new List<Artwork>();
+        public virtual List<Song> HasSongs { get; set; }
+        public virtual List<Release> HasReleases { get; set; }
+        public virtual List<Artwork> HasArtworks { get; set; }
 
         public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; }
         public virtual ICollection<SongToArtist> SongsToArtists { get; set; }
+
+        private List<ArtistSocialMedia> InitSocialMedias()
+        {
+            var list = new List<ArtistSocialMedia>();
+            foreach (var s in _db.SocialMedias.ToList())
+            {
+                var newSos = new ArtistSocialMedia
+                {
+                    Url = "",
+                    Name = s.Name,
+                    Prefix = "http://www." + s.Name + ".com/"
+                };
+                list.Add(newSos);
+            }
+            return list;
+        }
     }
 }

@@ -8,14 +8,17 @@ namespace AquavitBEAT.Models
 {
     public class Release
     {
+        private AquavitBeatContext _db = new AquavitBeatContext();
         public Release()
         {
             FormatTypes = new List<ReleaseFormat>();
+            //FormatTypes2 = FillFormatsList2();
             Artists = new List<Artist>();
             HasSongs = new List<Song>();
             HasArtworks = new List<Artwork>();
             ReleasesToArtists = new List<ReleaseToArtist>();
             Images = new List<UploadedImage>();
+            BuyOrStreamLinks = new List<BuyOrStreamLink>();
         }
 
         [Key]
@@ -36,7 +39,7 @@ namespace AquavitBEAT.Models
 
         [Display(Name = "Release type")]
         public virtual ReleaseType ReleaseType { get; set; }
-        //public virtual int ReleaseTypeId { get; set; }
+
         public string frontImageUrl
         {
             get
@@ -64,10 +67,10 @@ namespace AquavitBEAT.Models
         }
 
 
-
-
         [Display(Name = "Format type(s)")]
         public virtual List<ReleaseFormat> FormatTypes { get; set; }
+        //public virtual List<ReleaseFormat2> FormatTypes2 { get; set; } // Fjernes nok likevel
+
 
         [Display(Name = "Artist(s)")]
         public virtual List<Artist> Artists { get; set; }
@@ -78,9 +81,79 @@ namespace AquavitBEAT.Models
 
         [Display(Name = "Artwork")]
         public virtual List<Artwork> HasArtworks { get; set; }
-
+        public virtual List<BuyOrStreamLink> BuyOrStreamLinks { get; set; }
         public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; } // Fjernes?
         public virtual ICollection<SongToRelease> SongToReleases { get; set; }
+
+        private List<ReleaseFormat> FillFormatsList()
+        {
+            var list = new List<ReleaseFormat>();
+            foreach (var f in _db.FormatsTypes.ToList())
+            {
+                var newReleaseFormat = new ReleaseFormat
+                {
+
+                    Format = f
+                };
+                list.Add(newReleaseFormat);
+
+            }
+            return list;
+        }
+
+        // Fjernes?
+        //private List<ReleaseFormat2> FillFormatsList2()
+        //{
+        //    var list = new List<ReleaseFormat2>();
+        //    var buyUrl = new BuyUrl
+        //    {
+        //        BuyLink = "",
+        //        UrlName = ""
+        //    };
+        //    list.Add(new ReleaseFormat2
+        //    {
+        //        BuyUrls = new List<BuyUrl>
+        //        {
+        //            buyUrl
+        //        },
+        //        FormatName = Formats.Vinyl,
+        //    });
+        //    list.Add(new ReleaseFormat2
+        //    {
+        //        BuyUrls = new List<BuyUrl>
+        //        {
+        //            buyUrl
+        //        },
+        //        FormatName = Formats.Download,
+        //    });
+        //    list.Add(new ReleaseFormat2
+        //    {
+        //        BuyUrls = new List<BuyUrl>
+        //        {
+        //            buyUrl
+        //        },
+        //        FormatName = Formats.Streaming,
+        //    });
+        //    list.Add(new ReleaseFormat2
+        //    {
+        //        BuyUrls = new List<BuyUrl>
+        //        {
+        //            buyUrl
+        //        },
+        //        FormatName = Formats.CD,
+        //    });
+        //    list.Add(new ReleaseFormat2
+        //    {
+        //        BuyUrls = new List<BuyUrl>
+        //        {
+        //            buyUrl
+        //        },
+        //        FormatName = Formats.Cassette,
+        //    });
+        //    return list;
+        //}
+
+
     }
 
 
@@ -133,19 +206,6 @@ namespace AquavitBEAT.Models
         public virtual List<Artist> Artists { get; set; } = new List<Artist>();
     }
 
-    public class SocialMedia
-    {
-        public int SocialMediaId { get; set; }
 
-        [Display(Name = "Social media name")]
-        public string Name { get; set; }
-        public string Prefix { get; set; }
-    }
-    public class ArtistSocialMedia
-    {
-        public int ArtistSocialMediaId { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-    }
 
 }

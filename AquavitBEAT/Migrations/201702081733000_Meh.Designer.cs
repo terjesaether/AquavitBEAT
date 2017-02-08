@@ -7,13 +7,13 @@ namespace AquavitBEAT.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddedReleaseDateonRelease : IMigrationMetadata
+    public sealed partial class Meh : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedReleaseDateonRelease));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Meh));
         
         string IMigrationMetadata.Id
         {
-            get { return "201701222042248_AddedReleaseDateonRelease"; }
+            get { return "201702081733000_Meh"; }
         }
         
         string IMigrationMetadata.Source

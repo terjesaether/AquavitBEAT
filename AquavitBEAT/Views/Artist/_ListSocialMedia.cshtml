@@ -7,7 +7,6 @@
 
 @foreach (var some in Model.SocialMediaList)
             {
-
                 if (counter % 2 == 0)
                 {
         @htmlString1
@@ -17,6 +16,7 @@
     <div class="col-md-4">
 
         @Html.TextBox(some.Name, null, new { @class = "form-control single-line", placeholder = some.Name, value = some.Prefix })
+        
         @Html.ValidationMessageFor(model => some.Name, "", new { @class = "text-danger" })
     </div>
     if (counter % 2 == 0)

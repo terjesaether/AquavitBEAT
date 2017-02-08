@@ -21,22 +21,29 @@ namespace AquavitBEAT.Models
         public ReleaseViewModel()
         {
 
-            //ItemsListOfAllArtists = getLists.GetListOfArtists();
-            //ItemsListOfAllFormats = getLists.GetListOfAllFormats();
+            ItemsListOfAllArtists = getLists.GetListOfAllArtists();
+            ItemsListOfAllFormats = getLists.GetListOfAllFormats();
+            ItemsListOfAllSongs = getLists.GetListOfAllSongs();
+            ItemsListOfAllReleaseTypes = getLists.GetListOfAllReleaseTypes();
             ListOfAllArtists = _db.Artists.ToList();
+            ListOfAllBuyOrStreamSites = _db.BuyOrStreamSites.ToList();
+            //AllCurrentFormats = _db.FormatsTypes.ToList();
             //ArtistCheckBoxes = new List<CheckBoxViewModel>(); // Slett?
             SongCheckBoxes = new List<CheckBoxViewModel>();
 
             //ListOfHasSongs = getLists.GetListOfHasSongs(Release);
             //ListOfHasArtwork = getLists.GetListOfHasArtwork(Release);
+            Release = new Release();
         }
         public Release Release { get; set; }
 
-        public List<SelectListItem> ItemsListOfAllReleaseTypes { get { return getLists.GetListOfAllReleaseTypes(); } }
-        public List<SelectListItem> ItemsListOfAllSongs { get { return getLists.GetListOfAllSongs(); } }
-        public List<SelectListItem> ItemsListOfAllArtists { get { return getLists.GetListOfAllArtists(); } }
-        public List<SelectListItem> ItemsListOfAllFormats { get { return getLists.GetListOfAllFormats(); } }
+        public List<SelectListItem> ItemsListOfAllReleaseTypes { get; private set; }
+        public List<SelectListItem> ItemsListOfAllSongs { get; private set; }
+        public List<SelectListItem> ItemsListOfAllArtists { get; private set; }
+        public List<SelectListItem> ItemsListOfAllFormats { get; private set; }
         public List<Artist> ListOfAllArtists { get; set; }
+        public List<BuyOrStreamSite> ListOfAllBuyOrStreamSites { get; set; }
+        //public List<FormatType> AllCurrentFormats { get; set; }
 
         //public List<CheckBoxViewModel> ArtistCheckBoxes { get; set; } // Slett?
         public List<CheckBoxViewModel> SongCheckBoxes { get; set; }
@@ -52,7 +59,7 @@ namespace AquavitBEAT.Models
                 bool selected = false;
                 foreach (var item in allFormats)
                 {
-                    if (Release.FormatTypes.Select(f => f.FormatTypeId).Contains(item.FormatTypeId))
+                    if (Release.FormatTypes.Select(f => f.Format.FormatTypeName).Contains(item.FormatTypeName))
                     {
                         selected = true;
                     }
@@ -111,6 +118,23 @@ namespace AquavitBEAT.Models
             }
             return null;
         }
+        //private List<BuyOrStreamSite> GetAllBuyOrStreamSites()
+        //{
+        //    var b = new BuyOrStreamAndReleaseLinks();
+        //    foreach (var item in _db.BuyOrStreamSites.ToList())
+        //    {
+        //        b.BuyOrStreamSite = item,
+        //        b.Title = 
+        //    }
+        //    return _db.BuyOrStreamSites.ToList();
+        //}
+    }
+
+    public struct BuyOrStreamAndReleaseLinks
+    {
+        public BuyOrStreamSite BuyOrStreamSite { get; set; }
+        public string Title { get; set; }
+        public string Url { get; set; }
     }
 
     public class AddReleaseViewModel
@@ -147,18 +171,21 @@ namespace AquavitBEAT.Models
     public class ArtistViewModel
     {
         private AquavitBeatContext _db = new AquavitBeatContext();
-        public ArtistViewModel()
+        public ArtistViewModel() // BARE NY Artist!
         {
-            SocialMediaList = new List<SocialMedia>();
+            SocialMediaList = _db.SocialMedias.ToList();
+            //SocialMediaList = new List<SocialMedia>();
             SongToArtists = new List<SongToArtist>();
             ReleaseToArtists = new List<ReleaseToArtist>();
+            Artist = new Artist();
         }
-        public ArtistViewModel(List<SocialMedia> socialMediaList)
+        public ArtistViewModel(Artist artist) // Eksisterende artist!
         {
-            SocialMediaList = socialMediaList;
+            Artist = artist;
+            SocialMediaList = _db.SocialMedias.ToList();
         }
         public Artist Artist { get; set; }
-        public List<SocialMedia> SocialMediaList { get; set; }
+        public List<SocialMedia> SocialMediaList { get; private set; }
         public List<SongToArtist> SongToArtists { get; set; }
         public List<ReleaseToArtist> ReleaseToArtists { get; set; }
 
@@ -170,26 +197,35 @@ namespace AquavitBEAT.Models
         {
             _release = release;
         }
-
         private Release _release { get; set; }
-
         public string audioPlayerId { get { return "audio_" + _release.ReleaseId; } }
         public int ReleaseId { get { return _release.ReleaseId; } }
         public string Title { get { return _release.Title; } }
         public string ReleaseDate { get { return _release.ReleaseDate.ToShortDateString(); } }
         public string frontImageUrl { get { return _release.frontImageUrl; } }
 
-        public List<string> FormatTypes
-        { get { return _release.FormatTypes.Select(f => f.Format.FormatTypeName).ToList(); } }
+        public IEnumerable<string> FormatTypes
+        {
+            get
+            {
+                var formats = new List<string>();
+                foreach (var r in _release.FormatTypes)
+                {
+
+
+                    formats.Add(r.Format.FormatTypeName);
+
+                }
+                return formats;
+            }
+        }
 
         public string ArtistNames
         {
             get
             {
                 return string.Join(" // ", _release.Artists.Select(a => a.ArtistName));
-
             }
-
         }
         public string FeaturedSongUrl
         {
@@ -208,7 +244,44 @@ namespace AquavitBEAT.Models
 
     public class FrontPageViewModel
     {
-        public List<FrontPageReleaseBox> FrontPageReleaseBox { get; set; } = new List<Models.FrontPageReleaseBox>();
+        public List<FrontPageReleaseBox> FrontPageReleaseBox { get; set; } = new List<FrontPageReleaseBox>();
+    }
+
+    public class ReleaseDetailsViewModel
+    {
+        public ReleaseDetailsViewModel(Release release)
+        {
+            _release = release;
+        }
+        private Release _release { get; set; }
+        public string ArtistNames
+        {
+            get
+            {
+                return string.Join(" // ", _release.Artists.Select(a => a.ArtistName));
+
+            }
+
+        }
+        public string Title { get { return _release.Title; } }
+        public string About { get { return _release.Comment; } }
+        public IEnumerable<Song> Songs
+        {
+            get
+            {
+                return _release.HasSongs.ToList();
+                //return _release.SongToReleases.Select(s => s.Song).
+            }
+
+        }
+        public List<string> FormatTypes
+        {
+            get
+            {
+                return _release.FormatTypes.Select(f => f.Format.FormatTypeName).ToList();
+            }
+        }
+
     }
 
 

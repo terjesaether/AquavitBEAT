@@ -49,10 +49,21 @@ namespace AquavitBEAT.Controllers
             ViewBag.SongId = new SelectList(_db.Songs, "SongId", "Title");
 
             var vm = new ReleaseViewModel();
-            vm.Release = new Release();
+            //vm.Release = new Release();
 
             vm.Release.ReleaseDate = DateTime.Now;
             vm.Release.Price = 10;
+
+            //foreach (var f in vm.AllCurrentFormats)
+            //{
+            //    var newReleaseFormat = new ReleaseFormat
+            //    {
+            //        Format = f,
+            //        FormatTypeId = f.FormatTypeId,
+            //        BuyUrl = ""
+            //    };
+            //    vm.Release.FormatTypes.Add(newReleaseFormat);
+            //}
 
             return View(vm);
         }
@@ -70,6 +81,7 @@ namespace AquavitBEAT.Controllers
             var formats = Request.Form["Release.FormatTypes"].Split(',');
             ReleaseTypeId = Request.Form["Release.ReleaseType"];
             var songs = Request.Form["Release.SongToReleases"].Split(',');
+
 
             FormatTypeId = Array.ConvertAll(formats, int.Parse);
             SongId = Array.ConvertAll(songs, int.Parse);
@@ -122,16 +134,16 @@ namespace AquavitBEAT.Controllers
 
 
             var songsDropDown = new List<SelectListItem>();
-            var songsCheckBoxes = new List<CheckBoxViewModel>();
-            foreach (var item in allSongs)
-            {
-                songsCheckBoxes.Add(new CheckBoxViewModel
-                {
-                    Name = item.Title,
-                    Id = item.SongId,
-                    Checked = item.Checked
-                });
-            }
+            //var songsCheckBoxes = new List<CheckBoxViewModel>();
+            //foreach (var item in allSongs)
+            //{
+            //    songsCheckBoxes.Add(new CheckBoxViewModel
+            //    {
+            //        Name = item.Title,
+            //        Id = item.SongId,
+            //        Checked = item.Checked
+            //    });
+            //}
 
             // Lager dropdown med valgt verdi:
             foreach (var item in allSongs)
@@ -151,7 +163,7 @@ namespace AquavitBEAT.Controllers
             ViewBag.FormatTypeId = vm.GetReleasesAndSelectedFormats();
 
             //vm.ArtistCheckBoxes = CheckBoxes;
-            vm.SongCheckBoxes = songsCheckBoxes;
+            //vm.SongCheckBoxes = songsCheckBoxes;
 
             return View(vm);
         }

@@ -34,16 +34,16 @@ namespace AquavitBEAT.Migrations
                 c => new
                     {
                         ArtworkId = c.Int(nullable: false, identity: true),
-                        Title = c.String(nullable: false),
+                        Title = c.String(),
                         Comment = c.String(),
                         Image_ImageId = c.Int(),
-                        TypeOfArtwork_ReleaseTypeId = c.Int(nullable: false),
+                        TypeOfArtwork_ReleaseTypeId = c.Int(),
                         Artist_ArtistId = c.Int(),
                         Release_ReleaseId = c.Int(),
                     })
                 .PrimaryKey(t => t.ArtworkId)
                 .ForeignKey("dbo.Images", t => t.Image_ImageId)
-                .ForeignKey("dbo.ReleaseTypes", t => t.TypeOfArtwork_ReleaseTypeId, cascadeDelete: true)
+                .ForeignKey("dbo.ReleaseTypes", t => t.TypeOfArtwork_ReleaseTypeId)
                 .ForeignKey("dbo.Artists", t => t.Artist_ArtistId)
                 .ForeignKey("dbo.Releases", t => t.Release_ReleaseId)
                 .Index(t => t.Image_ImageId)
@@ -79,12 +79,28 @@ namespace AquavitBEAT.Migrations
                     {
                         ReleaseId = c.Int(nullable: false, identity: true),
                         Title = c.String(nullable: false),
+                        Comment = c.String(),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        ReleaseType_ReleaseTypeId = c.Int(nullable: false),
+                        ReleaseDate = c.DateTime(nullable: false),
+                        ReleaseType_ReleaseTypeId = c.Int(),
                     })
                 .PrimaryKey(t => t.ReleaseId)
-                .ForeignKey("dbo.ReleaseTypes", t => t.ReleaseType_ReleaseTypeId, cascadeDelete: true)
+                .ForeignKey("dbo.ReleaseTypes", t => t.ReleaseType_ReleaseTypeId)
                 .Index(t => t.ReleaseType_ReleaseTypeId);
+            
+            CreateTable(
+                "dbo.BuyOrStreamLinks",
+                c => new
+                    {
+                        BuyOrStreamLinkId = c.Int(nullable: false, identity: true),
+                        LinkUrl = c.String(),
+                        LinkTitle = c.String(),
+                        FormatName = c.String(),
+                        Release_ReleaseId = c.Int(),
+                    })
+                .PrimaryKey(t => t.BuyOrStreamLinkId)
+                .ForeignKey("dbo.Releases", t => t.Release_ReleaseId)
+                .Index(t => t.Release_ReleaseId);
             
             CreateTable(
                 "dbo.ReleaseFormats",
@@ -118,7 +134,7 @@ namespace AquavitBEAT.Migrations
                         RemixName = c.String(nullable: false),
                         ReleaseDate = c.DateTime(nullable: false),
                         Comment = c.String(),
-                        AudioUrl = c.String(nullable: false),
+                        AudioUrl = c.String(),
                         Artist_ArtistId = c.Int(),
                     })
                 .PrimaryKey(t => t.SongId)
@@ -126,17 +142,93 @@ namespace AquavitBEAT.Migrations
                 .Index(t => t.Artist_ArtistId);
             
             CreateTable(
+                "dbo.SongToArtists",
+                c => new
+                    {
+                        SongToArtistId = c.Int(nullable: false, identity: true),
+                        SongId = c.Int(nullable: false),
+                        ArtistId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.SongToArtistId)
+                .ForeignKey("dbo.Artists", t => t.ArtistId, cascadeDelete: true)
+                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: true)
+                .Index(t => t.SongId)
+                .Index(t => t.ArtistId);
+            
+            CreateTable(
+                "dbo.UploadedImages",
+                c => new
+                    {
+                        UploadedImageId = c.Int(nullable: false, identity: true),
+                        ImgUrl = c.String(),
+                        Title = c.String(),
+                        Release_ReleaseId = c.Int(),
+                    })
+                .PrimaryKey(t => t.UploadedImageId)
+                .ForeignKey("dbo.Releases", t => t.Release_ReleaseId)
+                .Index(t => t.Release_ReleaseId);
+            
+            CreateTable(
+                "dbo.ReleaseToArtists",
+                c => new
+                    {
+                        ReleaseToArtistId = c.Int(nullable: false, identity: true),
+                        ArtistId = c.Int(nullable: false),
+                        ReleaseId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ReleaseToArtistId)
+                .ForeignKey("dbo.Artists", t => t.ArtistId, cascadeDelete: true)
+                .ForeignKey("dbo.Releases", t => t.ReleaseId, cascadeDelete: true)
+                .Index(t => t.ArtistId)
+                .Index(t => t.ReleaseId);
+            
+            CreateTable(
+                "dbo.SongToReleases",
+                c => new
+                    {
+                        SongToReleaseId = c.Int(nullable: false, identity: true),
+                        SongId = c.Int(nullable: false),
+                        ReleaseId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.SongToReleaseId)
+                .ForeignKey("dbo.Releases", t => t.ReleaseId, cascadeDelete: true)
+                .ForeignKey("dbo.Songs", t => t.SongId, cascadeDelete: true)
+                .Index(t => t.SongId)
+                .Index(t => t.ReleaseId);
+            
+            CreateTable(
                 "dbo.ArtistSocialMedias",
                 c => new
                     {
                         ArtistSocialMediaId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        Address = c.String(),
+                        Url = c.String(),
+                        Prefix = c.String(),
                         Artist_ArtistId = c.Int(),
                     })
                 .PrimaryKey(t => t.ArtistSocialMediaId)
                 .ForeignKey("dbo.Artists", t => t.Artist_ArtistId)
                 .Index(t => t.Artist_ArtistId);
+            
+            CreateTable(
+                "dbo.BuyOrStreamSites",
+                c => new
+                    {
+                        BuyOrStreamSiteId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        Format = c.String(),
+                    })
+                .PrimaryKey(t => t.BuyOrStreamSiteId);
+            
+            CreateTable(
+                "dbo.BuyUrls",
+                c => new
+                    {
+                        BuyUrlId = c.Int(nullable: false, identity: true),
+                        BuyLink = c.String(),
+                        UrlName = c.String(),
+                    })
+                .PrimaryKey(t => t.BuyUrlId);
             
             CreateTable(
                 "dbo.SocialMedias",
@@ -180,7 +272,14 @@ namespace AquavitBEAT.Migrations
         {
             DropForeignKey("dbo.ArtistSocialMedias", "Artist_ArtistId", "dbo.Artists");
             DropForeignKey("dbo.Songs", "Artist_ArtistId", "dbo.Artists");
+            DropForeignKey("dbo.SongToReleases", "SongId", "dbo.Songs");
+            DropForeignKey("dbo.SongToReleases", "ReleaseId", "dbo.Releases");
             DropForeignKey("dbo.Releases", "ReleaseType_ReleaseTypeId", "dbo.ReleaseTypes");
+            DropForeignKey("dbo.ReleaseToArtists", "ReleaseId", "dbo.Releases");
+            DropForeignKey("dbo.ReleaseToArtists", "ArtistId", "dbo.Artists");
+            DropForeignKey("dbo.UploadedImages", "Release_ReleaseId", "dbo.Releases");
+            DropForeignKey("dbo.SongToArtists", "SongId", "dbo.Songs");
+            DropForeignKey("dbo.SongToArtists", "ArtistId", "dbo.Artists");
             DropForeignKey("dbo.Artists", "Song_SongId1", "dbo.Songs");
             DropForeignKey("dbo.SongReleases", "Release_ReleaseId", "dbo.Releases");
             DropForeignKey("dbo.SongReleases", "Song_SongId", "dbo.Songs");
@@ -188,6 +287,7 @@ namespace AquavitBEAT.Migrations
             DropForeignKey("dbo.Artworks", "Release_ReleaseId", "dbo.Releases");
             DropForeignKey("dbo.ReleaseFormats", "Release_ReleaseId", "dbo.Releases");
             DropForeignKey("dbo.ReleaseFormats", "FormatTypeId", "dbo.FormatTypes");
+            DropForeignKey("dbo.BuyOrStreamLinks", "Release_ReleaseId", "dbo.Releases");
             DropForeignKey("dbo.ReleaseArtists", "Artist_ArtistId", "dbo.Artists");
             DropForeignKey("dbo.ReleaseArtists", "Release_ReleaseId", "dbo.Releases");
             DropForeignKey("dbo.Artworks", "Artist_ArtistId", "dbo.Artists");
@@ -199,9 +299,17 @@ namespace AquavitBEAT.Migrations
             DropIndex("dbo.ReleaseArtists", new[] { "Artist_ArtistId" });
             DropIndex("dbo.ReleaseArtists", new[] { "Release_ReleaseId" });
             DropIndex("dbo.ArtistSocialMedias", new[] { "Artist_ArtistId" });
+            DropIndex("dbo.SongToReleases", new[] { "ReleaseId" });
+            DropIndex("dbo.SongToReleases", new[] { "SongId" });
+            DropIndex("dbo.ReleaseToArtists", new[] { "ReleaseId" });
+            DropIndex("dbo.ReleaseToArtists", new[] { "ArtistId" });
+            DropIndex("dbo.UploadedImages", new[] { "Release_ReleaseId" });
+            DropIndex("dbo.SongToArtists", new[] { "ArtistId" });
+            DropIndex("dbo.SongToArtists", new[] { "SongId" });
             DropIndex("dbo.Songs", new[] { "Artist_ArtistId" });
             DropIndex("dbo.ReleaseFormats", new[] { "Release_ReleaseId" });
             DropIndex("dbo.ReleaseFormats", new[] { "FormatTypeId" });
+            DropIndex("dbo.BuyOrStreamLinks", new[] { "Release_ReleaseId" });
             DropIndex("dbo.Releases", new[] { "ReleaseType_ReleaseTypeId" });
             DropIndex("dbo.Images", new[] { "Author_ArtistId" });
             DropIndex("dbo.Artworks", new[] { "Release_ReleaseId" });
@@ -213,10 +321,17 @@ namespace AquavitBEAT.Migrations
             DropTable("dbo.SongReleases");
             DropTable("dbo.ReleaseArtists");
             DropTable("dbo.SocialMedias");
+            DropTable("dbo.BuyUrls");
+            DropTable("dbo.BuyOrStreamSites");
             DropTable("dbo.ArtistSocialMedias");
+            DropTable("dbo.SongToReleases");
+            DropTable("dbo.ReleaseToArtists");
+            DropTable("dbo.UploadedImages");
+            DropTable("dbo.SongToArtists");
             DropTable("dbo.Songs");
             DropTable("dbo.FormatTypes");
             DropTable("dbo.ReleaseFormats");
+            DropTable("dbo.BuyOrStreamLinks");
             DropTable("dbo.Releases");
             DropTable("dbo.ReleaseTypes");
             DropTable("dbo.Images");

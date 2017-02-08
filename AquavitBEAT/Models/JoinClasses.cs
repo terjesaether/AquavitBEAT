@@ -28,7 +28,6 @@ namespace AquavitBEAT.Models
         public int ReleaseToArtistId { get; set; }
         public int ArtistId { get; set; }
         public int ReleaseId { get; set; }
-
         public virtual Release Release { get; set; }
         public virtual Artist Artist { get; set; }
     }

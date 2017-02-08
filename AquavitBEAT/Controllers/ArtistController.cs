@@ -22,9 +22,9 @@ namespace AquavitBEAT.Controllers
         [Route("Artist/Add")]
         public ActionResult AddArtist()
         {
-            ArtistViewModel vm = new ArtistViewModel(_db.SocialMedias.ToList());
+            ArtistViewModel vm = new ArtistViewModel();
 
-            ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
+            //ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
 
             return View(vm);
         }
@@ -52,10 +52,9 @@ namespace AquavitBEAT.Controllers
         public ActionResult EditArtist(int id)
         {
             var artist = _db.Artists.Find(id);
-            ArtistViewModel vm = new ArtistViewModel(_db.SocialMedias.ToList());
-            vm.Artist = artist;
+            ArtistViewModel vm = new ArtistViewModel(artist);
 
-            ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
+            //ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
 
             return View(vm);
         }
@@ -78,7 +77,7 @@ namespace AquavitBEAT.Controllers
 
             ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
 
-            vm.SocialMediaList = _db.SocialMedias.ToList();
+            //vm.SocialMediaList = _db.SocialMedias.ToList();
 
             return View(vm);
         }
@@ -91,7 +90,7 @@ namespace AquavitBEAT.Controllers
         [Route("Artist/{id}")]
         public ActionResult ArtistDetails(int? id)
         {
-            var vm = new ArtistViewModel(_db.SocialMedias.ToList());
+            var vm = new ArtistViewModel();
             var artist = _db.Artists.Find(id);
             vm.Artist = artist;
             vm.SongToArtists = _db.SongToArtists.Where(s => s.ArtistId == id.Value).ToList();

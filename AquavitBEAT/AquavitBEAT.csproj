@@ -190,65 +190,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701200049456_Init.cs" />
-    <Compile Include="Migrations\201701200049456_Init.Designer.cs">
-      <DependentUpon>201701200049456_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201702081640354_Init.cs" />
+    <Compile Include="Migrations\201702081640354_Init.Designer.cs">
+      <DependentUpon>201702081640354_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701221946505_AddedRequierdArtistToSong.cs" />
-    <Compile Include="Migrations\201701221946505_AddedRequierdArtistToSong.Designer.cs">
-      <DependentUpon>201701221946505_AddedRequierdArtistToSong.cs</DependentUpon>
+    <Compile Include="Migrations\201702081733000_Meh.cs" />
+    <Compile Include="Migrations\201702081733000_Meh.Designer.cs">
+      <DependentUpon>201702081733000_Meh.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701222042248_AddedReleaseDateonRelease.cs" />
-    <Compile Include="Migrations\201701222042248_AddedReleaseDateonRelease.Designer.cs">
-      <DependentUpon>201701222042248_AddedReleaseDateonRelease.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701222203497_RemovedRequiredFromRelease.cs" />
-    <Compile Include="Migrations\201701222203497_RemovedRequiredFromRelease.Designer.cs">
-      <DependentUpon>201701222203497_RemovedRequiredFromRelease.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701222247405_AddedFrontAndBackImageToRelease.cs" />
-    <Compile Include="Migrations\201701222247405_AddedFrontAndBackImageToRelease.Designer.cs">
-      <DependentUpon>201701222247405_AddedFrontAndBackImageToRelease.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701251638513_AddedReleaseToArtist-class.cs" />
-    <Compile Include="Migrations\201701251638513_AddedReleaseToArtist-class.Designer.cs">
-      <DependentUpon>201701251638513_AddedReleaseToArtist-class.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701251737114_AddedSongToArtist-model.cs" />
-    <Compile Include="Migrations\201701251737114_AddedSongToArtist-model.Designer.cs">
-      <DependentUpon>201701251737114_AddedSongToArtist-model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701261811091_AddedFileBaseToSong.cs" />
-    <Compile Include="Migrations\201701261811091_AddedFileBaseToSong.Designer.cs">
-      <DependentUpon>201701261811091_AddedFileBaseToSong.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701261816016_RemovedFileBaseToSong.cs" />
-    <Compile Include="Migrations\201701261816016_RemovedFileBaseToSong.Designer.cs">
-      <DependentUpon>201701261816016_RemovedFileBaseToSong.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701262051538_ChangedToKey.cs" />
-    <Compile Include="Migrations\201701262051538_ChangedToKey.Designer.cs">
-      <DependentUpon>201701262051538_ChangedToKey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701262111428_AddedUploadeImage.cs" />
-    <Compile Include="Migrations\201701262111428_AddedUploadeImage.Designer.cs">
-      <DependentUpon>201701262111428_AddedUploadeImage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701262113407_AddedUploadeImagesToRelease.cs" />
-    <Compile Include="Migrations\201701262113407_AddedUploadeImagesToRelease.Designer.cs">
-      <DependentUpon>201701262113407_AddedUploadeImagesToRelease.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701271428398_AddedSongToRelease.cs" />
-    <Compile Include="Migrations\201701271428398_AddedSongToRelease.Designer.cs">
-      <DependentUpon>201701271428398_AddedSongToRelease.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701271449093_AddedCommentToRelease.cs" />
-    <Compile Include="Migrations\201701271449093_AddedCommentToRelease.Designer.cs">
-      <DependentUpon>201701271449093_AddedCommentToRelease.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702031753372_FixedStuff.cs" />
-    <Compile Include="Migrations\201702031753372_FixedStuff.Designer.cs">
-      <DependentUpon>201702031753372_FixedStuff.cs</DependentUpon>
+    <Compile Include="Migrations\201702081740061_Meh1.cs" />
+    <Compile Include="Migrations\201702081740061_Meh1.Designer.cs">
+      <DependentUpon>201702081740061_Meh1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AquavitBEATDbInit.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -257,6 +209,7 @@
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\ArtistRepository.cs" />
     <Compile Include="Models\JoinClasses.cs" />
+    <Compile Include="Models\SocialMedia.cs" />
     <Compile Include="Operations\FileOperations.cs" />
     <Compile Include="Models\Format.cs" />
     <Compile Include="Models\IArtistRepository.cs" />
@@ -271,6 +224,18 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="audio\2017\01\04\Terje_Saether_End_And_Below_Jolly_Roger_Remix.mp3" />
+    <Content Include="audio\2017\01\17\End_And_Below_Gnureper_Remix.mp3" />
+    <Content Include="audio\2017\01\17\siri_2.mp3" />
+    <Content Include="audio\2017\01\25\siri_2.mp3" />
+    <Content Include="audio\2017\01\26\Robert_Solheim_Terje_Saether_Robert_Solheim_Terje_Saether_Julieta_Cickita_Original_Mix.mp3" />
+    <Content Include="audio\2017\01\26\siri_2.mp3" />
+    <Content Include="audio\2017\02\24\Sigbjørn_Solheim_-_eldre_mann.mp3" />
+    <Content Include="audio\2017\03\10\Robert_Solheim_Baby_Original_Mix.mp3" />
+    <Content Include="audio\2017\03\10\Robert_Solheim_Ny_sang_Original_Mix.mp3" />
+    <Content Include="audio\2017\03\10\Robert_Solheim_Terje_Saether_Rick_O%27Disko_End_And_Below_Swayzak_Robert_Solheim_Terje_Saether_Ny_sang_nummer_777_Original_Mix.mp3" />
+    <Content Include="audio\2017\03\18\Robert_Solheim_Rick_O%27Disko_End_And_Below_Allstar_Original_Mix.mp3" />
+    <Content Include="audio\song.mp3" />
     <Content Include="Content\bootstrap-sass\assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Content\bootstrap-sass\assets\javascripts\bootstrap-sprockets.js" />
     <Content Include="Content\bootstrap-sass\assets\javascripts\bootstrap.js" />
@@ -526,6 +491,15 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\miniaudioplayer\css\font\DroidSansMono\demo.html" />
+    <Content Include="Scripts\miniaudioplayer\css\font\DroidSansMono\DroidSansMono.svg" />
+    <Content Include="Scripts\miniaudioplayer\css\font\DroidSansMono\Google Android License.txt" />
+    <Content Include="Scripts\miniaudioplayer\css\font\DroidSansMono\stylesheet.css" />
+    <Content Include="Scripts\miniaudioplayer\css\font\mbAudioFont\mbaudio_font.svg" />
+    <Content Include="Scripts\miniaudioplayer\css\font\mbAudioFont\stylesheet.css" />
+    <Content Include="Scripts\miniaudioplayer\css\jquery.mb.miniAudioPlayer.css" />
+    <Content Include="Scripts\miniaudioplayer\css\jQuery.mb.miniAudioPlayer.min.css" />
+    <Content Include="Scripts\miniaudioplayer\css\spectrum.min.css" />
     <Content Include="Scripts\miniaudioplayer\index.html" />
     <Content Include="Scripts\miniaudioplayer\jquery.jplayer.js" />
     <Content Include="Scripts\miniaudioplayer\jquery.jplayer.min.js" />
@@ -533,7 +507,9 @@
     <Content Include="Scripts\miniaudioplayer\jquery.mb.miniAudioPlayer.js" />
     <Content Include="Scripts\miniaudioplayer\jquery.mb.miniAudioPlayer.min.js" />
     <Content Include="Scripts\miniaudioplayer\jquery.metadata.js" />
+    <Content Include="Scripts\miniaudioplayer\php\map_download.php" />
     <Content Include="Scripts\miniaudioplayer\skinMaker.html" />
+    <Content Include="Scripts\miniaudioplayer\swf\jquery.jplayer.swf" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -592,12 +568,17 @@
     <Content Include="Views\Shared\_LayoutPublic.cshtml" />
     <Content Include="Views\Releases\ReleaseDetailsPublic.cshtml" />
     <Content Include="Views\Home\Release.cshtml" />
+    <Content Include="Scripts\miniaudioplayer\css\font\DroidSansMono\DroidSansMono.eot" />
+    <Content Include="Scripts\miniaudioplayer\css\font\DroidSansMono\DroidSansMono.ttf" />
+    <Content Include="Scripts\miniaudioplayer\css\font\DroidSansMono\DroidSansMono.woff" />
+    <Content Include="Scripts\miniaudioplayer\css\font\mbAudioFont\master\mbaudio_font-regular.otf" />
+    <Content Include="Scripts\miniaudioplayer\css\font\mbAudioFont\master\mbaudio_font.glyphs" />
+    <Content Include="Scripts\miniaudioplayer\css\font\mbAudioFont\mbaudio_font.eot" />
+    <Content Include="Scripts\miniaudioplayer\css\font\mbAudioFont\mbaudio_font.ttf" />
+    <Content Include="Scripts\miniaudioplayer\css\font\mbAudioFont\mbaudio_font.woff" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\miniaudioplayer\css\" />
-    <Folder Include="Scripts\miniaudioplayer\php\" />
-    <Folder Include="Scripts\miniaudioplayer\swf\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\bootstrap\glyphicons-halflings-regular.woff" />
@@ -607,50 +588,14 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701200049456_Init.resx">
-      <DependentUpon>201701200049456_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702081640354_Init.resx">
+      <DependentUpon>201702081640354_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701221946505_AddedRequierdArtistToSong.resx">
-      <DependentUpon>201701221946505_AddedRequierdArtistToSong.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702081733000_Meh.resx">
+      <DependentUpon>201702081733000_Meh.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701222042248_AddedReleaseDateonRelease.resx">
-      <DependentUpon>201701222042248_AddedReleaseDateonRelease.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701222203497_RemovedRequiredFromRelease.resx">
-      <DependentUpon>201701222203497_RemovedRequiredFromRelease.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701222247405_AddedFrontAndBackImageToRelease.resx">
-      <DependentUpon>201701222247405_AddedFrontAndBackImageToRelease.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701251638513_AddedReleaseToArtist-class.resx">
-      <DependentUpon>201701251638513_AddedReleaseToArtist-class.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701251737114_AddedSongToArtist-model.resx">
-      <DependentUpon>201701251737114_AddedSongToArtist-model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701261811091_AddedFileBaseToSong.resx">
-      <DependentUpon>201701261811091_AddedFileBaseToSong.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701261816016_RemovedFileBaseToSong.resx">
-      <DependentUpon>201701261816016_RemovedFileBaseToSong.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701262051538_ChangedToKey.resx">
-      <DependentUpon>201701262051538_ChangedToKey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701262111428_AddedUploadeImage.resx">
-      <DependentUpon>201701262111428_AddedUploadeImage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701262113407_AddedUploadeImagesToRelease.resx">
-      <DependentUpon>201701262113407_AddedUploadeImagesToRelease.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701271428398_AddedSongToRelease.resx">
-      <DependentUpon>201701271428398_AddedSongToRelease.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701271449093_AddedCommentToRelease.resx">
-      <DependentUpon>201701271449093_AddedCommentToRelease.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702031753372_FixedStuff.resx">
-      <DependentUpon>201702031753372_FixedStuff.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702081740061_Meh1.resx">
+      <DependentUpon>201702081740061_Meh1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

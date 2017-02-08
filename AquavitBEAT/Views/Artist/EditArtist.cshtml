@@ -87,7 +87,7 @@
             var htmlString1 = new HtmlString("<div class='form-group row'>");
             var htmlString2 = new HtmlString("</div>");}
 
-        @foreach (var some in Model.SocialMediaList)
+        @foreach (var some in Model.Artist.SocialMedia)
         {
 
             if (counter % 2 == 0)
@@ -98,7 +98,9 @@
             @Html.Label(some.Name, new { @class = "control-label col-md-2" })
             <div class="col-md-4">
 
-                @Html.TextBox(some.Name, null, new { @class = "form-control single-line", placeholder = some.Name, value = some.Prefix })
+                @*@Html.EditorFor(modelItem => some.Url, new { htmlAttributes = new { @class = "form-control" } })*@
+                @*@Html.TextBoxFor(i => some.Name, null, new { @class = "form-control single-line", placeholder = some.Name, value = some.Url })*@
+                <input type="text" value="@some.Url" name="@some.Name" class="form-control" />
                 @Html.ValidationMessageFor(model => some.Name, "", new { @class = "text-danger" })
             </div>
             if (counter % 2 == 0)
@@ -112,7 +114,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save this great artist!" class="btn btn-info" />
             </div>
         </div>
     </div>

@@ -56,7 +56,7 @@ namespace AquavitBEAT.Controllers.API
                 artist.SocialMedia.Add(new ArtistSocialMedia
                 {
                     Name = item.Name.ToString(),
-                    Address = HttpContext.Current.Request.Form[item.Name].ToString()
+                    Url = HttpContext.Current.Request.Form[item.Name].ToString()
                 });
             }
             var formattedFilenames = new List<string>();

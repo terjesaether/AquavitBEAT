@@ -33,6 +33,9 @@ namespace AquavitBEAT
             bundles.Add(new StyleBundle("~/Content/jqueryuicss").Include(
                       "~/Content/themes/base/jquery-ui.css",
                       "~/Content/themes/base/datepicker.css"));
+
+            bundles.Add(new StyleBundle("~/Content/miniaudioplayercss").Include(
+                      "~/Scripts/miniaudioplayer/css/jQuery.mb.miniAudioPlayer.min.css"));
         }
     }
 }

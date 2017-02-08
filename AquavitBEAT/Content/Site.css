@@ -5889,7 +5889,8 @@ textarea {
   background: #6298b2; }
 
 textarea {
-  resize: vertical; }
+  resize: vertical;
+  max-height: 200px; }
 
 .fixed-textarea {
   resize: none;
