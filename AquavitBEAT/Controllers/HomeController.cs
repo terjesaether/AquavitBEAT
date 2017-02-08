@@ -48,12 +48,13 @@ namespace AquavitBEAT.Controllers
         }
         public ActionResult Release(int id)
         {
-            var release = _db.Releases.Find(id);
+            //var release = _db.Releases.Find(id);
+            var vm = new ReleaseDetailsViewModel(_db.Releases.Find(id));
 
-            ViewBag.Title2 = release.Title;
+            //ViewBag.Title2 = release.Title;
             ViewBag.Bodyclass = "front-page";
 
-            return View();
+            return View(vm);
         }
     }
 }

@@ -36,6 +36,32 @@ namespace AquavitBEAT.Migrations
                 new SocialMedia { Name = "Soundcloud", Prefix = "http://www.soundcloud.com/" },
                 new SocialMedia { Name = "Instagram", Prefix = "http://www.instagram.com/" }
                 );
+
+            context.FormatsTypes.AddOrUpdate(
+                f => f.FormatTypeName,
+                new FormatType { FormatTypeName = "Vinyl" },
+                new FormatType { FormatTypeName = "Download" },
+                new FormatType { FormatTypeName = "Streaming" },
+                new FormatType { FormatTypeName = "CD" },
+                new FormatType { FormatTypeName = "Cassette" }
+                );
+
+            context.BuyOrStreamSites.AddOrUpdate(
+                b => b.Name,
+                new BuyOrStreamSite { Name = "Juno", Format = "Vinyl" },
+                new BuyOrStreamSite { Name = "Beatport", Format = "Download" },
+                new BuyOrStreamSite { Name = "Spotify", Format = "Streaming" },
+                new BuyOrStreamSite { Name = "Decks.de", Format = "Vinyl" },
+                new BuyOrStreamSite { Name = "iTunes", Format = "Download" }
+                );
+
+            context.ReleaseTypes.AddOrUpdate(
+                r => r.ReleaseTypeName,
+                new ReleaseType { ReleaseTypeName = "Single" },
+                new ReleaseType { ReleaseTypeName = "EP" },
+                new ReleaseType { ReleaseTypeName = "Album" },
+                new ReleaseType { ReleaseTypeName = "Compilation" }
+                );
         }
     }
 }

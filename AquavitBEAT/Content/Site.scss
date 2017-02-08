@@ -262,6 +262,54 @@ margin-bottom: 10px;
     color: #000;
 }
 
+.release-details-bigbox {
+    background: $lightBlue;
+    margin-top: 100px;    
+    min-height: 400px;
+}
+.release-details-heading {    
+    
+    margin-top: -20px;
+    width: 100%;
+    height: 50px;
+    color: #000;
+}
+.release-details-heading h1 {
+    font-size: 1.8em;
+    padding: 20px;
+}
+.release-details-heading span:nth-of-type(2) {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.release-details-inner {
+    width: 900px;
+    margin: 0 auto;
+}
+.release-details-buylinks {
+    background: #000;
+    margin: 4px;
+    padding: 6px;
+    display: block;
+    width: 100%;
+}
+.release-details-buylinks a:hover  {    
+    color: #fff;
+    text-decoration: none;
+}
+.release-details-buylinks a:hover::after  {    
+    content: " >>>";
+}
+.release-details-buylinks a {
+    color: #ccc;
+}
+
+.release-details-body {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
 
 
 

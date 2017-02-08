@@ -31,10 +31,7 @@
                             <li>@Html.ActionLink("View Artists", "Index", "Artist", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Add Artist", "AddArtist", "Artist", new { area = "" }, new { @class = "" })</li>
 
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
+                            
                         </ul>
                     </li>
 
@@ -64,7 +61,7 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container-fluid body-content">
         @RenderBody()
 
         <footer>

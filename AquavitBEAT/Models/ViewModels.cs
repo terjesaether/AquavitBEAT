@@ -253,27 +253,82 @@ namespace AquavitBEAT.Models
         {
             _release = release;
         }
-        private Release _release { get; set; }
+        private Release _release;
         public string ArtistNames
         {
             get
             {
                 return string.Join(" // ", _release.Artists.Select(a => a.ArtistName));
-
             }
 
         }
         public string Title { get { return _release.Title; } }
         public string About { get { return _release.Comment; } }
+        public string FrontImg { get { return _release.frontImageUrl; } }
+        public string Backimg { get { return _release.backImageUrl; } }
+
+
+        public IEnumerable<BuyOrStreamLink> BuyOrStreamLinks
+        {
+            get
+            {
+                var list = new List<BuyOrStreamLink>();
+                foreach (var b in _release.BuyOrStreamLinks)
+                {
+                    if (!string.IsNullOrEmpty(b.LinkUrl))
+                    {
+                        list.Add(b);
+                    }
+                }
+                return list;
+            }
+        }
         public IEnumerable<Song> Songs
         {
             get
             {
-                return _release.HasSongs.ToList();
-                //return _release.SongToReleases.Select(s => s.Song).
+                return _release.HasSongs;
             }
 
         }
+        public List<string> AudioUrls
+        {
+            get
+            {
+                return _release.HasSongs.Select(h => h.AudioUrl).ToList();
+            }
+
+        }
+
+        public List<string> FullSongTitles
+        {
+            get
+            {
+                var list = new List<string>();
+
+                for (int i = 0; i < _release.HasSongs.Count; i++)
+                {
+                    list.Add((i + 1).ToString("D2") + " // " + _release.HasSongs[i].GetFullSongName());
+                }
+                return list;
+            }
+
+        }
+
+        //public string SongsFormatted
+        //{
+        //    get
+        //    {
+        //        string songs = "";
+
+        //        for (int i = 0; i < _release.HasSongs.Count; i++)
+        //        {
+        //            songs += "<p>" + (i + 1).ToString("D2") + " // " + _release.HasSongs[i].GetFullSongName() + "</p>";
+        //        }
+        //        return songs;
+        //    }
+
+        //}
         public List<string> FormatTypes
         {
             get
