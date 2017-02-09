@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using AquavitBEAT.Migrations;
 
 namespace AquavitBEAT.Models
 {
@@ -12,12 +13,9 @@ namespace AquavitBEAT.Models
         private AquavitBeatContext _db = new AquavitBeatContext();
         public Artist()
         {
-            //SocialMediaInfo = new Dictionary<string, string>();
             HasArtworks = new List<Artwork>();
             HasReleases = new List<Release>();
             HasSongs = new List<Song>();
-
-            //SocialMediaAddress = new List<string>();
             SocialMedia = new List<ArtistSocialMedia>();
         }
         [Required]
@@ -48,17 +46,12 @@ namespace AquavitBEAT.Models
 
         [Display(Name = "Profile image")]
         public string ProfileImgUrl { get; set; }
-
         public virtual List<ArtistSocialMedia> SocialMedia { get; set; }
-
-
-        //[NotMapped]
-        //public Dictionary<string, string> SocialMediaInfo { get; set; } = new Dictionary<string, string>();
         public virtual List<Song> HasSongs { get; set; }
         public virtual List<Release> HasReleases { get; set; }
         public virtual List<Artwork> HasArtworks { get; set; }
 
-        public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; }
+        //public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; }
         public virtual ICollection<SongToArtist> SongsToArtists { get; set; }
 
         private List<ArtistSocialMedia> InitSocialMedias()
@@ -76,5 +69,7 @@ namespace AquavitBEAT.Models
             }
             return list;
         }
+
+
     }
 }

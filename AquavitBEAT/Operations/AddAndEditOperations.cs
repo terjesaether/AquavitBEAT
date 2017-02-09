@@ -26,9 +26,9 @@ namespace AquavitBEAT.Operations
                 release.FormatTypes.Clear();
                 release.HasSongs.Clear();
                 release.Artists.Clear();
-                release.SongToReleases.Clear();
+                //release.SongToReleases.Clear(); OPS, sjekk om dette ødelegger
                 release.BuyOrStreamLinks.Clear();
-                //release.ReleasesToArtists.Clear();
+                //release.ReleasesToArtists.Clear(); // Tror ikke denne blir brukt
 
                 if (deleteCovers == "on")
                 {
@@ -37,7 +37,6 @@ namespace AquavitBEAT.Operations
             }
             else
             {
-                //release = new Release();
                 release = vm.Release;
             }
 
@@ -69,6 +68,7 @@ namespace AquavitBEAT.Operations
             //    //counter++;
             //}
 
+            // BUY OR STREAM
             foreach (var b in vm.ListOfAllBuyOrStreamSites)
             {
                 var newB = new BuyOrStreamLink
@@ -209,11 +209,10 @@ namespace AquavitBEAT.Operations
                 artist.About = vm.Artist.About;
                 artist.Address = vm.Artist.Address;
                 artist.Country = vm.Artist.Country;
-                artist.SocialMedia.Clear();
+                //artist.SocialMedia.Clear();
             }
             else
             {
-                //artist = new Artist();
                 artist = vm.Artist;
             }
 
@@ -223,6 +222,18 @@ namespace AquavitBEAT.Operations
             var fileOps = new FileOperations();
 
             //artist.ProfileImgUrl = storagePath + httpRequest.Files[0].FileName;
+
+            // SOCIAL MEDIA
+
+            // VIKTIG!?
+            foreach (var item in _db.ArtistSocialMedias)
+            {
+                if (item.Artist.ArtistId == artist.ArtistId)
+                {
+                    _db.Entry(item).State = EntityState.Deleted;
+                }
+            }
+
 
             foreach (var item in vm.SocialMediaList)
             {
@@ -284,7 +295,7 @@ namespace AquavitBEAT.Operations
             return false;
         }
 
-        public bool AddOrUpdateSong(SongViewModel vm, HttpContext context, int[] ArtistID, bool update, bool create)
+        public bool AddOrUpdateSong(SongViewModel vm, HttpContext context, int[] ArtistID, int[] RemixerID, bool update, bool create)
         {
             Song song;
             if (vm.Song.SongId != 0)
@@ -294,6 +305,9 @@ namespace AquavitBEAT.Operations
                 song.RemixName = vm.Song.RemixName;
                 song.ReleaseDate = vm.Song.ReleaseDate;
                 song.Comment = vm.Song.Comment;
+                song.Artist.Clear();
+                song.Remixers.Clear();
+
                 //song.InReleases = vm.Song.InReleases;
             }
             else
@@ -305,13 +319,44 @@ namespace AquavitBEAT.Operations
             string storagePath = "/audio/" + song.ReleaseDate.ToString("yyyy/MM/dd");
             bool isSavedSuccessfully = true;
             List<string> formattedFilenames = new List<string>();
-
             string extension = Path.GetExtension(httpRequest.Files[0].FileName);
 
             Artist addedArtist;
             if (ArtistID == null)
             {
                 // Sletter eksisterende artister:
+
+
+                // Og legger til de som er huket av: FJERNES?
+                //foreach (var chbx in vm.ArtistCheckBoxes)
+                //{
+                //    if (chbx.Checked)
+                //    {
+                //        addedArtist = _db.Artists.Find(chbx.Id);
+
+                //        song.Artist.Add(addedArtist);
+                //        song.SongToArtists.Add(new SongToArtist
+                //        {
+                //            Artist = addedArtist,
+                //            Song = song,
+                //            SongId = song.SongId,
+                //            ArtistId = chbx.Id,
+                //        });
+                //    }
+                //}
+                // Lager en ny array med artister for navngiving:
+                ArtistID = new int[song.Artist.Count()];
+                for (int i = 0; i < ArtistID.Length; i++)
+                {
+                    ArtistID[i] = song.Artist[i].ArtistId;
+                }
+
+            }
+
+            // Hvis det er create, dvs man henter fra dropdown
+            else if (ArtistID != null)
+            {
+                // VIKTIG!
                 foreach (var item in _db.SongToArtists)
                 {
                     if (item.SongId == song.SongId)
@@ -319,34 +364,7 @@ namespace AquavitBEAT.Operations
                         _db.Entry(item).State = EntityState.Deleted;
                     }
                 }
-                // Og legger til de som er huket av:
-                foreach (var chbx in vm.ArtistCheckBoxes)
-                {
-                    if (chbx.Checked)
-                    {
-                        addedArtist = _db.Artists.Find(chbx.Id);
 
-                        song.Artist.Add(addedArtist);
-                        song.SongToArtists.Add(new SongToArtist
-                        {
-                            Artist = addedArtist,
-                            Song = song,
-                            SongId = song.SongId,
-                            ArtistId = chbx.Id,
-                        });
-                    }
-                }
-                // Lager en ny array med artister for navngiving:
-                ArtistID = new int[song.Artist.Count()];
-                for (int i = 0; i < ArtistID.Length; i++)
-                {
-                    ArtistID[i] = song.Artist[i].ArtistId;
-                }
-            }
-
-            // Hvis det er create, dvs man henter fra dropdown
-            else if (ArtistID != null)
-            {
                 foreach (var artistId in ArtistID)
                 {
                     addedArtist = _db.Artists.Find(artistId);
@@ -357,6 +375,43 @@ namespace AquavitBEAT.Operations
                         Song = song,
                         SongId = song.SongId,
                         ArtistId = artistId,
+                    });
+                }
+            }
+
+            if (RemixerID == null)
+            {
+
+
+                RemixerID = new int[song.Artist.Count()];
+                for (int i = 0; i < RemixerID.Length; i++)
+                {
+                    RemixerID[i] = song.Artist[i].ArtistId;
+                }
+            }
+            else if (RemixerID != null)
+            {
+
+                // Sletter eksisterende artister: VIKTIG!
+                foreach (var item in _db.SongToRemixers)
+                {
+                    if (item.SongId == song.SongId)
+                    {
+                        _db.Entry(item).State = EntityState.Deleted;
+                    }
+                }
+
+                foreach (var remixerId in RemixerID)
+                {
+                    addedArtist = _db.Artists.Find(remixerId);
+                    song.Remixers.Add(addedArtist);
+                    song.SongToRemixers.Add(new SongToRemixer
+                    {
+                        Artist = addedArtist,
+                        Song = song,
+                        SongId = song.SongId,
+                        ArtistId = remixerId,
+                        RemixName = httpRequest.Form["Song.RemixName"]
                     });
                 }
             }

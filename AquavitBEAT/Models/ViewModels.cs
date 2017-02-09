@@ -224,7 +224,8 @@ namespace AquavitBEAT.Models
         {
             get
             {
-                return string.Join(" // ", _release.Artists.Select(a => a.ArtistName));
+                //return string.Join(" // ", _release.Artists.Select(a => a.ArtistName));
+                return string.Join(" // ", _release.GetArtists().Select(a => a.ArtistName));
             }
         }
         public string FeaturedSongUrl
@@ -258,7 +259,7 @@ namespace AquavitBEAT.Models
         {
             get
             {
-                return string.Join(" // ", _release.Artists.Select(a => a.ArtistName));
+                return string.Join(" // ", _release.GetArtists().Select(a => a.ArtistName));
             }
 
         }
@@ -339,6 +340,29 @@ namespace AquavitBEAT.Models
 
     }
 
+    //public class ReleaseIndexViewModel
+    //{
+    //    public ReleaseIndexViewModel(Release release)
+    //    {
+    //        Release = release;
+    //    }
+    //    public Release Release { get; set; }
+
+    //    public List<string> ListOfArtists
+    //    {
+    //        get
+    //        {
+    //            {
+    //                var list = new List<string>();
+    //                foreach (var item in this.Release.ReleasesToArtists)
+    //                {
+    //                    list.Add(item.Artist.FullName);
+    //                }
+    //                return list;
+    //            }
+    //        }
+    //    }
+    //}
 
 
     class GetSelectLists

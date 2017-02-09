@@ -15,7 +15,7 @@
 {
     
 <div class="row list-view">
-    <div class="col-md-2"><a href="/Song/@item.SongId">@item.Title</a></div>
+    <div class="col-md-2"><a href="/Song/@item.SongId">@item.Title</a>&nbsp;&nbsp;<a href="/Songs/Edit/@item.SongId"><span class="glyphicon glyphicon-pencil"></span></a></div>
     <div class="col-md-2">
         @foreach (var artist in item.SongToArtists)
         {

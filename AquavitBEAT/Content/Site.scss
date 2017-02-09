@@ -64,6 +64,9 @@ a {
 .bottom-air-1 {
     margin-bottom: 20px;
 }
+.bottom-air-2 {
+    margin-bottom: 40px;
+}
 .on-line {
     
     display:inline;
@@ -276,7 +279,7 @@ margin-bottom: 10px;
 }
 .release-details-heading h1 {
     font-size: 1.8em;
-    padding: 20px;
+    padding: 20px 0;
 }
 .release-details-heading span:nth-of-type(2) {
     text-transform: uppercase;
@@ -310,8 +313,13 @@ margin-bottom: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
 }
+.release-details-about {
+    padding-bottom: 30px;
+}
 
-
+.artist-details-box-1 {
+    margin-bottom: 50px;
+}
 
 .nav > li a {
     background: none;

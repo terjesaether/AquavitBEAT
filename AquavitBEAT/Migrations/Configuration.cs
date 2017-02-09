@@ -5,6 +5,7 @@ namespace AquavitBEAT.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using AquavitBEAT.Models;
+    using System.Collections.Generic;
 
     internal sealed class Configuration : DbMigrationsConfiguration<AquavitBeatContext>
     {
@@ -20,14 +21,82 @@ namespace AquavitBEAT.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
 
+            var robert = new Artist
+            {
+                ArtistName = "Robert Solheim",
+                FirstName = "Robert",
+                LastName = "Solheim",
+                Mail = "robert@mail.com",
 
-            context.Artists.AddOrUpdate(
-              p => p.FirstName,
-              new Artist { ArtistName = "Robert Solheim", FirstName = "Robert", LastName = "Solheim", Mail = "robert@mail.com" },
-              new Artist { ArtistName = "Terje Saether", FirstName = "Terje", LastName = "Saether", Mail = "robert@mail.com" },
-              new Artist { ArtistName = "Rick O'Disko", FirstName = "Rick", LastName = "ODisko", Mail = "robert@mail.com" },
-              new Artist { ArtistName = "End And Below", FirstName = "Ruben", LastName = "Naess", Mail = "robert@mail.com" }
-            );
+            };
+            var socialMedia = new List<ArtistSocialMedia>
+                  {
+                      new ArtistSocialMedia
+                      {
+                          Name = "Facebook",
+                          Url = "http://www.facebook/robert",
+                          Artist = robert
+                      },
+                      new ArtistSocialMedia
+                      {
+                          Name = "Soundcloud",
+                          Url = "http://www.facebook/robert",
+                          Artist = robert
+                      },
+                      new ArtistSocialMedia
+                      {
+                          Name = "Twitter",
+                          Url = "http://www.facebook/robert",
+                          Artist = robert
+                      },
+                      new ArtistSocialMedia
+                      {
+                          Name = "Instagram",
+                          Url = "http://www.facebook/robert",
+                          Artist = robert
+                      }
+                  };
+            robert.SocialMedia = socialMedia;
+
+            var terje = new Artist
+            {
+                ArtistName = "Terje Saether",
+                FirstName = "Terje",
+                LastName = "Saether",
+                Mail = "terje@mail.com"
+            };
+
+            var socialMedia2 = new List<ArtistSocialMedia>
+                  {
+                      new ArtistSocialMedia
+                      {
+                          Name = "Facebook",
+                          Url = "http://www.facebook/terje",
+                          Artist = terje
+                      },
+                      new ArtistSocialMedia
+                      {
+                          Name = "Soundcloud",
+                          Url = "http://www.facebook/robert",
+                          Artist = terje
+                      },
+                      new ArtistSocialMedia
+                      {
+                          Name = "Twitter",
+                          Url = "http://www.facebook/robert",
+                          Artist = terje
+                      },
+                      new ArtistSocialMedia
+                      {
+                          Name = "Instagram",
+                          Url = "http://www.facebook/robert",
+                          Artist = terje
+                      }
+                  };
+            terje.SocialMedia = socialMedia2;
+
+            context.Artists.AddOrUpdate(robert);
+            context.Artists.AddOrUpdate(terje);
 
             context.SocialMedias.AddOrUpdate(
                 s => s.Name,

@@ -22,7 +22,7 @@ namespace AquavitBEAT.Models
         [Required, Display(Name = "Remix name")]
         public string RemixName { get; set; }
 
-        [Required, DataType(DataType.DateTime), Display(Name = "Release date")]
+        [DataType(DataType.DateTime), Display(Name = "Release date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
 
@@ -37,10 +37,32 @@ namespace AquavitBEAT.Models
         public virtual List<Release> InReleases { get; set; } = new List<Release>();
 
         public virtual ICollection<SongToArtist> SongToArtists { get; set; } = new List<SongToArtist>();
+        public virtual ICollection<SongToRemixer> SongToRemixers { get; set; } = new List<SongToRemixer>();
 
         public string GetFullSongName()
         {
             return Title + " (" + RemixName + ")";
+        }
+        public string GetFormattedArtistNames()
+        {
+            string artists = "";
+            foreach (var a in this.Artist)
+            {
+                artists += a.ArtistName + " // ";
+            }
+            artists = artists.TrimEnd('/');
+            return artists;
+        }
+
+        public string GetFormattedRemixNames()
+        {
+            string artists = "";
+            foreach (var a in this.Remixers)
+            {
+                artists += a.ArtistName + " // ";
+            }
+            artists = artists.TrimEnd('/');
+            return artists;
         }
 
     }

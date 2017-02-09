@@ -202,6 +202,14 @@
     <Compile Include="Migrations\201702081740061_Meh1.Designer.cs">
       <DependentUpon>201702081740061_Meh1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702091809156_AddedSongTORemixerDb.cs" />
+    <Compile Include="Migrations\201702091809156_AddedSongTORemixerDb.Designer.cs">
+      <DependentUpon>201702091809156_AddedSongTORemixerDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702091812561_AddedSongTORemixerDbStuff.cs" />
+    <Compile Include="Migrations\201702091812561_AddedSongTORemixerDbStuff.Designer.cs">
+      <DependentUpon>201702091812561_AddedSongTORemixerDbStuff.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AquavitBEATDbInit.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -310,10 +318,15 @@
     <Content Include="images\profiles\Robert_Solheim_30-01-2017.jpg" />
     <Content Include="images\profiles\Swayzak_24-01-2017.jpg" />
     <Content Include="images\profiles\Terje_Saether_31-01-2017.jpg" />
+    <Content Include="images\releases\Baby\Baby_0.jpg" />
+    <Content Include="images\releases\Hurra_for_Kåre\Hurra_for_Kåre_0.jpg" />
     <Content Include="images\releases\Mercadona_EP\Mercadona_EP_0.jpg" />
     <Content Include="images\releases\Mercadona_EP\Mercadona_EP_1.jpg" />
+    <Content Include="images\releases\Robby_Robby\Robby_Robby_0.jpg" />
     <Content Include="images\releases\Star_Wars\Star_Wars_0.jpg" />
     <Content Include="images\releases\Star_Wars\Star_Wars_1.jpg" />
+    <Content Include="images\releases\Star_Wars_UUøø\Star_Wars_UUøø_0.jpg" />
+    <Content Include="images\releases\Uggggga\Uggggga_0.jpg" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -596,6 +609,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702081740061_Meh1.resx">
       <DependentUpon>201702081740061_Meh1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702091809156_AddedSongTORemixerDb.resx">
+      <DependentUpon>201702091809156_AddedSongTORemixerDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702091812561_AddedSongTORemixerDbStuff.resx">
+      <DependentUpon>201702091812561_AddedSongTORemixerDbStuff.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

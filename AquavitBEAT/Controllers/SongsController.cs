@@ -45,7 +45,8 @@ namespace AquavitBEAT.Controllers
         [HttpGet]
         public ActionResult AddSong()
         {
-            ViewBag.ArtistID = new SelectList(_db.Artists, "ArtistID", "ArtistName");
+            ViewBag.ArtistID = new SelectList(_db.Artists, "ArtistId", "ArtistName");
+            ViewBag.RemixerID = new SelectList(_db.Artists, "ArtistId", "ArtistName");
             return View();
         }
 
@@ -55,7 +56,7 @@ namespace AquavitBEAT.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Songs/Add")]
-        public ActionResult AddSong(SongViewModel vm, int[] ArtistID)
+        public ActionResult AddSong(SongViewModel vm, int[] ArtistId, int[] RemixerId)
         {
             //if (!ModelState.IsValid)
             //{
@@ -63,7 +64,7 @@ namespace AquavitBEAT.Controllers
             //}
             var httpRequest = System.Web.HttpContext.Current;
 
-            var success = addAndEdit.AddOrUpdateSong(vm, httpRequest, ArtistID, false, true);
+            var success = addAndEdit.AddOrUpdateSong(vm, httpRequest, ArtistId, RemixerId, false, true);
 
             if (success)
             {
@@ -111,8 +112,8 @@ namespace AquavitBEAT.Controllers
             {
                 return HttpNotFound();
             }
-
-            var results = _db.Artists
+            // Lager liste med alle artistene, men huker av de som er valgt
+            var artistList = _db.Artists
                 .Select(r => new
                 {
                     r.ArtistId,
@@ -121,20 +122,54 @@ namespace AquavitBEAT.Controllers
                     .Count() > 0
                 });
 
-
-
-            var CheckBoxes = new List<CheckBoxViewModel>();
-            foreach (var item in results)
-            {
-                CheckBoxes.Add(new CheckBoxViewModel
+            var remixerList = _db.Artists
+                .Select(r => new
                 {
-                    Name = item.ArtistName,
-                    Id = item.ArtistId,
-                    Checked = item.Checked
+                    r.ArtistId,
+                    r.ArtistName,
+                    Checked = _db.SongToRemixers.Where(s => s.SongId == id.Value && s.ArtistId == r.ArtistId)
+                    .Count() > 0
+                });
+
+
+
+            //var CheckBoxes = new List<CheckBoxViewModel>();
+            //foreach (var item in results)
+            //{
+            //    CheckBoxes.Add(new CheckBoxViewModel
+            //    {
+            //        Name = item.ArtistName,
+            //        Id = item.ArtistId,
+            //        Checked = item.Checked
+            //    });
+            //}
+            List<SelectListItem> artistDropDown = new List<SelectListItem>();
+            foreach (var item in artistList)
+            {
+                artistDropDown.Add(new SelectListItem
+                {
+                    Text = item.ArtistName,
+                    Value = item.ArtistId.ToString(),
+                    Selected = item.Checked
+                });
+            }
+            List<SelectListItem> remixDropDown = new List<SelectListItem>();
+            foreach (var item in remixerList)
+            {
+                remixDropDown.Add(new SelectListItem
+                {
+                    Text = item.ArtistName,
+                    Value = item.ArtistId.ToString(),
+                    Selected = item.Checked
                 });
             }
 
-            vm.ArtistCheckBoxes = CheckBoxes;
+            //vm.ArtistCheckBoxes = CheckBoxes;
+
+
+
+            ViewBag.ArtistID = artistDropDown;
+            ViewBag.RemixerID = remixDropDown;
 
             return View(vm);
         }
@@ -145,11 +180,11 @@ namespace AquavitBEAT.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Songs/Edit/{id}")]
-        public ActionResult EditSong(SongViewModel vm, int[] ArtistId)
+        public ActionResult EditSong(SongViewModel vm, int[] ArtistId, int[] RemixerId)
         {
             var httpRequest = System.Web.HttpContext.Current;
 
-            var success = addAndEdit.AddOrUpdateSong(vm, httpRequest, ArtistId, true, false);
+            var success = addAndEdit.AddOrUpdateSong(vm, httpRequest, ArtistId, RemixerId, true, false);
 
             if (success)
             {

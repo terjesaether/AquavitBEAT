@@ -6,7 +6,7 @@
 
 <h2>@Model.Artist.ArtistName <a href="/Artist/Edit/@Model.Artist.ArtistId"><span class="glyphicon glyphicon-pencil"></span></a></h2>
 
-<div class="row">
+<div class="row artist-details-box-1">
     <div class="col-md-3">
         
         <dl class="dl-horizontal">
@@ -64,19 +64,7 @@
             <dd>
                 @Html.DisplayFor(model => model.Artist.About)
             </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Artist.SocialMedia)
-            </dt>
-
-            <dd>
-                @foreach (var some in Model.Artist.SocialMedia)
-                {
-                    if (some.Url != "")
-                    {
-                        <p>@some.Name: @some.Url</p>
-                    }
-                }
-            </dd>
+            
 
         </dl>
     
@@ -112,12 +100,20 @@
 
 </div>
 <div class="row">
+    <div class="col-md-12">
+        <h3>Social Media:</h3>
+    </div>
+    <div class="col-md-6">
+        @foreach (var some in Model.Artist.SocialMedia)
+        {
+            if (some.Url != "")
+            {
 
-    
+                <p><a href="@some.Url">@some.Name</a></p>
 
-    
-
-
+            }
+        }
+    </div>
 
 </div>
 

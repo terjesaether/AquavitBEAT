@@ -19,6 +19,13 @@ namespace AquavitBEAT.Controllers
         // GET: Releases
         public ActionResult Index()
         {
+            //var vm = new List<ReleaseIndexViewModel>();
+            //foreach (var item in _db.Releases.ToList())
+            //{
+            //    var newRelease = new ReleaseIndexViewModel(item);
+            //    vm.Add(newRelease);
+            //}
+
             return View(_db.Releases.ToList());
         }
 
@@ -133,7 +140,7 @@ namespace AquavitBEAT.Controllers
                 });
 
 
-            var songsDropDown = new List<SelectListItem>();
+
             //var songsCheckBoxes = new List<CheckBoxViewModel>();
             //foreach (var item in allSongs)
             //{
@@ -146,6 +153,7 @@ namespace AquavitBEAT.Controllers
             //}
 
             // Lager dropdown med valgt verdi:
+            var songsDropDown = new List<SelectListItem>();
             foreach (var item in allSongs)
             {
                 songsDropDown.Add(new SelectListItem

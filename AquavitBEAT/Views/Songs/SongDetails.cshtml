@@ -5,59 +5,37 @@
 }
 
 <div class="row bottom-air-1">
-    <h2>@Model.Title</h2>
-    <audio controls>
-        <source src="@Model.AudioUrl" />
-    </audio>
+    <div class="col-md-8 col-md-push-2 bottom-air-2">
+        <h2><a href="/Songs/Edit/@Model.SongId"><span class="glyphicon glyphicon-pencil"></span></a>
+            @Model.Title (@Model.RemixName) by:
+            @foreach (var item in Model.Artist)
+            {
+                <span><a href="/Artist/@item.ArtistId">@item.ArtistName //</a></span>
+            }
+
+    </h2>
+        <audio controls>
+            <source src="@Model.AudioUrl" />
+        </audio>
+    </div>
+
+    <div class="col-md-8 col-md-push-2">
+
+        <p><span>Remix by:&nbsp;&nbsp;</span>
+
+            @foreach (var item in Model.Remixers)
+        {
+                <a href="/Artist/@item.ArtistId">@item.ArtistName //</a>
+        }
+        </p>
+    <p><span>@Html.DisplayNameFor(model => model.ReleaseDate)</span> <span>@Html.DisplayFor(model => model.ReleaseDate)</span></p>
+        <p><span>@Html.DisplayNameFor(model => model.Comment)</span> <span>@Html.DisplayFor(model => model.Comment)</span></p>
+
 </div>
 
-<div class="white-text dark-back">
-    
-    
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RemixName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RemixName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReleaseDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Comment)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Comment)
-        </dd>
-
-        
-
-    </dl>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
 </div>
+
+
+
+

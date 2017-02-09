@@ -21,12 +21,8 @@
     {
         <div class="row list-view">
             <div class="col-md-1"><img src="@artist.ProfileImgUrl" alt="@artist.ArtistName" class="img-responsive" /></div>
-            <div class="col-md-2">
-                <a class="glyphicon glyphicon-pencil" href="/Artist/Edit/@artist.ArtistId"></a>
-               
-                
-                <a href="/Artist/@artist.ArtistId">@artist.ArtistName</a>
-                
+            <div class="col-md-2">               
+                <a href="/Artist/@artist.ArtistId">@artist.ArtistName</a>&nbsp;&nbsp;<a href="/Artist/Edit/@artist.ArtistId"><span class="glyphicon glyphicon-pencil"></span></a>
             </div>
 
 

@@ -13,6 +13,15 @@ namespace AquavitBEAT.Models
         public virtual Song Song { get; set; }
         public virtual Artist Artist { get; set; }
     }
+    public class SongToRemixer
+    {
+        public int SongToRemixerId { get; set; }
+        public int SongId { get; set; }
+        public int ArtistId { get; set; }
+        public string RemixName { get; set; }
+        public virtual Song Song { get; set; }
+        public virtual Artist Artist { get; set; }
+    }
 
     public class SongToRelease
     {

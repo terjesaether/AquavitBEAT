@@ -16,7 +16,7 @@ namespace AquavitBEAT.Models
             Artists = new List<Artist>();
             HasSongs = new List<Song>();
             HasArtworks = new List<Artwork>();
-            ReleasesToArtists = new List<ReleaseToArtist>();
+            //ReleasesToArtists = new List<ReleaseToArtist>();
             Images = new List<UploadedImage>();
             BuyOrStreamLinks = new List<BuyOrStreamLink>();
         }
@@ -82,7 +82,7 @@ namespace AquavitBEAT.Models
         [Display(Name = "Artwork")]
         public virtual List<Artwork> HasArtworks { get; set; }
         public virtual List<BuyOrStreamLink> BuyOrStreamLinks { get; set; }
-        public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; } // Fjernes?
+        //public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; } // Fjernes?
         public virtual ICollection<SongToRelease> SongToReleases { get; set; }
 
         private List<ReleaseFormat> FillFormatsList()
@@ -98,6 +98,12 @@ namespace AquavitBEAT.Models
                 list.Add(newReleaseFormat);
 
             }
+            return list;
+        }
+
+        public IEnumerable<Artist> GetArtists()
+        {
+            List<Artist> list = SongToReleases.SelectMany(s => s.Song.Artist).ToList();
             return list;
         }
 

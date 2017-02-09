@@ -11,7 +11,7 @@
 
 <h2>Create new song</h2>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
 
         @using (Html.BeginForm("AddSong", "Songs", FormMethod.Post, new
         {
@@ -27,47 +27,42 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Song.Artist, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
+                    @Html.LabelFor(model => model.Song.Artist, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
                         @Html.DropDownList("ArtistID", null, null, new { @class = "selectpicker form-control", id = "selectArtists", multiple = true })
                     </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Song.Title, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
+                
+                    @Html.LabelFor(model => model.Song.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
                         @Html.EditorFor(model => model.Song.Title, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Song.Title, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Song.RemixName, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
+                    @Html.LabelFor(model => model.Song.RemixName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
                         @Html.EditorFor(model => model.Song.RemixName, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Song.RemixName, "", new { @class = "text-danger" })
                     </div>
-                </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Song.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.Song.ReleaseDate, new { htmlAttributes = new { @class = "form-control", id = "datepicker" } })
-                        @Html.ValidationMessageFor(model => model.Song.ReleaseDate, "", new { @class = "text-danger" })
+                    <label class="col-md-2 control-label">Remixer(s)</label>
+                    <div class="col-md-4">
+                        @Html.DropDownList("RemixerID", null, null, new { @class = "selectpicker form-control", id = "selectArtists", multiple = true })
                     </div>
+                
+                    
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Song.Comment, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
+                    @Html.LabelFor(model => model.Song.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
                         @Html.EditorFor(model => model.Song.Comment, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Song.Comment, "", new { @class = "text-danger" })
                     </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Song.AudioUrl, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
+                
+                    @Html.LabelFor(model => model.Song.AudioUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
                         
                         
                          <input type="file" id="file" name="audioFile" class="control-label inputfile" data-multiple-caption="{count} files selected" />
@@ -76,6 +71,13 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Song.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.Song.ReleaseDate, new { htmlAttributes = new { @class = "form-control", id = "datepicker" } })
+                        @Html.ValidationMessageFor(model => model.Song.ReleaseDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
                 
 
 
@@ -88,9 +90,7 @@
         }
 
     </div>
-    <div class="col-md-6 img-preview" id="output">
-        Bilde
-    </div>
+    
 </div>
 
 <div>
