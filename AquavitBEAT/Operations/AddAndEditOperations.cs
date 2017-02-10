@@ -188,7 +188,7 @@ namespace AquavitBEAT.Operations
                         return true;
                     }
                 }
-                catch (Exception e)
+                catch (Exception /*e*/)
                 {
                     throw;
                 }
@@ -199,22 +199,28 @@ namespace AquavitBEAT.Operations
         public bool AddOrUpdateArtist(ArtistViewModel vm, HttpContext context, bool update, bool create)
         {
             Artist artist;
-
-            if (vm.Artist.ArtistId != 0)
+            if (vm.Artist.ArtistId > 0)
             {
-                artist = _db.Artists.Find(vm.Artist.ArtistId);
+                //artist = _db.Artists.Find(vm.Artist.ArtistId);
+                artist = _db.Artists
+                .Where(a => a.ArtistId == vm.Artist.ArtistId)
+                .Include("ArtistSocialMedias")
+                .Single();
+
+                //Find(vm.Artist.ArtistId);
                 artist.FirstName = vm.Artist.FirstName;
                 artist.LastName = vm.Artist.LastName;
                 artist.ArtistName = vm.Artist.ArtistName;
                 artist.About = vm.Artist.About;
                 artist.Address = vm.Artist.Address;
                 artist.Country = vm.Artist.Country;
-                //artist.SocialMedia.Clear();
+                artist.ArtistSocialMedias.Clear();
             }
             else
             {
                 artist = vm.Artist;
             }
+
 
             const string storagePath = "/images/profiles/";
             bool isSavedSuccessfully = true;
@@ -224,14 +230,20 @@ namespace AquavitBEAT.Operations
             //artist.ProfileImgUrl = storagePath + httpRequest.Files[0].FileName;
 
             // SOCIAL MEDIA
-
+            // Noe med at listen cleares og prøves å opprettes igjen. Listen bør ikke cleares og addes, men oppdateres
             // VIKTIG!?
-            foreach (var item in _db.ArtistSocialMedias)
+            //foreach (var item in _db.ArtistSocialMedias)
+            //{
+            //    if (item.Artist.ArtistId == artist.ArtistId)
+            //    {
+            //        _db.Entry(item).State = EntityState.Deleted;
+            //    }
+            //}
+
+            var some = _db.ArtistSocialMedias.Where(a => a.ArtistId == artist.ArtistId);
+            foreach (var item in some)
             {
-                if (item.Artist.ArtistId == artist.ArtistId)
-                {
-                    _db.Entry(item).State = EntityState.Deleted;
-                }
+                _db.ArtistSocialMedias.Remove(item);
             }
 
 
@@ -241,11 +253,14 @@ namespace AquavitBEAT.Operations
                 {
                     Name = item.Name.ToString(),
                     Url = httpRequest.Form[item.Name].ToString(),
-                    Artist = artist
+                    Artist = artist,
+                    ArtistId = artist.ArtistId
                 };
 
-                artist.SocialMedia.Add(newSocMedia);
+                artist.ArtistSocialMedias.Add(newSocMedia);
+                _db.ArtistSocialMedias.Add(newSocMedia);
             }
+
 
             //for (int i = 0; i < artist.SocialMedia.Count; i++)
             //{
@@ -287,7 +302,7 @@ namespace AquavitBEAT.Operations
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception /* e */)
             {
                 return false;
             }
@@ -452,7 +467,7 @@ namespace AquavitBEAT.Operations
                         return true;
                     }
                 }
-                catch (Exception e)
+                catch (Exception /*e*/)
                 {
                     return false;
                 }

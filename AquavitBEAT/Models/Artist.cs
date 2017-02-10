@@ -16,7 +16,7 @@ namespace AquavitBEAT.Models
             HasArtworks = new List<Artwork>();
             HasReleases = new List<Release>();
             HasSongs = new List<Song>();
-            SocialMedia = new List<ArtistSocialMedia>();
+            ArtistSocialMedias = new List<ArtistSocialMedia>();
         }
         [Required]
         public int ArtistId { get; set; }
@@ -46,13 +46,14 @@ namespace AquavitBEAT.Models
 
         [Display(Name = "Profile image")]
         public string ProfileImgUrl { get; set; }
-        public virtual List<ArtistSocialMedia> SocialMedia { get; set; }
+        public virtual List<ArtistSocialMedia> ArtistSocialMedias { get; set; }
         public virtual List<Song> HasSongs { get; set; }
         public virtual List<Release> HasReleases { get; set; }
-        public virtual List<Artwork> HasArtworks { get; set; }
+        public virtual ICollection<Artwork> HasArtworks { get; set; }
 
         //public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; }
         public virtual ICollection<SongToArtist> SongsToArtists { get; set; }
+        //public virtual ICollection<ArtistToSocialMedia> ArtistToSocialMedias { get; set; } Fjernes
 
         private List<ArtistSocialMedia> InitSocialMedias()
         {

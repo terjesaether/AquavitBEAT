@@ -161,10 +161,13 @@ namespace AquavitBEAT.Models
     {
         public SongViewModel()
         {
-            ArtistCheckBoxes = new List<CheckBoxViewModel>();
+            //ArtistCheckBoxes = new List<CheckBoxViewModel>(); 
+            //Song = new Song();
         }
         public Song Song { get; set; }
-        public List<CheckBoxViewModel> ArtistCheckBoxes { get; set; }
+
+        //public DateTime SetReleaseDate { get; set; }
+        //public List<CheckBoxViewModel> ArtistCheckBoxes { get; set; }
         //public virtual SongToArtist SongsToArtists { get; set; }
     }
 

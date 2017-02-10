@@ -17,11 +17,13 @@ namespace AquavitBEAT.Models
     }
     public class ArtistSocialMedia
     {
-        [Key]
         public int ArtistSocialMediaId { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
         public string Prefix { get; set; }
+        public int ArtistId { get; set; }
+        //public int SocialMediaId { get; set; }
         public virtual Artist Artist { get; set; } // Tydeligvis viktig med referanser!
+
     }
 }

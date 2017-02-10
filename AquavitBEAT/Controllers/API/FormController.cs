@@ -53,7 +53,7 @@ namespace AquavitBEAT.Controllers.API
 
             foreach (var item in SocialMediaList)
             {
-                artist.SocialMedia.Add(new ArtistSocialMedia
+                artist.ArtistSocialMedias.Add(new ArtistSocialMedia
                 {
                     Name = item.Name.ToString(),
                     Url = HttpContext.Current.Request.Form[item.Name].ToString()

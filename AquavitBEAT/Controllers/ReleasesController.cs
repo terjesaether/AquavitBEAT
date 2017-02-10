@@ -84,13 +84,22 @@ namespace AquavitBEAT.Controllers
 
         public ActionResult AddRelease(ReleaseViewModel vm, int[] SongId, int[] FormatTypeId, string ReleaseTypeId)
         {
+            string[] formats;
+            if (!string.IsNullOrEmpty(Request.Form["Release.FormatTypes"]))
+            {
+                formats = Request.Form["Release.FormatTypes"].Split(',');
+                FormatTypeId = Array.ConvertAll(formats, int.Parse);
+            }
+            else
+            {
+                FormatTypeId[0] = 1;
+            }
 
-            var formats = Request.Form["Release.FormatTypes"].Split(',');
             ReleaseTypeId = Request.Form["Release.ReleaseType"];
             var songs = Request.Form["Release.SongToReleases"].Split(',');
 
 
-            FormatTypeId = Array.ConvertAll(formats, int.Parse);
+
             SongId = Array.ConvertAll(songs, int.Parse);
 
             var httpRequest = System.Web.HttpContext.Current;

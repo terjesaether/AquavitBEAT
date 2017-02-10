@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -39,5 +40,15 @@ namespace AquavitBEAT.Models
         public int ReleaseId { get; set; }
         public virtual Release Release { get; set; }
         public virtual Artist Artist { get; set; }
+    }
+
+    public class ArtistToSocialMedia
+    {
+        [Key]
+        public int ArtistToSocialMediaId { get; set; }
+        public int ArtistId { get; set; }
+        public int ArtistSocialMediaId { get; set; }
+        public virtual Artist Artist { get; set; } // Tydeligvis viktig med referanser!
+        public virtual ArtistSocialMedia ArtistSocialMedia { get; set; } // Tydeligvis viktig med referanser!
     }
 }

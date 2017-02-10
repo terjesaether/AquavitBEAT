@@ -45,9 +45,16 @@ namespace AquavitBEAT.Controllers
         [HttpGet]
         public ActionResult AddSong()
         {
+            var vm = new SongViewModel
+            {
+                Song = new Song()
+            };
+            vm.Song.ReleaseDate = DateTime.Now;
+
             ViewBag.ArtistID = new SelectList(_db.Artists, "ArtistId", "ArtistName");
             ViewBag.RemixerID = new SelectList(_db.Artists, "ArtistId", "ArtistName");
-            return View();
+
+            return View(vm);
         }
 
         // POST: Songs/Create

@@ -90,13 +90,14 @@
                                 <div class="col-md-4">
 
                                     @Html.DropDownListFor(model => model.Release.ReleaseType, Model.ItemsListOfAllReleaseTypes, new { @class = "form-control selectpicker", multiple = true })
-
+                                    @Html.ValidationMessageFor(model => model.Release.ReleaseType, "", new { @class = "text-danger" })
                                 </div>
 
                                 @Html.LabelFor(model => model.Release.FormatTypes, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-4">
                                     @*@Html.DropDownList("FormatTypeId", null, "Choose format ...", htmlAttributes: new { @class = "form-control selectpicker", multiple = true })*@
                                     @Html.DropDownListFor(model => model.Release.FormatTypes, Model.ItemsListOfAllFormats, new { @class = "form-control selectpicker", multiple = true })
+                                    @Html.ValidationMessageFor(model => model.Release.FormatTypes, "", new { @class = "text-danger" })
 
                                 </div>
 

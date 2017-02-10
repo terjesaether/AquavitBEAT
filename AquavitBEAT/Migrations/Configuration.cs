@@ -56,7 +56,7 @@ namespace AquavitBEAT.Migrations
                           Artist = robert
                       }
                   };
-            robert.SocialMedia = socialMedia;
+            robert.ArtistSocialMedias = socialMedia;
 
             var terje = new Artist
             {
@@ -93,7 +93,7 @@ namespace AquavitBEAT.Migrations
                           Artist = terje
                       }
                   };
-            terje.SocialMedia = socialMedia2;
+            terje.ArtistSocialMedias = socialMedia2;
 
             context.Artists.AddOrUpdate(robert);
             context.Artists.AddOrUpdate(terje);

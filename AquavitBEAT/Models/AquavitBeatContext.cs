@@ -28,6 +28,14 @@ namespace AquavitBEAT.Models
         public DbSet<SongToRemixer> SongToRemixers { get; set; }
         public DbSet<SongToRelease> SongToReleases { get; set; }
         public DbSet<BuyOrStreamSite> BuyOrStreamSites { get; set; }
+        //public DbSet<ArtistToSocialMedia> ArtistToSocialMedias { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<Artist>().HasMany(a => a.ArtistSocialMedias);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

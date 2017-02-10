@@ -210,6 +210,26 @@
     <Compile Include="Migrations\201702091812561_AddedSongTORemixerDbStuff.Designer.cs">
       <DependentUpon>201702091812561_AddedSongTORemixerDbStuff.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702092203324_FixedSociMedia1.cs" />
+    <Compile Include="Migrations\201702092203324_FixedSociMedia1.Designer.cs">
+      <DependentUpon>201702092203324_FixedSociMedia1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702092339466_SosMe2.cs" />
+    <Compile Include="Migrations\201702092339466_SosMe2.Designer.cs">
+      <DependentUpon>201702092339466_SosMe2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702101335195_AddedModelbinder.cs" />
+    <Compile Include="Migrations\201702101335195_AddedModelbinder.Designer.cs">
+      <DependentUpon>201702101335195_AddedModelbinder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702101837252_AddedRequredToRelease.cs" />
+    <Compile Include="Migrations\201702101837252_AddedRequredToRelease.Designer.cs">
+      <DependentUpon>201702101837252_AddedRequredToRelease.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702101840337_AddedRequredToRelease2.cs" />
+    <Compile Include="Migrations\201702101840337_AddedRequredToRelease2.Designer.cs">
+      <DependentUpon>201702101840337_AddedRequredToRelease2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AquavitBEATDbInit.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -319,6 +339,7 @@
     <Content Include="images\profiles\Swayzak_24-01-2017.jpg" />
     <Content Include="images\profiles\Terje_Saether_31-01-2017.jpg" />
     <Content Include="images\releases\Baby\Baby_0.jpg" />
+    <Content Include="images\releases\Come_Inside_EP\Come_Inside_EP_0.jpg" />
     <Content Include="images\releases\Hurra_for_Kåre\Hurra_for_Kåre_0.jpg" />
     <Content Include="images\releases\Mercadona_EP\Mercadona_EP_0.jpg" />
     <Content Include="images\releases\Mercadona_EP\Mercadona_EP_1.jpg" />
@@ -615,6 +636,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702091812561_AddedSongTORemixerDbStuff.resx">
       <DependentUpon>201702091812561_AddedSongTORemixerDbStuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702092203324_FixedSociMedia1.resx">
+      <DependentUpon>201702092203324_FixedSociMedia1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702092339466_SosMe2.resx">
+      <DependentUpon>201702092339466_SosMe2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702101335195_AddedModelbinder.resx">
+      <DependentUpon>201702101335195_AddedModelbinder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702101837252_AddedRequredToRelease.resx">
+      <DependentUpon>201702101837252_AddedRequredToRelease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702101840337_AddedRequredToRelease2.resx">
+      <DependentUpon>201702101840337_AddedRequredToRelease2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

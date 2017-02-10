@@ -37,7 +37,7 @@ namespace AquavitBEAT.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
 
-        [Display(Name = "Release type")]
+        [Required, Display(Name = "Release type")]
         public virtual ReleaseType ReleaseType { get; set; }
 
         public string frontImageUrl
@@ -67,7 +67,7 @@ namespace AquavitBEAT.Models
         }
 
 
-        [Display(Name = "Format type(s)")]
+        [Required, Display(Name = "Format type(s)")]
         public virtual List<ReleaseFormat> FormatTypes { get; set; }
         //public virtual List<ReleaseFormat2> FormatTypes2 { get; set; } // Fjernes nok likevel
 
@@ -83,6 +83,7 @@ namespace AquavitBEAT.Models
         public virtual List<Artwork> HasArtworks { get; set; }
         public virtual List<BuyOrStreamLink> BuyOrStreamLinks { get; set; }
         //public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; } // Fjernes?
+        [Required]
         public virtual ICollection<SongToRelease> SongToReleases { get; set; }
 
         private List<ReleaseFormat> FillFormatsList()
@@ -103,7 +104,7 @@ namespace AquavitBEAT.Models
 
         public IEnumerable<Artist> GetArtists()
         {
-            List<Artist> list = SongToReleases.SelectMany(s => s.Song.Artist).ToList();
+            List<Artist> list = SongToReleases.SelectMany(s => s.Song.SongToArtists.Select(a => a.Artist)).ToList();
             return list;
         }
 
