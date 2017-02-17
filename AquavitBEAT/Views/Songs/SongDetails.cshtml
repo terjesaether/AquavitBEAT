@@ -8,7 +8,7 @@
     <div class="col-md-8 col-md-push-2 bottom-air-2">
         <h2><a href="/Songs/Edit/@Model.SongId"><span class="glyphicon glyphicon-pencil"></span></a>
             @Model.Title (@Model.RemixName) by:
-            @foreach (var item in Model.Artist)
+            @foreach (var item in Model.Artists)
             {
                 <span><a href="/Artist/@item.ArtistId">@item.ArtistName //</a></span>
             }

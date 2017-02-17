@@ -5,60 +5,71 @@
 }
 @section Styles {
     @*@Styles.Render("~/Content/miniaudioplayercss")*@
-<link href="~/Scripts/miniaudioplayer/css/jQuery.mb.miniAudioPlayer.min.css" rel="stylesheet" />
+    <link href="~/Scripts/miniaudioplayer/css/jQuery.mb.miniAudioPlayer.min.css" rel="stylesheet" />
+    @*<link href="~/Content/Main-page.min.css" rel="stylesheet" />*@
 }
 
 
 <div class="row frontpage-first-row">
     @foreach (var release in Model.FrontPageReleaseBox)
     {
-        <div class="col-md-3 frontpage-box">
-            <div class="frontpage-inner-box">
-                <h1>
-                    @release.ArtistNames
-                </h1>
-                <h2>@release.Title</h2>
-                <img src="@release.frontImageUrl" alt="@release.Title" class="img-responsive" />
-                <div class="front-page-formats">
-                    @foreach (var format in release.FormatTypes)
+        
+            <div class="col-md-3 frontpage-box">
+                
+                <a class="front-page-link" href="/Home/Release/@release.ReleaseId">
+                    <div class="frontpage-inner-box">
+                        <div class="front-page-header">
+                            <h1>
+                                @release.ArtistNames
+                            </h1>
+                            <h2>@release.Title</h2>
+                        </div>
+                        <img src="@release.frontImageUrl" alt="@release.Title" class="img-responsive front-page-img" />
+
+                        <div class="front-page-formats">
+                            @foreach (var format in release.FormatTypes)
                 {
-                        <span>@format</span>
+                                <span>@format</span>
 
-                    }
-                </div>
-                <div class="player-wrapper">
+                            }
+                        </div>
 
-                    <a id="@release.ReleaseId" class="audio" href="@release.FeaturedSongUrl">@release.FeaturedSongTitle</a>
+                        <div class="player-wrapper">
 
-                    @*<audio id="@release.audioPlayerId" class="audioPlayer">
-                        <source src="@release.FeaturedSong" />
+                            <a id="@release.ReleaseId" class="audio" href="@release.FeaturedSongUrl">@release.FeaturedSongTitle</a>
+
+                            @*<audio id="@release.audioPlayerId" class="audioPlayer">
+                        <source src="@release.FeaturedSongUrl" />
                     </audio>*@
-                    
-                </div>
-                <p class="frontpage-box-releasedate">Release: @release.ReleaseDate</p>
-                <p>@Html.ActionLink("Read more >>>", "Release", new { id = release.ReleaseId})</p>
+
+                        </div>
+                        <p class="frontpage-box-releasedate">Release: @release.ReleaseDate</p>
+                        @*<p>@Html.ActionLink("Read more >>>", "Release", new { id = release.ReleaseId})</p>*@
+                    </div>
+                </a>
+                
             </div>
-        </div>
+        
     }
-</div>
+    </div>
 
 
-@section scripts{
-    @*<script src="~/Scripts/miniaudioplayer/jquery.jplayer.min.js" type="text/javascript"></script>*@
+    @section scripts{
+        @*<script src="~/Scripts/miniaudioplayer/jquery.jplayer.min.js" type="text/javascript"></script>*@
         <script src="~/Scripts/miniaudioplayer/jquery.mb.miniAudioPlayer.min.js" type="text/javascript"></script>
         @*<script src="~/Scripts/miniaudioplayer/jquery.metadata.js" type="text/javascript"></script>*@
 
-    <script>
+        <script>
 
-        
 
-        $(".audio").mb_miniPlayer(
-    {
-        playAlone: true,
-        skin: 'black'
+
+            $(".audio").mb_miniPlayer(
+        {
+            playAlone: true,
+            skin: 'black'
+        }
+        );
+
+
+        </script>
     }
-    );
-
-
-    </script>
-}

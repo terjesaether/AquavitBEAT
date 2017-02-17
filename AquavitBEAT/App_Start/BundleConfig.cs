@@ -26,6 +26,9 @@ namespace AquavitBEAT
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/readmorejs").Include(
+                      "~/Scripts/Readmore-js/readmore.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       //"~/Content/bootstrap.css",
                       "~/Content/site.css"));

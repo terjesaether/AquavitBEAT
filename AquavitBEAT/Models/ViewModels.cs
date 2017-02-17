@@ -6,6 +6,7 @@ using Microsoft.Web;
 using System.Web.Mvc;
 using AquavitBEAT.Models;
 using System.Data.Entity;
+using System.ComponentModel.DataAnnotations;
 
 namespace AquavitBEAT.Models
 {
@@ -31,7 +32,7 @@ namespace AquavitBEAT.Models
             //ArtistCheckBoxes = new List<CheckBoxViewModel>(); // Slett?
             SongCheckBoxes = new List<CheckBoxViewModel>();
 
-            //ListOfHasSongs = getLists.GetListOfHasSongs(Release);
+            ItemListOfHasSongs = new List<SelectListItem>();
             //ListOfHasArtwork = getLists.GetListOfHasArtwork(Release);
             Release = new Release();
         }
@@ -47,7 +48,8 @@ namespace AquavitBEAT.Models
 
         //public List<CheckBoxViewModel> ArtistCheckBoxes { get; set; } // Slett?
         public List<CheckBoxViewModel> SongCheckBoxes { get; set; }
-        //public List<SelectListItem> ListOfHasSongs { get; set; }
+        [Required]
+        public List<SelectListItem> ItemListOfHasSongs { get; set; }
         //public List<SelectListItem> ListOfHasArtwork { get; set; }
 
         public List<SelectListItem> GetReleasesAndSelectedFormats()
@@ -211,15 +213,15 @@ namespace AquavitBEAT.Models
         {
             get
             {
-                var formats = new List<string>();
+                //var formats = new List<string>();
                 foreach (var r in _release.FormatTypes)
                 {
 
-
-                    formats.Add(r.Format.FormatTypeName);
+                    yield return r.Format.FormatTypeName;
+                    //formats.Add(r.Format.FormatTypeName);
 
                 }
-                return formats;
+                //return formats;
             }
         }
 
@@ -276,15 +278,16 @@ namespace AquavitBEAT.Models
         {
             get
             {
-                var list = new List<BuyOrStreamLink>();
+                //var list = new List<BuyOrStreamLink>();
                 foreach (var b in _release.BuyOrStreamLinks)
                 {
                     if (!string.IsNullOrEmpty(b.LinkUrl))
                     {
-                        list.Add(b);
+                        //list.Add(b);
+                        yield return b;
                     }
                 }
-                return list;
+                //return list;
             }
         }
         public IEnumerable<Song> Songs
@@ -473,6 +476,43 @@ namespace AquavitBEAT.Models
                     Value = item.ArtworkId.ToString()
                 });
             }
+            return list;
+        }
+    }
+
+    public class AllReleasesPublicViewmodel
+    {
+        public AllReleasesPublicViewmodel()
+        {
+            SortBySelecList = GetSortBySelectList();
+            AllReleases = new List<Release>();
+        }
+        public List<Release> AllReleases { get; set; }
+        public List<SelectListItem> SortBySelecList { get; set; }
+
+        public List<SelectListItem> GetSortBySelectList()
+        {
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem
+            {
+                Value = "1",
+                Text = "Release Name"
+            });
+            list.Add(new SelectListItem
+            {
+                Value = "2",
+                Text = "Date - New first"
+            });
+            list.Add(new SelectListItem
+            {
+                Value = "3",
+                Text = "Date - Old first"
+            });
+            list.Add(new SelectListItem
+            {
+                Value = "4",
+                Text = "Artist"
+            });
             return list;
         }
     }

@@ -26,7 +26,7 @@
     
     <div class="col-md-1">@Html.DisplayFor(modelItem => item.RemixName)</div>
     <div class="col-md-1">@Html.DisplayFor(modelItem => item.ReleaseDate)</div>
-    <div class="col-md-2">@Html.DisplayFor(modelItem => item.Comment)</div>
+    <div class="col-md-2"><div class="readmore">@Html.DisplayFor(modelItem => item.Comment)</div></div>
     <div class="col-md-3"><audio controls>
     <source src="@item.AudioUrl" />
 </audio></div>
@@ -36,6 +36,7 @@
 }
 
 @section scripts{
+@Scripts.Render("~/bundles/readmorejs")
     <script>
         $(function () {
             $("audio").on("play", function () {
@@ -43,6 +44,16 @@
                     audio.pause();
                 });
             });
+
+            $('.readmore').readmore({
+                speed: 75,
+                collapsedHeight: 150,
+                moreLink: '<a href="#">Read more</a>',
+                lessLink: '<a href="#">Read less</a>'
+            });
+
         });
+
+
     </script>
 }

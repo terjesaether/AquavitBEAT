@@ -83,83 +83,29 @@ namespace AquavitBEAT.Models
         public virtual List<Artwork> HasArtworks { get; set; }
         public virtual List<BuyOrStreamLink> BuyOrStreamLinks { get; set; }
         //public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; } // Fjernes?
-        [Required]
+        [Required, Display(Name = "Song(s)")]
         public virtual ICollection<SongToRelease> SongToReleases { get; set; }
 
-        private List<ReleaseFormat> FillFormatsList()
+        private IEnumerable<ReleaseFormat> FillFormatsList()
         {
-            var list = new List<ReleaseFormat>();
-            foreach (var f in _db.FormatsTypes.ToList())
+            //var list = new List<ReleaseFormat>();
+            foreach (var format in _db.FormatsTypes)
             {
                 var newReleaseFormat = new ReleaseFormat
                 {
-
-                    Format = f
+                    Format = format
                 };
-                list.Add(newReleaseFormat);
+                //list.Add(newReleaseFormat);
+                yield return newReleaseFormat;
 
             }
-            return list;
+            //return list;
         }
 
         public IEnumerable<Artist> GetArtists()
         {
-            List<Artist> list = SongToReleases.SelectMany(s => s.Song.SongToArtists.Select(a => a.Artist)).ToList();
-            return list;
+            return SongToReleases.SelectMany(s => s.Song.SongToArtists.Select(a => a.Artist)).ToList();
         }
-
-        // Fjernes?
-        //private List<ReleaseFormat2> FillFormatsList2()
-        //{
-        //    var list = new List<ReleaseFormat2>();
-        //    var buyUrl = new BuyUrl
-        //    {
-        //        BuyLink = "",
-        //        UrlName = ""
-        //    };
-        //    list.Add(new ReleaseFormat2
-        //    {
-        //        BuyUrls = new List<BuyUrl>
-        //        {
-        //            buyUrl
-        //        },
-        //        FormatName = Formats.Vinyl,
-        //    });
-        //    list.Add(new ReleaseFormat2
-        //    {
-        //        BuyUrls = new List<BuyUrl>
-        //        {
-        //            buyUrl
-        //        },
-        //        FormatName = Formats.Download,
-        //    });
-        //    list.Add(new ReleaseFormat2
-        //    {
-        //        BuyUrls = new List<BuyUrl>
-        //        {
-        //            buyUrl
-        //        },
-        //        FormatName = Formats.Streaming,
-        //    });
-        //    list.Add(new ReleaseFormat2
-        //    {
-        //        BuyUrls = new List<BuyUrl>
-        //        {
-        //            buyUrl
-        //        },
-        //        FormatName = Formats.CD,
-        //    });
-        //    list.Add(new ReleaseFormat2
-        //    {
-        //        BuyUrls = new List<BuyUrl>
-        //        {
-        //            buyUrl
-        //        },
-        //        FormatName = Formats.Cassette,
-        //    });
-        //    return list;
-        //}
-
 
     }
 

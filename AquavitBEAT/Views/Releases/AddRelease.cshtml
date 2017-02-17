@@ -1,7 +1,7 @@
 ﻿@model AquavitBEAT.Models.ReleaseViewModel
 
 @{
-    ViewBag.Title = "CreateRelease";
+    ViewBag.Title = "Create Release";
 }
 
 @section Styles {
@@ -109,7 +109,7 @@
 
                             @*@Html.DropDownList("SongId", null, "Choose songs ...", htmlAttributes: new { @class = "form-control selectpicker", multiple = true })*@
                             @Html.DropDownListFor(model => model.Release.SongToReleases, Model.ItemsListOfAllSongs, new { @class = "form-control selectpicker", multiple = true })
-
+                            @Html.ValidationMessageFor(model => model.Release.SongToReleases, "", new { @class = "text-danger" })
                         </div>
                     </div>
 

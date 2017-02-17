@@ -29,6 +29,8 @@ namespace AquavitBEAT.Controllers
             return View(_db.Releases.ToList());
         }
 
+
+
         // GET: Releases/Details/5
         [HttpGet]
         [Route("Releases/{id}")]
@@ -56,7 +58,6 @@ namespace AquavitBEAT.Controllers
             ViewBag.SongId = new SelectList(_db.Songs, "SongId", "Title");
 
             var vm = new ReleaseViewModel();
-            //vm.Release = new Release();
 
             vm.Release.ReleaseDate = DateTime.Now;
             vm.Release.Price = 10;
@@ -84,37 +85,49 @@ namespace AquavitBEAT.Controllers
 
         public ActionResult AddRelease(ReleaseViewModel vm, int[] SongId, int[] FormatTypeId, string ReleaseTypeId)
         {
-            string[] formats;
-            if (!string.IsNullOrEmpty(Request.Form["Release.FormatTypes"]))
+            try
             {
-                formats = Request.Form["Release.FormatTypes"].Split(',');
-                FormatTypeId = Array.ConvertAll(formats, int.Parse);
+                if (ModelState.IsValid)
+                {
+                    string[] formats;
+                    if (!string.IsNullOrEmpty(Request.Form["Release.FormatTypes"]))
+                    {
+                        formats = Request.Form["Release.FormatTypes"].Split(',');
+                        FormatTypeId = Array.ConvertAll(formats, int.Parse);
+                    }
+                    else
+                    {
+                        FormatTypeId[0] = 1;
+                    }
+
+                    ReleaseTypeId = Request.Form["Release.ReleaseType"];
+                    var songs = Request.Form["Release.SongToReleases"].Split(',');
+
+
+
+                    SongId = Array.ConvertAll(songs, int.Parse);
+
+                    var httpRequest = System.Web.HttpContext.Current;
+
+                    var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, null, false, true);
+
+                    if (success)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View(vm);
+                    }
+                }
             }
-            else
+            catch (Exception)
             {
-                FormatTypeId[0] = 1;
+
+                throw;
             }
 
-            ReleaseTypeId = Request.Form["Release.ReleaseType"];
-            var songs = Request.Form["Release.SongToReleases"].Split(',');
-
-
-
-            SongId = Array.ConvertAll(songs, int.Parse);
-
-            var httpRequest = System.Web.HttpContext.Current;
-
-            var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, null, false, true);
-
-            if (success)
-            {
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View(vm);
-            }
-
+            return View();
         }
 
         // GET: Releases/Edit/5
@@ -176,6 +189,7 @@ namespace AquavitBEAT.Controllers
             var songTo = _db.SongToReleases.ToList();
 
             ViewBag.SongId = songsDropDown;
+            vm.ItemListOfHasSongs = songsDropDown; // Sender ikke med selected...
             ViewBag.ReleaseTypeId = vm.GetSelectedReleaseType();
             ViewBag.FormatTypeId = vm.GetReleasesAndSelectedFormats();
 

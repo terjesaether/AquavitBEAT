@@ -1,5 +1,26 @@
 ﻿@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans+Condensed|Open+Sans|Overpass|Quicksand");
+.front-page {
+  background-image: url(/images/ab_frontpage_bgr_w_logo.jpg);
+  background-color: #9babb2;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-top: 0;
+  background-attachment: fixed; }
+
+.front-page .navbar {
+  height: 200px;
+  background-color: none;
+  border: none;
+  border-radius: 0;
+  padding-top: 20px; }
+
+.front-page .nav > li a {
+  color: #6298b2; }
+
+.front-page .nav > li a:hover {
+  color: #000000; }
+
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -1517,7 +1538,7 @@ pre {
       width: 970px; } }
   @media (min-width: 1200px) {
     .container {
-      width: 1370px; } }
+      width: 1270px; } }
 
 .container-fluid {
   margin-right: auto;
@@ -5866,6 +5887,13 @@ a {
 .bottom-air-2 {
   margin-bottom: 40px; }
 
+.btn-aquavit {
+  background: #6298b2; }
+
+.btn-aquavit:hover {
+  color: #f3fbff;
+  background-color: #ca2e2e; }
+
 .on-line {
   display: inline; }
 
@@ -5899,6 +5927,7 @@ textarea {
   resize: none;
   min-height: 200px; }
 
+/* Fancy input */
 .inputfile {
   width: 0.1px;
   height: 0.1px;
@@ -5962,26 +5991,6 @@ textarea {
   background: #e5e5e5;
   cursor: pointer; }
 
-.front-page {
-  background-image: url(/images/ab_frontpage_bgr_w_logo.jpg);
-  background-color: #9babb2;
-  background-size: cover;
-  background-repeat: no-repeat;
-  padding-top: 0; }
-
-.front-page .navbar {
-  height: 200px;
-  background-color: none;
-  border: none;
-  border-radius: 0;
-  padding-top: 20px; }
-
-.front-page .nav > li a {
-  color: #6298b2; }
-
-.front-page .nav > li a:hover {
-  color: #000000; }
-
 .frontpage-first-row {
   margin-top: 200px; }
 
@@ -5989,13 +5998,37 @@ textarea {
   background: none;
   padding: 20px; }
 
+.frontpage-box a:hover {
+  text-decoration: none; }
+
+.frontpage-box a {
+  color: #000; }
+
+.frontpage-inner-box {
+  background: #6298b2;
+  padding: 16px;
+  min-height: 460px; }
+
+.frontpage-inner-box:hover {
+  opacity: 0.9;
+  background: #ffffff; }
+
+div.frontpage-inner-box > a > h1, div.frontpage-inner-box > a > h2 {
+  color: #000; }
+
+.front-page-box a {
+  text-decoration: none; }
+
+.front-page-header {
+  height: 80px; }
+
 .frontpage-box h1 {
-  font-size: 1.3em;
+  font-size: 1.2em;
   margin: 0;
   padding: 0; }
 
 .frontpage-box h2 {
-  font-size: 1.1em;
+  font-size: 1.3em;
   font-weight: bold;
   margin-top: 10px; }
 
@@ -6003,23 +6036,20 @@ textarea {
   background: #000; }
 
 .front-page-formats span {
-  font-size: 10px;
+  color: #fff;
+  top: 30px;
+  font-size: 1em;
   margin-right: 4px;
   background: #000; }
 
 .front-page-formats {
-  padding-top: 6px;
+  padding-top: 16px;
   padding-bottom: 6px;
   margin-bottom: 10px; }
 
 .frontpage-box p, .frontpage-box span {
   padding: 4px;
   margin: 2px; }
-
-.frontpage-inner-box {
-  background: #6298b2;
-  padding: 16px;
-  min-height: 460px; }
 
 .frontpage-box .audio {
   background: #000;
@@ -6029,7 +6059,8 @@ textarea {
   cursor: pointer; }
 
 .frontpage-box-releasedate {
-  color: #000; }
+  color: #fff;
+  background: #000; }
 
 .release-details-bigbox {
   background: #6298b2;
@@ -6079,6 +6110,20 @@ textarea {
 
 .release-details-about {
   padding-bottom: 30px; }
+
+.all-releases-wrapper {
+  background: #6298b2;
+  padding: 20px;
+  opacity: 0.9; }
+
+.all-releases-wrapper h2 a:hover {
+  color: #fff; }
+
+.all-releases-wrapper h2 a {
+  color: #ca2e2e; }
+
+.all-releases-wrapper a {
+  color: #fff; }
 
 .artist-details-box-1 {
   margin-bottom: 50px; }

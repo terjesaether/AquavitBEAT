@@ -4,15 +4,16 @@
     ViewBag.Title = "Index";
 }
 
+
 <h1>AquavitBEAT artists <a href="/Artist/Add"><span class="glyphicon glyphicon-plus"></span></a></h1>
 
 <div class="row">
     <div class="col-md-3"><h4>Artist Name</h4></div>
     <div class="col-md-2"><h4>Real Name</h4></div>
-    <div class="col-md-2"><h4>Address</h4></div>
+    
     <div class="col-md-2"><h4>Mail</h4></div>
     <div class="col-md-1"><h4>Country</h4></div>
-    <div class="col-md-2"><h4>About</h4></div>
+    <div class="col-md-4"><h4>About</h4></div>
 </div>
 
 <div class="" id="artist-list">
@@ -28,11 +29,11 @@
 
             <div class="col-md-2">@artist.FirstName&nbsp;@artist.LastName</div>
 
-            <div class="col-md-2">@artist.Address</div>
+            
             <div class="col-md-2"><a href="mailto:@artist.Mail">@artist.Mail</a></div>
 
             <div class="col-md-1">@artist.Country</div>
-            <div class="col-md-2">@artist.About</div>
+            <div class="col-md-4"><div class="readmore">@artist.About</div></div>
 
 
 
@@ -40,6 +41,22 @@
     }
 
 </div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/readmorejs")
+<script>
+
+    $('.readmore').readmore({
+        speed: 75,
+        collapsedHeight: 150,
+        moreLink: '<a href="#">Read more</a>',
+        lessLink: '<a href="#">Read less</a>'
+    });
+
+    </script>
+
+
+    }
 
 
 

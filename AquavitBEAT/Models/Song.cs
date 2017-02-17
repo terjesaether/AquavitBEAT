@@ -9,6 +9,14 @@ namespace AquavitBEAT.Models
 {
     public class Song
     {
+        public Song()
+        {
+            Remixers = new List<Artist>();
+            InReleases = new List<Release>();
+            SongToArtists = new List<SongToArtist>();
+            SongToRemixers = new List<SongToRemixer>();
+        }
+
         [Required]
         public int SongId { get; set; }
 
@@ -17,7 +25,7 @@ namespace AquavitBEAT.Models
 
         [Required]
         [Display(Name = "Artist(s)")]
-        public virtual List<Artist> Artist { get; set; } = new List<Artist>();
+        public virtual List<Artist> Artists { get; set; } = new List<Artist>();
 
         [Required, Display(Name = "Remix name")]
         public string RemixName { get; set; }
@@ -33,11 +41,11 @@ namespace AquavitBEAT.Models
         [Display(Name = "Audiofile:")]
         public string AudioUrl { get; set; }
 
-        public virtual List<Artist> Remixers { get; set; } = new List<Artist>();
-        public virtual List<Release> InReleases { get; set; } = new List<Release>();
-
-        public virtual ICollection<SongToArtist> SongToArtists { get; set; } = new List<SongToArtist>();
-        public virtual ICollection<SongToRemixer> SongToRemixers { get; set; } = new List<SongToRemixer>();
+        [Display(Name = "Remixers(s)")]
+        public virtual List<Artist> Remixers { get; set; }
+        public virtual ICollection<Release> InReleases { get; set; }
+        public virtual ICollection<SongToArtist> SongToArtists { get; set; }
+        public virtual ICollection<SongToRemixer> SongToRemixers { get; set; }
 
         public string GetFullSongName()
         {
@@ -46,7 +54,7 @@ namespace AquavitBEAT.Models
         public string GetFormattedArtistNames()
         {
             string artists = "";
-            foreach (var a in this.Artist)
+            foreach (var a in this.Artists)
             {
                 artists += a.ArtistName + " // ";
             }

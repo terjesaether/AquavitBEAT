@@ -30,4 +30,5 @@
 /// <reference path="miniaudioplayer/jquery.mb.miniaudioplayer.js" />
 /// <reference path="miniaudioplayer/jquery.metadata.js" />
 /// <reference path="modernizr-2.6.2.js" />
+/// <reference path="readmore-js/readmore.min.js" />
 /// <reference path="respond.js" />

@@ -1,7 +1,7 @@
 ﻿@model AquavitBEAT.Models.SongViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Song";
 }
 
 @section Styles {
@@ -27,28 +27,35 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Song.Artist, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-4">
-                        @Html.DropDownList("ArtistID", null, null, new { @class = "selectpicker form-control", id = "selectArtists", multiple = true })
-                    </div>
+                    
                 
                     @Html.LabelFor(model => model.Song.Title, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-4">
                         @Html.EditorFor(model => model.Song.Title, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Song.Title, "", new { @class = "text-danger" })
                     </div>
+
+
+@Html.LabelFor(model => model.Song.RemixName, htmlAttributes: new { @class = "control-label col-md-2" })
+<div class="col-md-4">
+    @Html.EditorFor(model => model.Song.RemixName, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Song.RemixName, "", new { @class = "text-danger" })
+</div>
+
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Song.RemixName, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                    @Html.LabelFor(model => model.Song.Artists, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-4">
-                        @Html.EditorFor(model => model.Song.RemixName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Song.RemixName, "", new { @class = "text-danger" })
+                        @Html.DropDownList("ArtistID", null, null, new { @class = "selectpicker form-control", id = "selectArtists", multiple = true })
+                        @Html.ValidationMessageFor(model => model.Song.Artists, "", new { @class = "text-danger" })
                     </div>
 
                     <label class="col-md-2 control-label">Remixer(s)</label>
                     <div class="col-md-4">
                         @Html.DropDownList("RemixerID", null, null, new { @class = "selectpicker form-control", id = "selectArtists", multiple = true })
+                        @Html.ValidationMessageFor(model => model.Song.Remixers, "", new { @class = "text-danger" })
                     </div>
                 
                     
@@ -83,7 +90,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Add new great track!" class="btn btn-default" />
+                        <input type="submit" value="Add new great track!" class="btn btn-aquavit" />
                     </div>
                 </div>
             </div>
@@ -106,8 +113,7 @@
         $(document).ready(function () {
 
             var selectPicker = $('.selectpicker');
-            //selectPicker.attr("multiple", true);
-
+            
             selectPicker.selectpicker({
                 liveSearch: true,
                 liveSearchStyle: 'contains',

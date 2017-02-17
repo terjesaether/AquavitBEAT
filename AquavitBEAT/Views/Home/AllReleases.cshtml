@@ -1,0 +1,47 @@
+﻿@model AquavitBEAT.Models.AllReleasesPublicViewmodel
+
+@{
+    ViewBag.Title = "AllReleases";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+}
+
+
+<div class="all-releases-wrapper">
+    @using (Html.BeginForm("AllReleases","Home", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-md-3">@Html.DropDownListFor(model => model.AllReleases, Model.SortBySelecList, "Sort by ...", new { @class = "form-control", @onchange = "this.form.submit()" })</div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"><input type="submit" class="btn btn-default" value="Sort!" /></div>
+        </div>
+    }
+    
+
+    @foreach (var release in Model.AllReleases)
+    {
+        <div class="row list-view">
+            <div class="col-md-4"><h2><a href="/Home/Release/@release.ReleaseId">@release.Title</a></h2></div>
+            <div class="col-md-3">
+                @foreach (var artist in release.GetArtists())
+                {
+                    <p><a href="/Home/Artist/@artist.ArtistId">@artist.ArtistName</a></p>
+                }
+            </div>
+            <div class="col-md-3">
+                @foreach (var song in release.HasSongs)
+                {
+                    <p>@song.GetFullSongName()</p>
+                }
+            </div>
+            <div class="col-md-1">
+                <img src="@release.frontImageUrl" class="img-responsive" alt="" />
+                
+            </div>
+            <div class="col-md-1">
+               
+                <img src="@release.backImageUrl" class="img-responsive" alt="" />
+            </div>
+        </div>
+    }
+</div>

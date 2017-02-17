@@ -2,8 +2,11 @@
 $lightBlue : #6298b2;
 $lightGrey: #9babb2;
 $lighterGrey: #f3fbff;
+$abRed: #ca2e2e;
 
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans+Condensed|Open+Sans|Overpass|Quicksand');
+
+@import 'abeat-main-page';
 
 @import 'bootstrap-sass/assets/stylesheets/bootstrap';
 
@@ -22,7 +25,7 @@ body {
 	padding-bottom: 20px;
 	background: $lighterGrey;
 	font-family:'Quicksand', sans-serif;
-    color: #fff;
+	color: #fff;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -35,17 +38,17 @@ h1, h2, h3, h4 {
 	font-family: 'Quicksand', sans-serif;
 }
 h4 {
-    font-weight: bold;
+	font-weight: bold;
 }
 .white-text {
-    color: #fff;
+	color: #fff;
 }
 .dark-back {
-    background: #000000;
+	background: #000000;
 }
 
 a {
-    color: #ca2e2e;
+	color: #ca2e2e;
 }
 
 .center-block {
@@ -55,36 +58,44 @@ a {
 }
 
 .margin-1 {
-    margin: 10px;
+	margin: 10px;
 }
 .padding-1 {
-    padding: 10px;
+	padding: 10px;
 }
 
 .bottom-air-1 {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 .bottom-air-2 {
-    margin-bottom: 40px;
+	margin-bottom: 40px;
+}
+
+.btn-aquavit {
+	background: $lightBlue;
+}
+.btn-aquavit:hover {
+	color: $lighterGrey;
+    background-color: #ca2e2e;
 }
 .on-line {
-    
-    display:inline;
+	
+	display:inline;
 }
 
 .list-view {
-    border-bottom: dashed #9babb2 1px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    min-height: 80px;
+	border-bottom: dashed #9babb2 1px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	min-height: 80px;
 }
 .list-view:nth-child(odd) {
-    /*background: #2c2c2c;*/
+	/*background: #2c2c2c;*/
 }
 
 .scroll-box {
-    max-height: 600px;
-    overflow: auto;
+	max-height: 600px;
+	overflow: auto;
 }
 /* Set width on the form input elements since they're 100% wide by default */
 input,
@@ -92,8 +103,8 @@ select,
 textarea {
 	/*max-width: 400px;*/
 	/*background: #e5e5e5;*/
-    border-radius: 0 0;
-    background: #6298b2;
+	border-radius: 0 0;
+	background: #6298b2;
 }
 
 textarea {
@@ -102,9 +113,11 @@ textarea {
 }
 
 .fixed-textarea {
-    resize: none;
-    min-height: 200px;
+	resize: none;
+	min-height: 200px;
 }
+
+/* Fancy input */
 
 .inputfile {
 	width: 0.1px;
@@ -146,12 +159,12 @@ textarea {
 	color: #ca2e2e;
 }
 .artist-form textarea, .song-form textarea {
-    height: 200px;
+	height: 200px;
 	max-height: 200px;
 }
 #artist-list a {
-    
-    margin: 2px;
+	
+	margin: 2px;
 }
 
 
@@ -165,7 +178,7 @@ textarea {
 #artist-file-preview {	
 	max-height: 200px;	
 	overflow: hidden;
-    
+	
 	
 }
 
@@ -174,70 +187,82 @@ textarea {
 }
 
 .sidebar {
-    position: absolute;
-    height: 500px;    
+	position: absolute;
+	height: 500px;    
 }
 
 .block {
-    display: block;
+	display: block;
 }
 
 .artist-chbox-list:hover {
-    background: #e5e5e5;
-    cursor: pointer;
+	background: #e5e5e5;
+	cursor: pointer;
 }
 
-.front-page {
-    background-image: url(/images/ab_frontpage_bgr_w_logo.jpg);
-    background-color: #9babb2;
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding-top: 0;
-}
-.front-page .navbar {
-    height: 200px;
-    background-color: none;
-    border: none;
-    border-radius: 0;
-    padding-top: 20px;
-}
-.front-page .nav > li  a {
-    color: $lightBlue;
-}
-.front-page .nav > li  a:hover {
-    color: #000000;
-}
 
 .frontpage-first-row {
-    margin-top: 200px;
+	margin-top: 200px;
 }
 
 .frontpage-box {
-    background: none;
-    padding: 20px;
+	background: none;
+	padding: 20px;      
+}
+.frontpage-box a:hover {
+    text-decoration: none;
+}
+.frontpage-box a {
+    color: #000;
+}
+.frontpage-inner-box {    
+	background: $lightBlue;
+	padding: 16px;
     
+	min-height: 460px;
+}
+
+.frontpage-inner-box:hover {
+	opacity: 0.9; 
+    background: #ffffff;   
+}
+
+div.frontpage-inner-box > a > h1, div.frontpage-inner-box > a > h2 {
+    color: #000;
+}
+
+.front-page-box a {
+	text-decoration: none;
+ 	
+}
+.front-page-header {
+    height: 80px;
 }
 .frontpage-box h1 {
-        font-size: 1.3em;
-        margin: 0;
-        padding: 0;
+		font-size: 1.2em;
+		margin: 0;
+		padding: 0;
 }
 .frontpage-box h2 {
-        font-size: 1.1em;
-        font-weight: bold;
-        margin-top: 10px;
+		font-size: 1.3em;
+		font-weight: bold;
+		margin-top: 10px;
 }
 .frontpage-box p:last-of-type {
-        background: #000;
+		background: #000;
 }
+
+
 .front-page-formats span {
-font-size: 10px;
+   color: #fff;
+   top: 30px;
+font-size: 1em;
 margin-right: 4px;
 background: #000;
 }
 
 .front-page-formats {
-padding-top: 6px;
+padding-top: 16px;
 padding-bottom: 6px;
 margin-bottom: 10px;
 }
@@ -245,101 +270,113 @@ margin-bottom: 10px;
 
 
 .frontpage-box p, .frontpage-box span {
-    padding: 4px;    
-    margin: 2px;
-}
-.frontpage-inner-box {    
-    background: $lightBlue;
-    padding: 16px;
-    min-height: 460px;
+	padding: 4px;    
+	margin: 2px;
 }
 
+
 .frontpage-box .audio {
-    background: #000;
-    width: 50px;
-    height: 50px;
-    display: block;
-    cursor: pointer;
+	background: #000;
+	width: 50px;
+	height: 50px;
+	display: block;
+	cursor: pointer;
 }
 .frontpage-box-releasedate {
-    color: #000;
+	color: #fff;
+    background: #000;
 }
 
 .release-details-bigbox {
-    background: $lightBlue;
-    margin-top: 100px;    
-    min-height: 400px;
+	background: $lightBlue;
+	margin-top: 100px;    
+	min-height: 400px;
 }
 .release-details-heading {    
-    
-    margin-top: -20px;
-    width: 100%;
-    height: 50px;
-    color: #000;
+	
+	margin-top: -20px;
+	width: 100%;
+	height: 50px;
+	color: #000;
 }
 .release-details-heading h1 {
-    font-size: 1.8em;
-    padding: 20px 0;
+	font-size: 1.8em;
+	padding: 20px 0;
 }
 .release-details-heading span:nth-of-type(2) {
-    text-transform: uppercase;
-    font-weight: bold;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 .release-details-inner {
-    width: 900px;
-    margin: 0 auto;
+	width: 900px;
+	margin: 0 auto;
 }
 .release-details-buylinks {
-    background: #000;
-    margin: 4px;
-    padding: 6px;
-    display: block;
-    width: 100%;
+	background: #000;
+	margin: 4px;
+	padding: 6px;
+	display: block;
+	width: 100%;
 }
 .release-details-buylinks a:hover  {    
-    color: #fff;
-    text-decoration: none;
+	color: #fff;
+	text-decoration: none;
 }
 .release-details-buylinks a:hover::after  {    
-    content: " >>>";
+	content: " >>>";
 }
 .release-details-buylinks a {
-    color: #ccc;
+	color: #ccc;
 }
 
 .release-details-body {
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 .release-details-about {
-    padding-bottom: 30px;
+	padding-bottom: 30px;
 }
 
-.artist-details-box-1 {
-    margin-bottom: 50px;
+.all-releases-wrapper {
+    background: #6298b2;
+    padding: 20px;
+    opacity: 0.9;
 }
+.all-releases-wrapper h2 a:hover {
+	color: #fff;
+}
+.all-releases-wrapper h2 a {
+	color: $abRed;
+}
+.all-releases-wrapper a {
+	color: #fff;
+}
+.artist-details-box-1 {
+	margin-bottom: 50px;
+}
+
 
 .nav > li a {
-    background: none;
-    text-transform: uppercase;
-    font-size: 1.4em;
+	background: none;
+	text-transform: uppercase;
+	font-size: 1.4em;
 }
 .nav > li a:hover, .nav > li a:visited, .nav > li a:active {
-    background: none;
+	background: none;
 }
 .dropdown-menu > li a {
-    font-size: 1em;
+	font-size: 1em;
 }
 .dropdown-menu > li a:hover {
-    background: #808080;
+	background: #808080;
 }
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-    background: none;
+	background: none;
 }
 .dropdown:visited .dropdown-toggle {
-    background: none;
+	background: none;
 }
 
 

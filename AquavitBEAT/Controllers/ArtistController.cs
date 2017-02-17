@@ -2,6 +2,7 @@
 using AquavitBEAT.Operations;
 using System.Linq;
 using System.Web.Mvc;
+using System;
 
 namespace AquavitBEAT.Controllers
 {
@@ -34,14 +35,25 @@ namespace AquavitBEAT.Controllers
         [Route("Artist/Add")]
         public ActionResult AddArtist(ArtistViewModel vm)
         {
-
-            var context = System.Web.HttpContext.Current;
-
-            var isSaved = addAndEditOps.AddOrUpdateArtist(vm, context, false, true);
-
-            if (isSaved)
+            try
             {
-                return RedirectToAction("Index", "Artist");
+                if (ModelState.IsValid)
+                {
+                    var context = System.Web.HttpContext.Current;
+
+                    var isSaved = addAndEditOps.AddOrUpdateArtist(vm, context, false, true);
+
+                    if (isSaved)
+                    {
+                        return RedirectToAction("Index", "Artist");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+
             }
 
             return View();
@@ -64,15 +76,24 @@ namespace AquavitBEAT.Controllers
         [Route("Artist/Edit/")]
         public ActionResult EditArtist(ArtistViewModel vm)
         {
-            //var artist = _db.Artists.Find(id);
 
-            var context = System.Web.HttpContext.Current;
-
-            var isSaved = addAndEditOps.AddOrUpdateArtist(vm, context, true, false);
-
-            if (isSaved)
+            try
             {
-                return RedirectToAction("Index", "Artist");
+                if (ModelState.IsValid)
+                {
+                    var context = System.Web.HttpContext.Current;
+
+                    var isSaved = addAndEditOps.AddOrUpdateArtist(vm, context, true, false);
+
+                    if (isSaved)
+                    {
+                        return RedirectToAction("Index", "Artist");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
             ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
@@ -90,16 +111,16 @@ namespace AquavitBEAT.Controllers
         [Route("Artist/{id}")]
         public ActionResult ArtistDetails(int? id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             var vm = new ArtistViewModel();
             var artist = _db.Artists.Find(id);
             vm.Artist = artist;
             vm.SongToArtists = _db.SongToArtists.Where(s => s.ArtistId == id.Value).ToList();
             vm.ReleaseToArtists = _db.ReleaseToArtist.Where(r => r.ArtistId == id.Value).ToList();
-
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
 
             return View(vm);
         }

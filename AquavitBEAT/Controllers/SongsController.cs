@@ -30,7 +30,8 @@ namespace AquavitBEAT.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return HttpNotFound();
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Song song = _db.Songs.Find(id);
             if (song == null)
@@ -65,22 +66,30 @@ namespace AquavitBEAT.Controllers
         [Route("Songs/Add")]
         public ActionResult AddSong(SongViewModel vm, int[] ArtistId, int[] RemixerId)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return RedirectToAction("AddSong");
-            //}
-            var httpRequest = System.Web.HttpContext.Current;
-
-            var success = addAndEdit.AddOrUpdateSong(vm, httpRequest, ArtistId, RemixerId, false, true);
-
-            if (success)
+            try
             {
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    var httpRequest = System.Web.HttpContext.Current;
+
+                    var success = addAndEdit.AddOrUpdateSong(vm, httpRequest, ArtistId, RemixerId, false, true);
+
+                    if (success)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View();
+                    }
+                }
             }
-            else
+            catch (Exception)
             {
-                return View();
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
+            return View();
+
         }
 
         // For å laste opp musikk til en evt pool
@@ -113,7 +122,6 @@ namespace AquavitBEAT.Controllers
                 Song = song
             };
 
-            // TO DO: hente inn flere artister!
 
             if (song == null)
             {
@@ -173,8 +181,6 @@ namespace AquavitBEAT.Controllers
 
             //vm.ArtistCheckBoxes = CheckBoxes;
 
-
-
             ViewBag.ArtistID = artistDropDown;
             ViewBag.RemixerID = remixDropDown;
 
@@ -189,26 +195,31 @@ namespace AquavitBEAT.Controllers
         [Route("Songs/Edit/{id}")]
         public ActionResult EditSong(SongViewModel vm, int[] ArtistId, int[] RemixerId)
         {
-            var httpRequest = System.Web.HttpContext.Current;
-
-            var success = addAndEdit.AddOrUpdateSong(vm, httpRequest, ArtistId, RemixerId, true, false);
-
-            if (success)
+            try
             {
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    var httpRequest = System.Web.HttpContext.Current;
+
+                    var success = addAndEdit.AddOrUpdateSong(vm, httpRequest, ArtistId, RemixerId, true, false);
+
+                    if (success)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View(vm);
+                    }
+                }
             }
-            else
+            catch (Exception)
             {
-                return View(vm);
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
-            //if (ModelState.IsValid)
-            //{
-            //    _db.Entry(vm.Song).State = EntityState.Modified;
-            //    _db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
-            //return View(vm);
+            return View(vm);
+
         }
 
         // GET: Songs/Delete/5

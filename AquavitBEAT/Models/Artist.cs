@@ -58,7 +58,7 @@ namespace AquavitBEAT.Models
         private List<ArtistSocialMedia> InitSocialMedias()
         {
             var list = new List<ArtistSocialMedia>();
-            foreach (var s in _db.SocialMedias.ToList())
+            foreach (var s in _db.SocialMedias)
             {
                 var newSos = new ArtistSocialMedia
                 {
@@ -66,6 +66,7 @@ namespace AquavitBEAT.Models
                     Name = s.Name,
                     Prefix = "http://www." + s.Name + ".com/"
                 };
+                //yield return newSos;
                 list.Add(newSos);
             }
             return list;

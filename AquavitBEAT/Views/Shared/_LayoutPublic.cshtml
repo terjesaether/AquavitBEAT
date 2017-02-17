@@ -54,14 +54,14 @@
 
                         </ul>
                     </li>
-
-                    
+                    <li>@Html.ActionLink("Releases", "AllReleases", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Admin", "Admin", "Home", new { area = "" }, null)</li>
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>
-    <div class="container-fluid body-content">
+    <div class="container body-content">
         @RenderBody()
 
         <footer>

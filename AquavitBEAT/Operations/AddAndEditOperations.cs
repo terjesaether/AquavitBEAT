@@ -108,7 +108,7 @@ namespace AquavitBEAT.Operations
                         Song = _db.Songs.Find(songId),
                         SongId = songId
                     });
-                    foreach (var artist in song.Artist)
+                    foreach (var artist in song.Artists)
                     {
                         if (!release.Artists.Contains(artist))
                         {
@@ -196,6 +196,7 @@ namespace AquavitBEAT.Operations
             return false;
         }
 
+        // ARTIST
         public bool AddOrUpdateArtist(ArtistViewModel vm, HttpContext context, bool update, bool create)
         {
             Artist artist;
@@ -207,13 +208,14 @@ namespace AquavitBEAT.Operations
                 .Include("ArtistSocialMedias")
                 .Single();
 
-                //Find(vm.Artist.ArtistId);
+
                 artist.FirstName = vm.Artist.FirstName;
                 artist.LastName = vm.Artist.LastName;
                 artist.ArtistName = vm.Artist.ArtistName;
                 artist.About = vm.Artist.About;
                 artist.Address = vm.Artist.Address;
                 artist.Country = vm.Artist.Country;
+                artist.Mail = vm.Artist.Mail;
                 artist.ArtistSocialMedias.Clear();
             }
             else
@@ -240,12 +242,12 @@ namespace AquavitBEAT.Operations
             //    }
             //}
 
+            // Sletter eksisterende og fyller opp liste på nytt:
             var some = _db.ArtistSocialMedias.Where(a => a.ArtistId == artist.ArtistId);
             foreach (var item in some)
             {
                 _db.ArtistSocialMedias.Remove(item);
             }
-
 
             foreach (var item in vm.SocialMediaList)
             {
@@ -310,17 +312,23 @@ namespace AquavitBEAT.Operations
             return false;
         }
 
+        // SONG
         public bool AddOrUpdateSong(SongViewModel vm, HttpContext context, int[] ArtistID, int[] RemixerID, bool update, bool create)
         {
             Song song;
             if (vm.Song.SongId != 0)
             {
                 song = _db.Songs.Find(vm.Song.SongId);
+                song = _db.Songs
+                    .Where(s => s.SongId == vm.Song.SongId)
+                    .Include("Artists")
+                    .Include("Remixers")
+                    .Single();
                 song.Title = vm.Song.Title;
                 song.RemixName = vm.Song.RemixName;
                 song.ReleaseDate = vm.Song.ReleaseDate;
                 song.Comment = vm.Song.Comment;
-                song.Artist.Clear();
+                song.Artists.Clear();
                 song.Remixers.Clear();
 
                 //song.InReleases = vm.Song.InReleases;
@@ -360,10 +368,10 @@ namespace AquavitBEAT.Operations
                 //    }
                 //}
                 // Lager en ny array med artister for navngiving:
-                ArtistID = new int[song.Artist.Count()];
+                ArtistID = new int[song.Artists.Count()];
                 for (int i = 0; i < ArtistID.Length; i++)
                 {
-                    ArtistID[i] = song.Artist[i].ArtistId;
+                    ArtistID[i] = song.Artists[i].ArtistId;
                 }
 
             }
@@ -383,7 +391,7 @@ namespace AquavitBEAT.Operations
                 foreach (var artistId in ArtistID)
                 {
                     addedArtist = _db.Artists.Find(artistId);
-                    song.Artist.Add(addedArtist);
+                    song.Artists.Add(addedArtist);
                     song.SongToArtists.Add(new SongToArtist
                     {
                         Artist = addedArtist,
@@ -398,10 +406,10 @@ namespace AquavitBEAT.Operations
             {
 
 
-                RemixerID = new int[song.Artist.Count()];
+                RemixerID = new int[song.Artists.Count()];
                 for (int i = 0; i < RemixerID.Length; i++)
                 {
-                    RemixerID[i] = song.Artist[i].ArtistId;
+                    RemixerID[i] = song.Artists[i].ArtistId;
                 }
             }
             else if (RemixerID != null)
