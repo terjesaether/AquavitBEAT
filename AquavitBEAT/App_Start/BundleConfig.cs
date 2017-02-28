@@ -29,6 +29,12 @@ namespace AquavitBEAT
             bundles.Add(new ScriptBundle("~/bundles/readmorejs").Include(
                       "~/Scripts/Readmore-js/readmore.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/soundmanager2js").Include(
+                      "~/Scripts/SoundManager2/demo/360-player/script/berniecode-animator.js",
+                      "~/Scripts/SoundManager2/script/soundmanager2-nodebug-jsmin.js",
+                      "~/Scripts/SoundManager2/demo/360-player/script/360player.js"
+                      ));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       //"~/Content/bootstrap.css",
                       "~/Content/site.css"));
@@ -39,6 +45,8 @@ namespace AquavitBEAT
 
             bundles.Add(new StyleBundle("~/Content/miniaudioplayercss").Include(
                       "~/Scripts/miniaudioplayer/css/jQuery.mb.miniAudioPlayer.min.css"));
+
+
         }
     }
 }

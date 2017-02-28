@@ -223,13 +223,15 @@ namespace AquavitBEAT.Controllers
         }
 
         // GET: Songs/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteSong(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Song song = _db.Songs.Find(id);
+
             if (song == null)
             {
                 return HttpNotFound();

@@ -88,23 +88,23 @@ namespace AquavitBEAT.Models
 
         private IEnumerable<ReleaseFormat> FillFormatsList()
         {
-            //var list = new List<ReleaseFormat>();
+
             foreach (var format in _db.FormatsTypes)
             {
                 var newReleaseFormat = new ReleaseFormat
                 {
                     Format = format
                 };
-                //list.Add(newReleaseFormat);
+
                 yield return newReleaseFormat;
 
             }
-            //return list;
+
         }
 
         public IEnumerable<Artist> GetArtists()
         {
-            return SongToReleases.SelectMany(s => s.Song.SongToArtists.Select(a => a.Artist)).ToList();
+            return SongToReleases.SelectMany(s => s.Song.SongToArtists.Select(a => a.Artist)).Distinct().ToList();
         }
 
     }

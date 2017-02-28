@@ -87,47 +87,47 @@ namespace AquavitBEAT.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+
+
+                string[] formats;
+                if (!string.IsNullOrEmpty(Request.Form["Release.FormatTypes"]))
                 {
-                    string[] formats;
-                    if (!string.IsNullOrEmpty(Request.Form["Release.FormatTypes"]))
-                    {
-                        formats = Request.Form["Release.FormatTypes"].Split(',');
-                        FormatTypeId = Array.ConvertAll(formats, int.Parse);
-                    }
-                    else
-                    {
-                        FormatTypeId[0] = 1;
-                    }
-
-                    ReleaseTypeId = Request.Form["Release.ReleaseType"];
-                    var songs = Request.Form["Release.SongToReleases"].Split(',');
-
-
-
-                    SongId = Array.ConvertAll(songs, int.Parse);
-
-                    var httpRequest = System.Web.HttpContext.Current;
-
-                    var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, null, false, true);
-
-                    if (success)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        return View(vm);
-                    }
+                    formats = Request.Form["Release.FormatTypes"].Split(',');
+                    FormatTypeId = Array.ConvertAll(formats, int.Parse);
                 }
+                else
+                {
+                    FormatTypeId[0] = 1;
+                }
+
+                ReleaseTypeId = Request.Form["Release.ReleaseType"];
+                var songs = Request.Form["Release.SongToReleases"].Split(',');
+
+
+
+                SongId = Array.ConvertAll(songs, int.Parse);
+
+                var httpRequest = System.Web.HttpContext.Current;
+
+                var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, null, false, true);
+
+                if (success)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(vm);
+                }
+
             }
             catch (Exception)
             {
 
-                throw;
+                return View();
             }
 
-            return View();
+
         }
 
         // GET: Releases/Edit/5

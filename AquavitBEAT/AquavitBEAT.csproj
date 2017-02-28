@@ -234,6 +234,14 @@
     <Compile Include="Migrations\201702111624380_SomeReqirements.Designer.cs">
       <DependentUpon>201702111624380_SomeReqirements.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702281706092_AddedIconUri.cs" />
+    <Compile Include="Migrations\201702281706092_AddedIconUri.Designer.cs">
+      <DependentUpon>201702281706092_AddedIconUri.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702282022400_SongToReleaesInSongs.cs" />
+    <Compile Include="Migrations\201702282022400_SongToReleaesInSongs.Designer.cs">
+      <DependentUpon>201702282022400_SongToReleaesInSongs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AquavitBEATDbInit.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -254,6 +262,7 @@
     <Compile Include="Operations\AddAndEditOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ArtistDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="audio\2017\01\04\Terje_Saether_End_And_Below_Jolly_Roger_Remix.mp3" />
@@ -262,6 +271,10 @@
     <Content Include="audio\2017\01\25\siri_2.mp3" />
     <Content Include="audio\2017\01\26\Robert_Solheim_Terje_Saether_Robert_Solheim_Terje_Saether_Julieta_Cickita_Original_Mix.mp3" />
     <Content Include="audio\2017\01\26\siri_2.mp3" />
+    <Content Include="audio\2017\02\08\Terje_Saether_Come_Inside_Original_Mix.mp3" />
+    <Content Include="audio\2017\02\09\Robert_Solheim_Baby_Original_Mix.mp3" />
+    <Content Include="audio\2017\02\14\Rick_O%27Disko_Robert_Solheim_Rick_O%27Disko_Satans_baller_Original_Mix.mp3" />
+    <Content Include="audio\2017\02\16\Robert_Solheim_Terje_Saether_Dolores_Original_Mix.mp3" />
     <Content Include="audio\2017\02\24\Sigbjørn_Solheim_-_eldre_mann.mp3" />
     <Content Include="audio\2017\03\10\Robert_Solheim_Baby_Original_Mix.mp3" />
     <Content Include="audio\2017\03\10\Robert_Solheim_Ny_sang_Original_Mix.mp3" />
@@ -289,7 +302,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Main-page.css">
-      <DependentUpon>abeat-main-page.scss</DependentUpon>
+      <DependentUpon>abeat-front-page.scss</DependentUpon>
     </Content>
     <Content Include="Content\Main-page.min.css">
       <DependentUpon>Main-page.css</DependentUpon>
@@ -342,11 +355,19 @@
     <Content Include="fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\ab_artist_bgr.jpg" />
     <Content Include="images\ab_frontpage_bgr.jpg" />
     <Content Include="images\ab_frontpage_bgr_w_logo.jpg" />
+    <Content Include="images\fb-icon.png" />
+    <Content Include="images\profiles\End_And_Below_09-02-2017.jpg" />
     <Content Include="images\profiles\Rick_O%27Disko_02-02-2017.jpg" />
+    <Content Include="images\profiles\Rick_O%27Disko_28-02-2017.jpg" />
+    <Content Include="images\profiles\Robert_Solheim_09-02-2017.jpg" />
+    <Content Include="images\profiles\Robert_Solheim_25-02-2017.jpg" />
     <Content Include="images\profiles\Robert_Solheim_30-01-2017.jpg" />
+    <Content Include="images\profiles\Swayzak_09-02-2017.jpg" />
     <Content Include="images\profiles\Swayzak_24-01-2017.jpg" />
+    <Content Include="images\profiles\Terje_Saether_09-02-2017.jpg" />
     <Content Include="images\profiles\Terje_Saether_31-01-2017.jpg" />
     <Content Include="images\releases\Baby\Baby_0.jpg" />
     <Content Include="images\releases\Cicuenas_Remixes\Cicuenas_Remixes_0.jpg" />
@@ -355,10 +376,13 @@
     <Content Include="images\releases\Mercadona_EP\Mercadona_EP_0.jpg" />
     <Content Include="images\releases\Mercadona_EP\Mercadona_EP_1.jpg" />
     <Content Include="images\releases\Robby_Robby\Robby_Robby_0.jpg" />
+    <Content Include="images\releases\Saviour_Remixed\Saviour_Remixed_0.jpg" />
     <Content Include="images\releases\Star_Wars\Star_Wars_0.jpg" />
     <Content Include="images\releases\Star_Wars\Star_Wars_1.jpg" />
     <Content Include="images\releases\Star_Wars_UUøø\Star_Wars_UUøø_0.jpg" />
     <Content Include="images\releases\Uggggga\Uggggga_0.jpg" />
+    <Content Include="images\sc-icon.png" />
+    <Content Include="images\tw-icon.png" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -459,9 +483,11 @@
     <Content Include="Content\bootstrap-sass\assets\stylesheets\_bootstrap-sprockets.scss" />
     <Content Include="Content\bootstrap-sass\assets\stylesheets\_bootstrap.scss" />
     <Content Include="Content\bootstrap-select.css.map" />
-    <Content Include="Content\abeat-main-page.scss" />
+    <Content Include="Content\abeat-front-page.scss" />
     <None Include="Properties\PublishProfiles\AquavitBeat.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
+    <None Include="Properties\PublishProfiles\dev2.terjesaether.com - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\dev2.terjesaether.com.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-ar_AR.js" />
     <Content Include="Scripts\i18n\defaults-ar_AR.min.js" />
@@ -560,6 +586,119 @@
     <Content Include="Scripts\Readmore-js\readmore.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-pause-2x.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-pause-light-2x.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-pause-light.gif" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-pause-light.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-pause.gif" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-pause.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-play-2x.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-play-light-2x.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-play-light.gif" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-play-light.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-play.gif" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-play.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-vis-pause-light.gif" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-vis-pause-light.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-vis-pause.gif" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-vis-pause.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-vis-play-light.gif" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-vis-play-light.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-vis-play.gif" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360-button-vis-play.png" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360player-visualization.css" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360player.css" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\canvas-visualization-basic.html" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\canvas-visualization.html" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\demo-slider-controls.css" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\demo-slider-controls.js" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\demo.css" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\icon_loading_dots.gif" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\icon_loading_spinner.gif" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\icon_loading_spinner_bigger.gif" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\index.html" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\script\360player.js" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\script\berniecode-animator.js" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\script\excanvas.js" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\css\bar-ui.css" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\css\demo.css" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\black-10.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\black-25.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\black-33.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\credits.txt" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\arrow.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\cart.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\first.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\last.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\list.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\list2.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\loop.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\music.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\pause.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\play.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\shuffle.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\PNG\volume.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\arrow.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\cart.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\first.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\last.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\list.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\list2.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\loop.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\music.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\pause.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\play.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\shuffle.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-000000\SVG\volume.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\arrow.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\cart.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\first.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\last.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\list.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\list2.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\loop.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\music.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\pause.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\play.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\shuffle.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\PNG\volume.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\arrow.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\cart.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\first.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\last.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\list.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\list2.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\loop.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\music.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\pause.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\play.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\shuffle.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\entypo-25px-ffffff\SVG\volume.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\free-25px-000000\PNG\spinner.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\free-25px-000000\SVG\spinner.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\free-25px-ffffff\PNG\spinner.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\icomoon\free-25px-ffffff\SVG\spinner.svg" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\patterns\credits.txt" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\patterns\pinstriped_suit_vertical.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\patterns\pool_table.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\patterns\rubber_grip.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\patterns\tasky_pattern.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\patterns\textured_paper.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\patterns\tweed.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\patterns\wood_pattern.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\patterns\wood_pattern_dark.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\image\patterns\woven.png" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\index.html" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\script\bar-ui.js" />
+    <Content Include="Scripts\SoundManager2\demo\bar-ui\script\demo.js" />
+    <Content Include="Scripts\SoundManager2\script\soundmanager2-jsmin.js" />
+    <Content Include="Scripts\SoundManager2\script\soundmanager2-nodebug-jsmin.js" />
+    <Content Include="Scripts\SoundManager2\script\soundmanager2-nodebug.js" />
+    <Content Include="Scripts\SoundManager2\script\soundmanager2.js" />
+    <Content Include="Scripts\SoundManager2\swf\soundmanager2.swf" />
+    <Content Include="Scripts\SoundManager2\swf\soundmanager2_debug.swf" />
+    <Content Include="Scripts\SoundManager2\swf\soundmanager2_flash9.swf" />
+    <Content Include="Scripts\SoundManager2\swf\soundmanager2_flash9_debug.swf" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -626,6 +765,22 @@
     <Content Include="Scripts\miniaudioplayer\css\font\mbAudioFont\mbaudio_font.woff" />
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Home\AllReleases.cshtml" />
+    <Content Include="Scripts\SoundManager2\swf\soundmanager2_flash_xdomain.zip" />
+    <Content Include="Scripts\SoundManager2\src\make-flash8.bat" />
+    <Content Include="Scripts\SoundManager2\src\make-flash8.sh" />
+    <Content Include="Scripts\SoundManager2\src\make-flash9.bat" />
+    <Content Include="Scripts\SoundManager2\src\make-flash9.sh" />
+    <Content Include="Scripts\SoundManager2\src\SoundManager2.as" />
+    <Content Include="Scripts\SoundManager2\src\SoundManager2_AS3.as" />
+    <Content Include="Scripts\SoundManager2\src\SoundManager2_SMSound_AS3.as" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360 button %28retina - not playing%29.psd" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360 button %28retina - playing%29.psd" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360 button - large.psd" />
+    <Content Include="Scripts\SoundManager2\demo\360-player\360 button.psd" />
+    <Content Include="Views\Home\_SMPlayerMulti.cshtml" />
+    <Content Include="Views\Home\Artist.cshtml" />
+    <Content Include="Views\Songs\DeleteSong.cshtml" />
+    <Content Include="Views\Home\_SMPlayerSingle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -670,6 +825,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702111624380_SomeReqirements.resx">
       <DependentUpon>201702111624380_SomeReqirements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702281706092_AddedIconUri.resx">
+      <DependentUpon>201702281706092_AddedIconUri.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702282022400_SongToReleaesInSongs.resx">
+      <DependentUpon>201702282022400_SongToReleaesInSongs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

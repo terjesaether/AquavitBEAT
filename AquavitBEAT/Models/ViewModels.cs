@@ -120,16 +120,7 @@ namespace AquavitBEAT.Models
             }
             return null;
         }
-        //private List<BuyOrStreamSite> GetAllBuyOrStreamSites()
-        //{
-        //    var b = new BuyOrStreamAndReleaseLinks();
-        //    foreach (var item in _db.BuyOrStreamSites.ToList())
-        //    {
-        //        b.BuyOrStreamSite = item,
-        //        b.Title = 
-        //    }
-        //    return _db.BuyOrStreamSites.ToList();
-        //}
+
     }
 
     public struct BuyOrStreamAndReleaseLinks
@@ -198,9 +189,13 @@ namespace AquavitBEAT.Models
 
     public class FrontPageReleaseBox
     {
+        private Random _rnd;
+        private int _randomSong;
         public FrontPageReleaseBox(Release release)
         {
             _release = release;
+            _rnd = new Random();
+            _randomSong = _rnd.Next(0, _release.SongToReleases.Count());
         }
         private Release _release { get; set; }
         public string audioPlayerId { get { return "audio_" + _release.ReleaseId; } }
@@ -213,15 +208,10 @@ namespace AquavitBEAT.Models
         {
             get
             {
-                //var formats = new List<string>();
                 foreach (var r in _release.FormatTypes)
                 {
-
                     yield return r.Format.FormatTypeName;
-                    //formats.Add(r.Format.FormatTypeName);
-
                 }
-                //return formats;
             }
         }
 
@@ -229,18 +219,21 @@ namespace AquavitBEAT.Models
         {
             get
             {
-                //return string.Join(" // ", _release.Artists.Select(a => a.ArtistName));
-                return string.Join(" // ", _release.GetArtists().Select(a => a.ArtistName));
+                //var an = "";
+                //an = string.Join(" // ", _release.GetArtists().Select(a => a.ArtistName).Distinct());
+                //return an;
+
+                return HelperMethods.GetDistinctArtistNames(_release);
             }
         }
         public string FeaturedSongUrl
         {
-            get { return _release.HasSongs[0].AudioUrl; }
+            get { return _release.HasSongs[_randomSong].AudioUrl; }
 
         }
         public string FeaturedSongTitle
         {
-            get { return _release.HasSongs[0].Title; }
+            get { return _release.HasSongs[_randomSong].Title; }
 
         }
 
@@ -255,6 +248,7 @@ namespace AquavitBEAT.Models
 
     public class ReleaseDetailsViewModel
     {
+        private AquavitBeatContext _db = new AquavitBeatContext();
         public ReleaseDetailsViewModel(Release release)
         {
             _release = release;
@@ -264,7 +258,8 @@ namespace AquavitBEAT.Models
         {
             get
             {
-                return string.Join(" // ", _release.GetArtists().Select(a => a.ArtistName));
+                //return string.Join(" // ", _release.GetArtists().Select(a => a.ArtistName).Distinct());
+                return HelperMethods.GetDistinctArtistNames(_release);
             }
 
         }
@@ -272,7 +267,6 @@ namespace AquavitBEAT.Models
         public string About { get { return _release.Comment; } }
         public string FrontImg { get { return _release.frontImageUrl; } }
         public string Backimg { get { return _release.backImageUrl; } }
-
 
         public IEnumerable<BuyOrStreamLink> BuyOrStreamLinks
         {
@@ -344,31 +338,14 @@ namespace AquavitBEAT.Models
             }
         }
 
+        public IEnumerable<Artist> GetAllArtists()
+        {
+            return _db.Artists.ToList();
+        }
+
     }
 
-    //public class ReleaseIndexViewModel
-    //{
-    //    public ReleaseIndexViewModel(Release release)
-    //    {
-    //        Release = release;
-    //    }
-    //    public Release Release { get; set; }
 
-    //    public List<string> ListOfArtists
-    //    {
-    //        get
-    //        {
-    //            {
-    //                var list = new List<string>();
-    //                foreach (var item in this.Release.ReleasesToArtists)
-    //                {
-    //                    list.Add(item.Artist.FullName);
-    //                }
-    //                return list;
-    //            }
-    //        }
-    //    }
-    //}
 
 
     class GetSelectLists
@@ -516,6 +493,16 @@ namespace AquavitBEAT.Models
             return list;
         }
     }
+
+    static class HelperMethods
+    {
+        public static string GetDistinctArtistNames(Release release)
+        {
+            return string.Join(" // ", release.GetArtists().Select(a => a.ArtistName).Distinct());
+        }
+    }
+
+
 
     public class CheckBoxViewModel
     {

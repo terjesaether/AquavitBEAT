@@ -26,7 +26,7 @@ namespace AquavitBEAT.Operations
                 release.FormatTypes.Clear();
                 release.HasSongs.Clear();
                 release.Artists.Clear();
-                //release.SongToReleases.Clear(); OPS, sjekk om dette ødelegger
+                //release.SongToReleases.Clear(); OBS, sjekk om dette ødelegger
                 release.BuyOrStreamLinks.Clear();
                 //release.ReleasesToArtists.Clear(); // Tror ikke denne blir brukt
 

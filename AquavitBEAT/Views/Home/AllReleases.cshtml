@@ -6,17 +6,19 @@
 }
 
 
-<div class="all-releases-wrapper">
-    @using (Html.BeginForm("AllReleases","Home", FormMethod.Post))
+<div class="all-releases-wrapper container" id="main-wrapper" data-pushed="false">
+    @using (Html.BeginForm("AllReleases", "Home", FormMethod.Post))
     {
         <div class="row">
             <div class="col-md-3">@Html.DropDownListFor(model => model.AllReleases, Model.SortBySelecList, "Sort by ...", new { @class = "form-control", @onchange = "this.form.submit()" })</div>
             <div class="col-md-3"></div>
             <div class="col-md-3"></div>
-            <div class="col-md-3"><input type="submit" class="btn btn-default" value="Sort!" /></div>
+            <div class="col-md-3">
+                @*<input type="submit" class="btn btn-default" value="Sort!" />*@
+            </div>
         </div>
     }
-    
+
 
     @foreach (var release in Model.AllReleases)
     {
@@ -36,12 +38,39 @@
             </div>
             <div class="col-md-1">
                 <img src="@release.frontImageUrl" class="img-responsive" alt="" />
-                
+
             </div>
             <div class="col-md-1">
-               
+
                 <img src="@release.backImageUrl" class="img-responsive" alt="" />
             </div>
         </div>
     }
 </div>
+
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var row = $('#main-wrapper');
+
+            $('.navbar-toggle').click(function () {
+
+                if (row.data("pushed") === false) {
+                    TweenMax.to(row, 1, { y: 280 });
+                    row.data("pushed", true);
+                    console.log("pushed down");
+                }
+                else {
+                    TweenMax.to(row, 1, { y: 0 });
+                    row.data("pushed", false);
+                    console.log("pushed up");
+                }
+            });
+
+        });
+    </script>
+
+}

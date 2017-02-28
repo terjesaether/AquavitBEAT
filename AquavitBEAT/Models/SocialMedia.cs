@@ -13,6 +13,7 @@ namespace AquavitBEAT.Models
 
         [Display(Name = "Social media name")]
         public string Name { get; set; }
+        public string IconUri { get; set; }
         public string Prefix { get; set; }
     }
     public class ArtistSocialMedia

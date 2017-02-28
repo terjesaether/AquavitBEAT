@@ -1,0 +1,120 @@
+﻿$lightBlue : #6298b2;
+$lightGrey: #9babb2;
+$lighterGrey: #f3fbff;
+$abRed: #ca2e2e;
+
+
+.front-page {
+	background-image: url(/images/ab_frontpage_bgr_w_logo.jpg);
+	background-color: $lightGrey;
+	background-size: cover;
+	background-repeat: no-repeat;
+	padding-top: 20px;
+    background-attachment: fixed;
+}
+.front-page .navbar {
+	height: 90px;
+	background-color: none;
+	border: none;
+	border-radius: 0;
+	padding-top: 0;
+}
+.front-page .nav > li  a {
+	color: $lightBlue;
+}
+.front-page .nav > li  a:hover {
+	color: #000000;
+}
+
+.frontpage-first-row {
+    
+	//margin-top: 200px;
+}
+
+.frontpage-box {
+	background: none;
+	padding: 20px;      
+}
+.frontpage-box a:hover {
+    text-decoration: none;
+}
+.frontpage-box a {
+    color: #000;
+}
+.frontpage-inner-box {    
+	background: $lightBlue;
+	padding: 16px;
+    
+	min-height: 460px;
+}
+
+.frontpage-inner-box:hover {
+	opacity: 0.9; 
+    background: lightBlue; 
+    color: #000;  
+}
+
+div.frontpage-inner-box > a > h1, div.frontpage-inner-box > a > h2 {
+    color: #000;
+}
+
+.front-page-box a {
+	text-decoration: none;
+ 	
+}
+.front-page-header {
+    height: 80px;
+}
+.frontpage-box h1 {
+		font-size: 1.2em;
+		margin: 0;
+		padding: 0;
+}
+.frontpage-box h2 {
+		font-size: 1.3em;
+		font-weight: bold;
+		margin-top: 10px;
+}
+.frontpage-box p:last-of-type {
+		background: #000;
+}
+
+
+.front-page-formats span {
+   color: #fff;
+   top: 30px;
+font-size: 1em;
+margin-right: 4px;
+background: #000;
+}
+
+.front-page-formats {
+padding-top: 16px;
+padding-bottom: 6px;
+margin-bottom: 10px;
+}
+
+
+
+.frontpage-box p, .frontpage-box span {
+	padding: 4px;    
+	margin: 2px;
+}
+
+
+.frontpage-box .audio {
+	background: #000;
+	width: 50px;
+	height: 50px;
+	display: block;
+	cursor: pointer;
+}
+.frontpage-box-releasedate {
+	color: #fff;
+    background: #000;
+}
+
+.add-height {
+    position: absolute;
+    top: 300px;
+}

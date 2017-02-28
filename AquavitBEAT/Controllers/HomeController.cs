@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using AquavitBEAT.ViewModels;
 
 namespace AquavitBEAT.Controllers
 {
@@ -54,13 +55,13 @@ namespace AquavitBEAT.Controllers
             switch (AllReleases)
             {
                 case "1":
-                    sortedReleases = _db.Releases.OrderByDescending(r => r.Title).ToList();
+                    sortedReleases = _db.Releases.OrderBy(r => r.Title).ToList();
                     break;
                 case "2":
-                    sortedReleases = _db.Releases.OrderBy(r => r.ReleaseDate).ToList();
+                    sortedReleases = _db.Releases.OrderByDescending(r => r.ReleaseDate).ToList();
                     break;
                 case "3":
-                    sortedReleases = _db.Releases.OrderByDescending(r => r.ReleaseDate).ToList();
+                    sortedReleases = _db.Releases.OrderBy(r => r.ReleaseDate).ToList();
                     break;
                 case "4":
                     sortedReleases = null;
@@ -87,13 +88,22 @@ namespace AquavitBEAT.Controllers
 
             return View();
         }
-        public ActionResult Release(int id)
+        public ActionResult Release(int id = 3)
         {
             //var release = _db.Releases.Find(id);
             var vm = new ReleaseDetailsViewModel(_db.Releases.Find(id));
 
             //ViewBag.Title2 = release.Title;
-            ViewBag.Bodyclass = "front-page";
+            ViewBag.Bodyclass = "release-page";
+
+            return View(vm);
+        }
+        [HttpGet]
+        public ActionResult Artist(int id = 3)
+        {
+            var vm = new ArtistDetailsViewModel(_db.Artists.Find(id));
+
+            ViewBag.Bodyclass = "artist-page";
 
             return View(vm);
         }

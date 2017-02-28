@@ -5,18 +5,20 @@
 }
 @section Styles {
     @*@Styles.Render("~/Content/miniaudioplayercss")*@
-    <link href="~/Scripts/miniaudioplayer/css/jQuery.mb.miniAudioPlayer.min.css" rel="stylesheet" />
+<link href="~/Scripts/miniaudioplayer/css/jQuery.mb.miniAudioPlayer.min.css" rel="stylesheet" />
+    <link href="~/Scripts/SoundManager2/demo/360-player/360player.css" rel="stylesheet" />
+    <link href="~/Scripts/SoundManager2/demo/bar-ui/css/bar-ui.css" rel="stylesheet" />
     @*<link href="~/Content/Main-page.min.css" rel="stylesheet" />*@
 }
 
 
-<div class="row frontpage-first-row">
+<div class="row frontpage-first-row" data-pushed="false">
     @foreach (var release in Model.FrontPageReleaseBox)
     {
         
-            <div class="col-md-3 frontpage-box">
+            <div class="col-md-3 col-sm-6 frontpage-box">
                 
-                <a class="front-page-link" href="/Home/Release/@release.ReleaseId">
+                
                     <div class="frontpage-inner-box">
                         <div class="front-page-header">
                             <h1>
@@ -24,29 +26,31 @@
                             </h1>
                             <h2>@release.Title</h2>
                         </div>
-                        <img src="@release.frontImageUrl" alt="@release.Title" class="img-responsive front-page-img" />
-
-                        <div class="front-page-formats">
-                            @foreach (var format in release.FormatTypes)
+                        <a class="front-page-link" href="/Home/Release/@release.ReleaseId">
+                            <img src="@release.frontImageUrl" alt="@release.Title" class="img-responsive front-page-img" />
+                        </a>
+                            <div class="front-page-formats">
+                                @foreach (var format in release.FormatTypes)
                 {
-                                <span>@format</span>
+                                    <span>@format</span>
 
-                            }
-                        </div>
+                                }
+                            </div>
 
-                        <div class="player-wrapper">
+                            <div class="player-wrapper">
 
-                            <a id="@release.ReleaseId" class="audio" href="@release.FeaturedSongUrl">@release.FeaturedSongTitle</a>
+                                @*<div id="sm2-container"></div>
+                                <div class="ui360">
+                                    <a href="@release.FeaturedSongUrl">@release.FeaturedSongTitle</a>
+                                </div>*@
 
-                            @*<audio id="@release.audioPlayerId" class="audioPlayer">
-                        <source src="@release.FeaturedSongUrl" />
-                    </audio>*@
+                                @Html.Partial("_SMPlayerSingle", release)
 
-                        </div>
-                        <p class="frontpage-box-releasedate">Release: @release.ReleaseDate</p>
-                        @*<p>@Html.ActionLink("Read more >>>", "Release", new { id = release.ReleaseId})</p>*@
-                    </div>
-                </a>
+                            </div>
+                            <p class="frontpage-box-releasedate">Release: @release.ReleaseDate</p>
+                            
+                </div>
+                
                 
             </div>
         
@@ -55,20 +59,70 @@
 
 
     @section scripts{
+@Scripts.Render("~/bundles/soundmanager2js")
         @*<script src="~/Scripts/miniaudioplayer/jquery.jplayer.min.js" type="text/javascript"></script>*@
         <script src="~/Scripts/miniaudioplayer/jquery.mb.miniAudioPlayer.min.js" type="text/javascript"></script>
+<script src="~/Scripts/SoundManager2/demo/bar-ui/script/bar-ui.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
         @*<script src="~/Scripts/miniaudioplayer/jquery.metadata.js" type="text/javascript"></script>*@
 
         <script>
 
+            $(document).ready(function () {
+                
+                // Get saved data from sessionStorage
+                var hasVisited = sessionStorage.getItem('hasVisited');
+                console.log('Har vært her før: ' + hasVisited);
 
+                if (hasVisited === null) {
+                    
+                    // Greensock
+                    var box = $('.frontpage-box');
+                    //var boxAnimation = TweenLite.from(box, 2, { opacity: "0", top: "-300px" });
 
-            $(".audio").mb_miniPlayer(
-        {
-            playAlone: true,
-            skin: 'black'
-        }
-        );
+                    TweenMax.staggerFrom(box, 2, { y: "+=200", opacity: 0 }, 0.2);
+                    //boxAnimation.delay(2);
+
+                    sessionStorage.setItem('hasVisited', 'true');
+                }
+
+                // SoundManager2
+                soundManager.setup({
+                    url: '/Scripts/SoundManager2/swf/',
+                });
+
+            });
+            
+
+            
+
+            
+            
+
+        //    $(".audio").mb_miniplayer(
+        //{
+        //    playalone: true,
+        //    skin: 'black'
+        //}
+        //);
+
+            console.log($('.frontpage-first-row').data("pushed"));
+            var row = $('.frontpage-first-row');
+            
+            $('.navbar-toggle').click(function () {
+                
+                if (row.data("pushed") === false) {
+                    TweenMax.to(row, 1, { y: 300 });
+                    //row.animate({ top: "300px" });
+                    row.data("pushed", true);                    
+                }
+                else {
+                    TweenMax.to(row, 1, { y: 0 });
+                    //row.animate({ top: "0px" });
+                    row.data("pushed", false);
+                }
+
+            });
 
 
         </script>

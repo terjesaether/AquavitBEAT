@@ -46,6 +46,7 @@ namespace AquavitBEAT.Models
         public virtual ICollection<Release> InReleases { get; set; }
         public virtual ICollection<SongToArtist> SongToArtists { get; set; }
         public virtual ICollection<SongToRemixer> SongToRemixers { get; set; }
+        public virtual ICollection<SongToRelease> SongToReleases { get; set; }
 
         public string GetFullSongName()
         {

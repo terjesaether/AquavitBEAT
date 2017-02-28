@@ -4,39 +4,44 @@
     ViewBag.Title = "Index";
 }
 
-<h1>AquavitBEAT songs <a href="/Songs/Add"><span class="glyphicon glyphicon-plus"></span></a></h1> 
+<h1>AquavitBEAT songs <a href="/Songs/Add"><span class="glyphicon glyphicon-plus"></span></a></h1>
 
 @*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
 
 
 @foreach (var item in Model)
 {
-    
-<div class="row list-view">
-    <div class="col-md-2"><a href="/Song/@item.SongId">@item.Title</a>&nbsp;&nbsp;<a href="/Songs/Edit/@item.SongId"><span class="glyphicon glyphicon-pencil"></span></a></div>
-    <div class="col-md-2">
-        @foreach (var artist in item.SongToArtists)
-        {
-            <p>@Html.ActionLink(artist.Artist.ArtistName, "ArtistDetails", "Artist", new { id = artist.ArtistId }, null)</p>
 
-        }
-    </div>
-    
-    <div class="col-md-1">@Html.DisplayFor(modelItem => item.RemixName)</div>
-    <div class="col-md-1">@Html.DisplayFor(modelItem => item.ReleaseDate)</div>
-    <div class="col-md-2"><div class="readmore">@Html.DisplayFor(modelItem => item.Comment)</div></div>
-    <div class="col-md-3"><audio controls>
-    <source src="@item.AudioUrl" />
-</audio></div>
-    <div class="col-md-1">@Html.ActionLink("Edit", "Edit", new { id = item.SongId })</div>
-    </div>
+    <div class="row list-view">
+        <div class="col-md-2"><a href="/Song/@item.SongId">@item.Title</a>&nbsp;&nbsp;<a href="/Songs/Edit/@item.SongId"><span class="glyphicon glyphicon-pencil"></span></a></div>
+        <div class="col-md-2">
+            @foreach (var artist in item.SongToArtists)
+            {
+                <p>@Html.ActionLink(artist.Artist.ArtistName, "ArtistDetails", "Artist", new { id = artist.ArtistId }, null)</p>
+
+            }
+        </div>
+
+        <div class="col-md-1">@Html.DisplayFor(modelItem => item.RemixName)</div>
+        <div class="col-md-1">@Html.DisplayFor(modelItem => item.ReleaseDate)</div>
+        <div class="col-md-2"><div class="readmore">@Html.DisplayFor(modelItem => item.Comment)</div></div>
+        <div class="col-md-3">
+            <audio controls>
+                <source src="@item.AudioUrl" />
+            </audio>
+        </div>
+        <div class="col-md-1">
+            @Html.ActionLink("Edit", "Edit", new { id = item.SongId })
+            @Html.ActionLink("Delete", "DeleteSong", new { id = item.SongId })
+        </div>
+</div>
 
 }
 
 @section scripts{
-@Scripts.Render("~/bundles/readmorejs")
+    @Scripts.Render("~/bundles/readmorejs")
     <script>
         $(function () {
             $("audio").on("play", function () {

@@ -23,7 +23,7 @@ namespace AquavitBEAT.Migrations
 
             var robert = new Artist
             {
-                ArtistName = "Robert Solheim",
+                ArtistName = "Robert Solheim Seed",
                 FirstName = "Robert",
                 LastName = "Solheim",
                 Mail = "robert@mail.com",
@@ -60,7 +60,7 @@ namespace AquavitBEAT.Migrations
 
             var terje = new Artist
             {
-                ArtistName = "Terje Saether",
+                ArtistName = "Terje Saether Seed",
                 FirstName = "Terje",
                 LastName = "Saether",
                 Mail = "terje@mail.com"
