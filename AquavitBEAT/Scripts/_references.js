@@ -20,6 +20,7 @@
 /// <reference path="custom/selectpicker.js" />
 /// <reference path="dropzone/dropzone.min.js" />
 /// <reference path="dropzone/dropzone-amd-module.min.js" />
+/// <reference path="jquery.filedrop.js" />
 /// <reference path="jquery.validate.js" />
 /// <reference path="jquery.validate.unobtrusive.js" />
 /// <reference path="jquery-1.12.4.js" />

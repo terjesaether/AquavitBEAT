@@ -25,3 +25,8 @@ Array.prototype.forEach.call(inputs, function (input) {
             label.innerHTML = labelVal;
     });
 });
+
+//var submitBtn = $('#submit');
+//submitBtn.click(function () {
+//    $('#message').html('Wait for file upload..');
+//});

@@ -38,6 +38,7 @@ namespace AquavitBEAT.Models
         }
         public Release Release { get; set; }
 
+        public string RequestFrom { get; set; }
         public List<SelectListItem> ItemsListOfAllReleaseTypes { get; private set; }
         public List<SelectListItem> ItemsListOfAllSongs { get; private set; }
         public List<SelectListItem> ItemsListOfAllArtists { get; private set; }
@@ -263,10 +264,11 @@ namespace AquavitBEAT.Models
             }
 
         }
-        public string Title { get { return _release.Title; } }
-        public string About { get { return _release.Comment; } }
-        public string FrontImg { get { return _release.frontImageUrl; } }
-        public string Backimg { get { return _release.backImageUrl; } }
+        public string Title => _release.Title;
+        public int Id => _release.ReleaseId;
+        public string About => _release.Comment;
+        public string FrontImg => _release.frontImageUrl;
+        public string Backimg => _release.backImageUrl;
 
         public IEnumerable<BuyOrStreamLink> BuyOrStreamLinks
         {

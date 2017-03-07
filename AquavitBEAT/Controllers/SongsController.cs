@@ -8,18 +8,20 @@ using System.Web;
 using System.Web.Mvc;
 using AquavitBEAT.Models;
 using AquavitBEAT.Operations;
+using AquavitBEAT.DbServices;
 
 namespace AquavitBEAT.Controllers
 {
     public class SongsController : Controller
     {
         private AquavitBeatContext _db = new AquavitBeatContext();
-        AddAndEditOperations addAndEdit = new AddAndEditOperations();
+        private AddAndEditOperations addAndEdit = new AddAndEditOperations();
+        private AquavitDbService _dbService = new AquavitDbService();
 
         // GET: Songs
         public ActionResult Index()
         {
-            var songs = _db.Songs.ToList();
+            var songs = _dbService.GetAllSongs();
 
             return View(songs);
         }
@@ -30,10 +32,10 @@ namespace AquavitBEAT.Controllers
         {
             if (id == null)
             {
-                return HttpNotFound();
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Song song = _db.Songs.Find(id);
+            Song song = _dbService.GetSongById(id.Value);
             if (song == null)
             {
                 return HttpNotFound();
@@ -52,8 +54,8 @@ namespace AquavitBEAT.Controllers
             };
             vm.Song.ReleaseDate = DateTime.Now;
 
-            ViewBag.ArtistID = new SelectList(_db.Artists, "ArtistId", "ArtistName");
-            ViewBag.RemixerID = new SelectList(_db.Artists, "ArtistId", "ArtistName");
+            ViewBag.ArtistID = new SelectList(_dbService.GetAllArtists(), "ArtistId", "ArtistName");
+            ViewBag.RemixerID = new SelectList(_dbService.GetAllArtists(), "ArtistId", "ArtistName");
 
             return View(vm);
         }
@@ -99,8 +101,9 @@ namespace AquavitBEAT.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Songs.Add(song);
-                _db.SaveChanges();
+                //_db.Songs.Add(song);
+                //_db.SaveChanges();
+                _dbService.AddSong(song);
                 return RedirectToAction("Index");
             }
 
@@ -116,7 +119,7 @@ namespace AquavitBEAT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Song song = _db.Songs.Find(id);
+            Song song = _dbService.GetSongById(id.Value);
             var vm = new SongViewModel
             {
                 Song = song
@@ -128,21 +131,21 @@ namespace AquavitBEAT.Controllers
                 return HttpNotFound();
             }
             // Lager liste med alle artistene, men huker av de som er valgt
-            var artistList = _db.Artists
+            var artistList = _dbService.GetAllArtists()
                 .Select(r => new
                 {
                     r.ArtistId,
                     r.ArtistName,
-                    Checked = _db.SongToArtists.Where(s => s.SongId == id.Value && s.ArtistId == r.ArtistId)
+                    Checked = _dbService.GetAllSongToArtists().Where(s => s.SongId == id.Value && s.ArtistId == r.ArtistId)
                     .Count() > 0
                 });
 
-            var remixerList = _db.Artists
+            var remixerList = _dbService.GetAllArtists()
                 .Select(r => new
                 {
                     r.ArtistId,
                     r.ArtistName,
-                    Checked = _db.SongToRemixers.Where(s => s.SongId == id.Value && s.ArtistId == r.ArtistId)
+                    Checked = _dbService.GetAllSongToRemixers().Where(s => s.SongId == id.Value && s.ArtistId == r.ArtistId)
                     .Count() > 0
                 });
 
@@ -230,7 +233,7 @@ namespace AquavitBEAT.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Song song = _db.Songs.Find(id);
+            Song song = _dbService.GetSongById(id.Value);
 
             if (song == null)
             {
@@ -240,13 +243,16 @@ namespace AquavitBEAT.Controllers
         }
 
         // POST: Songs/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteSong")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Song song = _db.Songs.Find(id);
-            _db.Songs.Remove(song);
-            _db.SaveChanges();
+
+            if (id > 0)
+            {
+                _dbService.DeleteSong(id);
+            }
+
             return RedirectToAction("Index");
         }
 

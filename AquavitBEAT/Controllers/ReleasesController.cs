@@ -8,13 +8,15 @@ using System.Web;
 using System.Web.Mvc;
 using AquavitBEAT.Models;
 using AquavitBEAT.Operations;
+using AquavitBEAT.DbServices;
 
 namespace AquavitBEAT.Controllers
 {
     public class ReleasesController : Controller
     {
         private AquavitBeatContext _db = new AquavitBeatContext();
-        AddAndEditOperations addAndEdit = new AddAndEditOperations();
+        private AddAndEditOperations _addAndEdit = new AddAndEditOperations();
+        private AquavitDbService _dbService = new AquavitDbService();
 
         // GET: Releases
         public ActionResult Index()
@@ -26,7 +28,7 @@ namespace AquavitBEAT.Controllers
             //    vm.Add(newRelease);
             //}
 
-            return View(_db.Releases.ToList());
+            return View(_dbService.GetAllReleases());
         }
 
 
@@ -40,7 +42,7 @@ namespace AquavitBEAT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Release release = _db.Releases.Find(id);
+            Release release = _dbService.GetReleaseById(id.Value);
             if (release == null)
             {
                 return HttpNotFound();
@@ -55,23 +57,12 @@ namespace AquavitBEAT.Controllers
 
             ViewBag.FormatTypeId = new SelectList(_db.FormatsTypes, "FormatTypeId", "FormatTypeName");
             ViewBag.ReleaseTypeId = new SelectList(_db.ReleaseTypes, "ReleaseTypeId", "ReleaseTypeName");
-            ViewBag.SongId = new SelectList(_db.Songs, "SongId", "Title");
+            ViewBag.SongId = new SelectList(_dbService.GetAllSongs(), "SongId", "Title");
 
             var vm = new ReleaseViewModel();
 
             vm.Release.ReleaseDate = DateTime.Now;
             vm.Release.Price = 10;
-
-            //foreach (var f in vm.AllCurrentFormats)
-            //{
-            //    var newReleaseFormat = new ReleaseFormat
-            //    {
-            //        Format = f,
-            //        FormatTypeId = f.FormatTypeId,
-            //        BuyUrl = ""
-            //    };
-            //    vm.Release.FormatTypes.Add(newReleaseFormat);
-            //}
 
             return View(vm);
         }
@@ -88,7 +79,6 @@ namespace AquavitBEAT.Controllers
             try
             {
 
-
                 string[] formats;
                 if (!string.IsNullOrEmpty(Request.Form["Release.FormatTypes"]))
                 {
@@ -103,13 +93,11 @@ namespace AquavitBEAT.Controllers
                 ReleaseTypeId = Request.Form["Release.ReleaseType"];
                 var songs = Request.Form["Release.SongToReleases"].Split(',');
 
-
-
                 SongId = Array.ConvertAll(songs, int.Parse);
 
                 var httpRequest = System.Web.HttpContext.Current;
 
-                var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, null, false, true);
+                var success = _addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, null, false, true);
 
                 if (success)
                 {
@@ -132,8 +120,8 @@ namespace AquavitBEAT.Controllers
 
         // GET: Releases/Edit/5
         [HttpGet]
-        [Route("Releases/Edit/{id}")]
-        public ActionResult EditRelease(int? id)
+        [Route("Releases/Edit/{id}/{from?}")]
+        public ActionResult EditRelease(int? id, string from)
         {
             if (id == null)
             {
@@ -141,7 +129,7 @@ namespace AquavitBEAT.Controllers
             }
             var vm = new ReleaseViewModel
             {
-                Release = _db.Releases.Find(id)
+                Release = _dbService.GetReleaseById(id.Value)
             };
 
 
@@ -149,16 +137,20 @@ namespace AquavitBEAT.Controllers
             {
                 return HttpNotFound();
             }
+            if (from != null)
+            {
+                vm.RequestFrom = from;
+            }
 
 
-            var allSongs = _db.Songs
+            var allSongs = _dbService.GetAllSongs()
                 .Select(r => new
                 {
                     r.SongId,
                     r.Title,
                     r.RemixName,
-                    Checked = _db.SongToReleases.Where(s => s.ReleaseId == id.Value && s.SongId == r.SongId)
-                    .Count() > 0
+                    Checked = _db.SongToReleases
+                    .Count(s => s.ReleaseId == id.Value && s.SongId == r.SongId) > 0
                 });
 
 
@@ -186,7 +178,7 @@ namespace AquavitBEAT.Controllers
                 });
             }
 
-            var songTo = _db.SongToReleases.ToList();
+            //var songTo = _dbService.GetAllSongToReleases();
 
             ViewBag.SongId = songsDropDown;
             vm.ItemListOfHasSongs = songsDropDown; // Sender ikke med selected...
@@ -215,14 +207,19 @@ namespace AquavitBEAT.Controllers
             string deleteCovers = Request.Form["deleteCovers"];
 
             // Kjører UpdateAndCreate-metode:
-            var success = addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, deleteCovers, true, false);
+            var success = _addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, deleteCovers, true, false);
 
             if (success)
             {
+                if (vm.RequestFrom == "main")
+                {
+                    return RedirectToAction("Release", "Home", new { id = vm.Release.ReleaseId });
+                }
                 return RedirectToAction("Index");
             }
             else
             {
+
                 return View(vm);
             }
         }
@@ -234,7 +231,7 @@ namespace AquavitBEAT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Release release = _db.Releases.Find(id);
+            Release release = _dbService.GetReleaseById(id.Value);
             if (release == null)
             {
                 return HttpNotFound();
@@ -247,7 +244,7 @@ namespace AquavitBEAT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Release release = _db.Releases.Find(id);
+            Release release = _dbService.GetReleaseById(id);
             _db.Releases.Remove(release);
             _db.SaveChanges();
             return RedirectToAction("Index");

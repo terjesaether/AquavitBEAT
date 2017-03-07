@@ -29,7 +29,13 @@
     <div class="release-details-inner container">
         <div class="release-details-heading">
             <div class="paper-box">
-                <h1><span>@Model.ArtistNames</span> // <span>@Model.Title</span></h1>
+                <h1><span>@Model.ArtistNames</span> // <span>@Model.Title</span>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="/Releases/Edit/@Model.Id/main"><span class="glyphicon glyphicon-pencil"></span></a>
+                    }
+                    
+                </h1>
             </div>
         </div>
 

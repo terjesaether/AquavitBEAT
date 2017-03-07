@@ -65,6 +65,11 @@
 
                 </div>
             </div>
+            
+            <div class="control-label col-md-12">
+                <h1 class="text-center label-danger" id="message"></h1>
+            </div>
+
         </div>
 
         <div class="form-group">
@@ -115,7 +120,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-10 col-md-2">
-                <input type="submit" value="Save this great artist!" class="btn btn-aquavit pull-right" />
+                <input type="submit" id="submit" value="Save this great artist!" class="btn btn-aquavit pull-right" />
             </div>
         </div>
     </div>
@@ -127,5 +132,14 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script src="~/Scripts/custom/fileInput.js"></script>
+   
+    <script src="~/Scripts/custom/fileInput.js"></script>
+    
+    <script>
+        var submitBtn = $('#submit');
+        submitBtn.click(function () {
+            $('#message').html('Wait for file upload..');
+        });
+    </script>
+    
 }

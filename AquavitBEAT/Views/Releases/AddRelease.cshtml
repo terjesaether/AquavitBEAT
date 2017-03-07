@@ -145,8 +145,12 @@
                             <img src="" alt="@Model.Release.Title" class="img-responsive img-rounded center-block" id="output" />
                         </div>
                     </div>
+                    
+                    <div class="control-label col-md-12">
+                        <h1 class="text-center label-danger" id="message"></h1>
+                    </div>
 
-                            <div class="form-group">
+                    <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
                                     <input type="submit" value="Create a new great release" class="btn btn-default" />
                                 </div>
@@ -198,6 +202,11 @@
                 dateFormat: "yy-mm-dd",
                 changeYear: true
 
+            });
+
+            var submitBtn = $('#submit');
+            submitBtn.click(function () {
+                $('#message').html('Wait for file upload..');
             });
 
         });

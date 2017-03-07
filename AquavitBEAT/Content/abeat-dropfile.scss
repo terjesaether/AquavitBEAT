@@ -1,0 +1,24 @@
+﻿#progressBar {
+    height: 20px;
+    background: bisque;
+    width: 1px;
+}
+
+#dropArea {
+    background: aqua;
+    height: 60px;
+    padding: 10px;
+}
+#dropArea h4 {
+    text-align: center;
+    
+    
+}
+
+#uploadList {
+    background: green;
+    height: 50px;
+}
+.active-drop {
+    background: red !important;
+}

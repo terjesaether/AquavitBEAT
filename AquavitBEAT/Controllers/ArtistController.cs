@@ -3,19 +3,20 @@ using AquavitBEAT.Operations;
 using System.Linq;
 using System.Web.Mvc;
 using System;
+using AquavitBEAT.DbServices;
 
 namespace AquavitBEAT.Controllers
 {
     public class ArtistController : Controller
     {
         private AquavitBeatContext _db = new AquavitBeatContext();
-        ArtistRepository artistRepo = new ArtistRepository();
-        AddAndEditOperations addAndEditOps = new AddAndEditOperations();
+        private AddAndEditOperations addAndEditOps = new AddAndEditOperations();
+        private AquavitDbService _dbService = new AquavitDbService();
 
         // GET: Artist
         public ActionResult Index()
         {
-            var artists = artistRepo.GetAllArtists();
+            var artists = _dbService.GetAllArtists();
             return View(artists);
         }
 
@@ -63,7 +64,7 @@ namespace AquavitBEAT.Controllers
         [Route("Artist/Edit/{id}")]
         public ActionResult EditArtist(int id)
         {
-            var artist = _db.Artists.Find(id);
+            var artist = _dbService.GetArtistById(id);
             ArtistViewModel vm = new ArtistViewModel(artist);
 
             //ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
@@ -96,7 +97,7 @@ namespace AquavitBEAT.Controllers
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
-            ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
+            ViewBag.SocialMedia = new SelectList(_dbService.GetAllSocialMedia(), "SocialMediaId", "Name");
 
             //vm.SocialMediaList = _db.SocialMedias.ToList();
 
