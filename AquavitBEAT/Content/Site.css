@@ -5937,6 +5937,9 @@ h4 {
 .white-text {
   color: #fff; }
 
+.black-text {
+  color: #000; }
+
 .dark-back {
   background: #000000; }
 
@@ -5997,6 +6000,11 @@ textarea {
   /*background: #e5e5e5;*/
   border-radius: 0 0;
   background: #6298b2; }
+
+.beta-flag {
+  position: fixed;
+  right: 0;
+  top: 0; }
 
 textarea {
   resize: vertical;
@@ -6181,6 +6189,14 @@ textarea {
 
 .artist-details-box-1 {
   margin-bottom: 50px; }
+
+.white-box {
+  padding: 10px; }
+
+.white-box div {
+  padding: 5px 10px;
+  background: #fff;
+  color: #000; }
 
 /* SOUNDMANAGER2 */
 .ui360,

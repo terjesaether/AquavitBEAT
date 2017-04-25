@@ -11,6 +11,7 @@ namespace AquavitBEAT.DbServices
     {
         private AquavitBeatContext _db = new AquavitBeatContext();
 
+        // ARTISTS
 
         public Artist GetArtistById(int id)
         {
@@ -20,6 +21,41 @@ namespace AquavitBEAT.DbServices
         public List<Artist> GetAllArtists()
         {
             return _db.Artists.ToList();
+        }
+
+        public MyJson DeleteArtist(int id)
+        {
+            var artist = _db.Artists.Find(id);
+            var socMedias = _db.ArtistSocialMedias.Where(d => d.ArtistId == id).ToList();
+
+            if (artist.SongsToArtists.Count() == 0 && artist.HasReleases.Count() == 0)
+            {
+
+                try
+                {
+                    foreach (var socMedia in socMedias)
+                    {                       
+                        _db.ArtistSocialMedias.Remove(socMedia);
+                    }
+                    
+                    _db.Artists.Remove(artist);
+                    _db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    var error = e.Message;
+                    //return error;
+                }
+                return new MyJson { Status = "success", Message = "Deleted" };
+            }
+
+            var songs = "";
+            foreach (var song in artist.SongsToArtists)
+            {
+                songs += song.Song.Title + " ";
+            }
+            return new MyJson{ Status = "error", Message = "Can't delete artist. Artist has these songs: " + songs };
+            
         }
 
         // SONGS
@@ -62,8 +98,12 @@ namespace AquavitBEAT.DbServices
         {
             return _db.Releases.OrderBy(r => r.Title).ToList();
         }
+        public List<Release> OrderReleasesByTitleDecending()
+        {
+            return _db.Releases.OrderByDescending(r => r.Title).ToList();
+        }
 
-        public List<Release> OrderByDescendingReleaseDate()
+        public List<Release> OrderByReleaseDateDecending()
         {
             return _db.Releases.OrderByDescending(r => r.ReleaseDate).ToList();
         }

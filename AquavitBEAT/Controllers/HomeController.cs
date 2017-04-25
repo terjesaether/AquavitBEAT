@@ -19,9 +19,9 @@ namespace AquavitBEAT.Controllers
 
             var vm = new FrontPageViewModel();
             ViewBag.Bodyclass = "front-page";
-
-
+            
             var releases = _dbService.GetAllReleases()
+                .Where(r => r.ShowOnFrontpage == true)
                 .Take(6)
                 .OrderByDescending(d => d.ReleaseDate)
                 .ToList();
@@ -39,11 +39,12 @@ namespace AquavitBEAT.Controllers
         [HttpGet]
         public ActionResult AllReleases()
         {
-            var vm = new AllReleasesPublicViewmodel();
+            var vm = new AllReleasesPublicViewmodel()
+            {
 
-            //vm.AllReleases = _db.Releases.ToList();
-            vm.AllReleases = _dbService.GetAllReleases();
-
+                //vm.AllReleases = _db.Releases.ToList();
+                AllReleases = _dbService.GetAllReleases()
+            };
             ViewBag.Bodyclass = "front-page";
             return View(vm);
         }
@@ -58,19 +59,16 @@ namespace AquavitBEAT.Controllers
             switch (AllReleases)
             {
                 case "1":
-                    //sortedReleases = _db.Releases.OrderBy(r => r.Title).ToList();
                     sortedReleases = _dbService.OrderReleasesByTitle();
                     break;
-                case "2":
-                    //sortedReleases = _db.Releases.OrderByDescending(r => r.ReleaseDate).ToList();
-                    sortedReleases = _dbService.OrderByDescendingReleaseDate();
+                case "2":                  
+                    sortedReleases = _dbService.OrderReleasesByTitleDecending();
                     break;
-                case "3":
-                    //sortedReleases = _db.Releases.OrderBy(r => r.ReleaseDate).ToList();
+                case "3":                  
                     sortedReleases = _dbService.OrderByReleaseDate();
                     break;
                 case "4":
-                    sortedReleases = null;
+                    sortedReleases = _dbService.OrderByReleaseDateDecending();
                     break;
                 default:
                     break;
@@ -83,7 +81,7 @@ namespace AquavitBEAT.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Bodyclass = "front-page";
 
             return View();
         }
@@ -105,15 +103,17 @@ namespace AquavitBEAT.Controllers
             return View(vm);
         }
         [HttpGet]
-        public ActionResult Artist(int id = 3)
+        public ActionResult Artist(int id)
         {
-            var vm = new ArtistDetailsViewModel(_dbService.GetArtistById(id));
+            //var vm = new ArtistDetailsViewModel(_dbService.GetArtistById(id));
+            var vm = new ArtistDetailsViewModel(id);
 
             ViewBag.Bodyclass = "artist-page";
 
             return View(vm);
         }
 
+        [Authorize]
         public ActionResult Admin()
         {
             return View();

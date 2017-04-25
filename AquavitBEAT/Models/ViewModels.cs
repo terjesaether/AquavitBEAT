@@ -170,21 +170,41 @@ namespace AquavitBEAT.Models
         private AquavitBeatContext _db = new AquavitBeatContext();
         public ArtistViewModel() // BARE NY Artist!
         {
-            SocialMediaList = _db.SocialMedias.ToList();
-            //SocialMediaList = new List<SocialMedia>();
+            SocialMediaList = _db.SocialMedias.ToList();            
             SongToArtists = new List<SongToArtist>();
             ReleaseToArtists = new List<ReleaseToArtist>();
             Artist = new Artist();
         }
-        public ArtistViewModel(Artist artist) // Eksisterende artist!
+        public ArtistViewModel(int id) // Eksisterende artist!
         {
-            Artist = artist;
+            Artist = _db.Artists.Find(id);
             SocialMediaList = _db.SocialMedias.ToList();
+            Releases = GetReleases(id);
         }
         public Artist Artist { get; set; }
         public List<SocialMedia> SocialMediaList { get; private set; }
         public List<SongToArtist> SongToArtists { get; set; }
         public List<ReleaseToArtist> ReleaseToArtists { get; set; }
+        public IEnumerable<Release> Releases { get; set; }
+
+        public IEnumerable<Release> GetReleases(int id)
+        {
+            var artistSongs = _db.SongToArtists.Where(s => s.ArtistId == id).Select(s => s.Song).ToList();
+
+            var list = new List<Release>();
+
+            foreach (var release in _db.Releases.ToList())
+            {
+                foreach (var song in release.HasSongs)
+                {
+                    if (artistSongs.Contains(song) && !list.Contains(release))
+                    {
+                        list.Add(release);
+                    }
+                }
+            }
+            return list;
+        }
 
     }
 
@@ -199,11 +219,11 @@ namespace AquavitBEAT.Models
             _randomSong = _rnd.Next(0, _release.SongToReleases.Count());
         }
         private Release _release { get; set; }
-        public string audioPlayerId { get { return "audio_" + _release.ReleaseId; } }
+        public string AudioPlayerId { get { return "audio_" + _release.ReleaseId; } }
         public int ReleaseId { get { return _release.ReleaseId; } }
         public string Title { get { return _release.Title; } }
         public string ReleaseDate { get { return _release.ReleaseDate.ToShortDateString(); } }
-        public string frontImageUrl { get { return _release.frontImageUrl; } }
+        public string frontImageUrl { get { return _release.FrontImageUrl; } }
 
         public IEnumerable<string> FormatTypes
         {
@@ -223,8 +243,12 @@ namespace AquavitBEAT.Models
                 //var an = "";
                 //an = string.Join(" // ", _release.GetArtists().Select(a => a.ArtistName).Distinct());
                 //return an;
-
-                return HelperMethods.GetDistinctArtistNames(_release);
+                var artistNames = HelperMethods.GetDistinctArtistNames(_release);
+                if (artistNames.Count() > 50)
+                {
+                    artistNames = artistNames.Substring(0, 50) + " ...";
+                }
+                return artistNames;
             }
         }
         public string FeaturedSongUrl
@@ -267,8 +291,8 @@ namespace AquavitBEAT.Models
         public string Title => _release.Title;
         public int Id => _release.ReleaseId;
         public string About => _release.Comment;
-        public string FrontImg => _release.frontImageUrl;
-        public string Backimg => _release.backImageUrl;
+        public string FrontImg => _release.FrontImageUrl;
+        public string Backimg => _release.BackImageUrl;
 
         public IEnumerable<BuyOrStreamLink> BuyOrStreamLinks
         {
@@ -475,22 +499,22 @@ namespace AquavitBEAT.Models
             list.Add(new SelectListItem
             {
                 Value = "1",
-                Text = "Release Name"
+                Text = "Title - A-Z"
             });
             list.Add(new SelectListItem
             {
                 Value = "2",
-                Text = "Date - New first"
+                Text = "Title - Z-A"
             });
             list.Add(new SelectListItem
             {
                 Value = "3",
-                Text = "Date - Old first"
+                Text = "Date - New first"
             });
             list.Add(new SelectListItem
             {
                 Value = "4",
-                Text = "Artist"
+                Text = "Date - Old first"
             });
             return list;
         }
@@ -504,6 +528,11 @@ namespace AquavitBEAT.Models
         }
     }
 
+    public class MyJson
+    {
+        public  string Status { get; set; }
+        public  string Message { get; set; }
+    }
 
 
     public class CheckBoxViewModel

@@ -32,7 +32,7 @@
             <h3>Releases</h3>
 
             <ul class="list-no-bullets">
-                @foreach (var item in Model.Artist.HasReleases)
+                @foreach (var item in Model.Releases)
             {
                     <li>@Html.ActionLink(item.Title, "Release", new { id = item.ReleaseId })</li>
                 }
@@ -40,7 +40,6 @@
         </div>
 
     </div>
-
 
 </div>
 

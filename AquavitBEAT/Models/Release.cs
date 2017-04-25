@@ -37,10 +37,12 @@ namespace AquavitBEAT.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
 
+        public bool ShowOnFrontpage { get; set; }
+
         [Required, Display(Name = "Release type")]
         public virtual ReleaseType ReleaseType { get; set; }
 
-        public string frontImageUrl
+        public string FrontImageUrl
         {
             get
             {
@@ -50,10 +52,9 @@ namespace AquavitBEAT.Models
                 };
                 return "";
             }
-
         }
 
-        public string backImageUrl
+        public string BackImageUrl
         {
             get
             {
@@ -69,9 +70,7 @@ namespace AquavitBEAT.Models
 
         [Required, Display(Name = "Format type(s)")]
         public virtual List<ReleaseFormat> FormatTypes { get; set; }
-        //public virtual List<ReleaseFormat2> FormatTypes2 { get; set; } // Fjernes nok likevel
-
-
+        
         [Display(Name = "Artist(s)")]
         public virtual List<Artist> Artists { get; set; }
         public virtual List<UploadedImage> Images { get; set; }
@@ -81,10 +80,14 @@ namespace AquavitBEAT.Models
 
         [Display(Name = "Artwork")]
         public virtual List<Artwork> HasArtworks { get; set; }
-        public virtual List<BuyOrStreamLink> BuyOrStreamLinks { get; set; }
-        //public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; } // Fjernes?
+        public virtual List<BuyOrStreamLink> BuyOrStreamLinks { get; set; }   
+        
         [Required, Display(Name = "Song(s)")]
         public virtual ICollection<SongToRelease> SongToReleases { get; set; }
+
+        // Kanskje fjernes? Bedre å regne ut i ViewModel:
+        [Required, Display(Name = "Releases(s)")]
+        public virtual ICollection<ReleaseToArtist> ReleaseToArtist { get; set; }
 
         private IEnumerable<ReleaseFormat> FillFormatsList()
         {
@@ -97,14 +100,14 @@ namespace AquavitBEAT.Models
                 };
 
                 yield return newReleaseFormat;
-
             }
-
         }
 
         public IEnumerable<Artist> GetArtists()
         {
-            return SongToReleases.SelectMany(s => s.Song.SongToArtists.Select(a => a.Artist)).Distinct().ToList();
+            return SongToReleases
+                .SelectMany(s => s.Song.SongToArtists.Select(a => a.Artist))
+                .Distinct().ToList();
         }
 
     }

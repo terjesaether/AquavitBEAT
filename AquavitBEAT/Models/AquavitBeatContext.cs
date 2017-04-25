@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity;
 
 namespace AquavitBEAT.Models
 {
@@ -10,7 +6,7 @@ namespace AquavitBEAT.Models
     {
         public AquavitBeatContext() : base("AquavitBeatConnection")
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<AquavitBeatContext>());
+            //Database.SetInitializer(new CreateDatabaseIfNotExists<AquavitBeatContext>());
             //Database.SetInitializer(new DropCreateDatabaseAlways<AquavitBeatContext>());
         }
         public DbSet<Release> Releases { get; set; }

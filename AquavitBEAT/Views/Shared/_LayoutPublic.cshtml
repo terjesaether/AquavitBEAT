@@ -3,6 +3,26 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicon/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicon/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/favicon/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/favicon/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/images/favicon/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/favicon/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/favicon/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/favicon/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="/images/favicon/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="/images/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/images/favicon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/images/favicon/favicon-128.png" sizes="128x128" />
+    <meta name="application-name" content="&nbsp;" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="mstile-70x70.png" />
+    <meta name="msapplication-square150x150logo" content="mstile-150x150.png" />
+    <meta name="msapplication-wide310x150logo" content="mstile-310x150.png" />
+    <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @*@Scripts.Render("~/bundles/modernizr")*@
@@ -10,6 +30,7 @@
     @RenderSection("styles", required: false)
 </head>
 <body class=@ViewBag.Bodyclass>
+    <div class="beta-flag"><img src="~/images/beta.png" alt="Beta" /></div>
     <div class="navbar nav-main">
         <div class="container">
             <div class="navbar-header" >
@@ -23,17 +44,21 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("About", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("About Us", "About", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("News", "Index", "Home", new { area = "" }, null)</li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Artists admin<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("View Artists", "Index", "Artist", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Add Artist", "AddArtist", "Artist", new { area = "" }, new { @class = "" })</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Artists admin<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("View Artists", "Index", "Artist", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Add Artist", "AddArtist", "Artist", new { area = "" }, new { @class = "" })</li>
 
-                            
-                        </ul>
-                    </li>
+
+                            </ul>
+                        </li>
+                    
+                   
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Songs admin<span class="caret"></span></a>
@@ -54,8 +79,9 @@
 
                         </ul>
                     </li>
+                    }
                     <li>@Html.ActionLink("Releases", "AllReleases", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Admin", "Admin", "Home", new { area = "" }, null)</li>
+                    @*<li>@Html.ActionLink("Admin", "Admin", "Home", new { area = "" }, null)</li>*@
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@
             </div>

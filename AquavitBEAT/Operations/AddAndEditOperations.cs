@@ -12,7 +12,7 @@ namespace AquavitBEAT.Operations
     {
         private AquavitBeatContext _db = new AquavitBeatContext();
 
-        public bool AddOrUpdateRelease(ReleaseViewModel vm, HttpContext context, int[] SongId, int[] FormatTypeId, string ReleaseTypeId, string deleteCovers, bool update, bool create)
+        public bool AddOrUpdateRelease(ReleaseViewModel vm, HttpContext context, int[] SongId, int[] FormatTypeId, string ReleaseTypeId, string deleteCovers,string showOnFrontpage, bool update, bool create)
         {
             var httpRequest = context.Request;
             Release release;
@@ -23,6 +23,14 @@ namespace AquavitBEAT.Operations
                 release.Price = vm.Release.Price;
                 release.ReleaseDate = vm.Release.ReleaseDate;
                 release.Comment = vm.Release.Comment;
+                if (showOnFrontpage == "on")
+                {
+                    release.ShowOnFrontpage = true;
+                }
+                else
+                {
+                    release.ShowOnFrontpage = false;
+                }
                 release.FormatTypes.Clear();
                 release.HasSongs.Clear();
                 release.Artists.Clear();
@@ -93,6 +101,23 @@ namespace AquavitBEAT.Operations
                     _db.Entry(item).State = EntityState.Deleted;
                 }
             }
+
+            //// OBS NY!
+            //foreach (var item in _db.ReleaseToArtist)
+            //{
+            //    if (item.ReleaseId == release.ReleaseId)
+            //    {
+            //        _db.Entry(item).State = EntityState.Deleted;
+            //    }
+            //}
+
+            //foreach (var item in _db.SongToReleases)
+            //{
+            //    if (item.ReleaseId == release.ReleaseId)
+            //    {
+            //        _db.ReleaseToArtist.Add(item.Song.Artists)
+            //    }
+            //}
 
             // SANGER
             foreach (var songId in SongId)

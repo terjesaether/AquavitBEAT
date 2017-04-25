@@ -1,11 +1,11 @@
 ﻿@model AquavitBEAT.Models.ArtistViewModel
 
 @{
-    ViewBag.Title = "EditArtist";
+    ViewBag.Title = "Edit Artist";
 }
 
-<h2>Edit @Model.Artist.ArtistName</h2>
-
+<h2 class="">Edit @Model.Artist.ArtistName <button id="deleteBtn" class="btn btn-danger">Delete Artist</button></h2>
+<p id="message" class="label-danger"></p>
 
 @using (Html.BeginForm("Edit", "Artist", FormMethod.Post, new
 {
@@ -127,7 +127,9 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @*@Html.ActionLink("Back to List", "Index")*@
+    
+    
 </div>
 
 @section Scripts {
@@ -137,9 +139,34 @@
     
     <script>
         var submitBtn = $('#submit');
+        var deletBtn = $('#deleteBtn');
+        var message = $('#message');
+        
+
         submitBtn.click(function () {
             $('#message').html('Wait for file upload..');
         });
+
+        deletBtn.click(function () {
+            alert('Nå slettes det!');
+            $.post('/artist/delete/' + @Model.Artist.ArtistId)
+                .done(function (data) {
+                    if (data.status === 'error') {
+                        message.html(data.message);
+                    } else if (data.status === 'success') {
+                        //message.html(data.message).fadeOut(2000);
+                        $('html').fadeOut(2000);
+                        setTimeout(function () {
+                            location.href = "/Artist/"; 
+                        }, 2000); 
+                    }                   
+                    console.log('Done! Slettet id ' + data)
+                }).fail(function (err) {
+                    console.error(err);
+                })
+        });
+
+
     </script>
     
 }

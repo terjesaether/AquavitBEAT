@@ -243,6 +243,18 @@
     <Compile Include="Migrations\201702282022400_SongToReleaesInSongs.Designer.cs">
       <DependentUpon>201702282022400_SongToReleaesInSongs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704251811460_AddedShowOnFrontPage in Releases.cs" />
+    <Compile Include="Migrations\201704251811460_AddedShowOnFrontPage in Releases.Designer.cs">
+      <DependentUpon>201704251811460_AddedShowOnFrontPage in Releases.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704251922031_AddedReleasesToArtists in Artist.cs" />
+    <Compile Include="Migrations\201704251922031_AddedReleasesToArtists in Artist.Designer.cs">
+      <DependentUpon>201704251922031_AddedReleasesToArtists in Artist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704252045392_AddedReleasesToArtists in Release.cs" />
+    <Compile Include="Migrations\201704252045392_AddedReleasesToArtists in Release.Designer.cs">
+      <DependentUpon>201704252045392_AddedReleasesToArtists in Release.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AquavitBEATDbInit.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -359,6 +371,26 @@
     <Content Include="images\ab_artist_bgr.jpg" />
     <Content Include="images\ab_frontpage_bgr.jpg" />
     <Content Include="images\ab_frontpage_bgr_w_logo.jpg" />
+    <Content Include="images\beta.png" />
+    <Content Include="images\favicon\apple-touch-icon-114x114.png" />
+    <Content Include="images\favicon\apple-touch-icon-120x120.png" />
+    <Content Include="images\favicon\apple-touch-icon-144x144.png" />
+    <Content Include="images\favicon\apple-touch-icon-152x152.png" />
+    <Content Include="images\favicon\apple-touch-icon-57x57.png" />
+    <Content Include="images\favicon\apple-touch-icon-60x60.png" />
+    <Content Include="images\favicon\apple-touch-icon-72x72.png" />
+    <Content Include="images\favicon\apple-touch-icon-76x76.png" />
+    <Content Include="images\favicon\favicon-128.png" />
+    <Content Include="images\favicon\favicon-16x16.png" />
+    <Content Include="images\favicon\favicon-196x196.png" />
+    <Content Include="images\favicon\favicon-32x32.png" />
+    <Content Include="images\favicon\favicon-96x96.png" />
+    <Content Include="images\favicon\favicon.ico" />
+    <Content Include="images\favicon\mstile-144x144.png" />
+    <Content Include="images\favicon\mstile-150x150.png" />
+    <Content Include="images\favicon\mstile-310x150.png" />
+    <Content Include="images\favicon\mstile-310x310.png" />
+    <Content Include="images\favicon\mstile-70x70.png" />
     <Content Include="images\fb-icon.png" />
     <Content Include="images\profiles\End_And_Below_09-02-2017.jpg" />
     <Content Include="images\profiles\Rick_O%27Disko_02-02-2017.jpg" />
@@ -486,6 +518,7 @@
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="Content\abeat-front-page.scss" />
     <Content Include="Content\abeat-dropfile.scss" />
+    <None Include="Properties\PublishProfiles\aquavitbeat.com - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\AquavitBeat.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <None Include="Properties\PublishProfiles\dev2.terjesaether.com - Web Deploy.pubxml" />
@@ -834,6 +867,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702282022400_SongToReleaesInSongs.resx">
       <DependentUpon>201702282022400_SongToReleaesInSongs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251811460_AddedShowOnFrontPage in Releases.resx">
+      <DependentUpon>201704251811460_AddedShowOnFrontPage in Releases.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251922031_AddedReleasesToArtists in Artist.resx">
+      <DependentUpon>201704251922031_AddedReleasesToArtists in Artist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704252045392_AddedReleasesToArtists in Release.resx">
+      <DependentUpon>201704252045392_AddedReleasesToArtists in Release.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -20,7 +20,7 @@ namespace AquavitBEAT
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AquavitBeatContext, Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<AquavitBeatContext, Configuration>());
             //Database.SetInitializer<AquavitBeatContext>(null);
         }
     }

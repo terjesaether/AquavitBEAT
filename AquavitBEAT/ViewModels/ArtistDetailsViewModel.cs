@@ -9,9 +9,11 @@ namespace AquavitBEAT.ViewModels
     public class ArtistDetailsViewModel
     {
         AquavitBeatContext _db = new AquavitBeatContext();
-        public ArtistDetailsViewModel(Artist artist)
+
+        public ArtistDetailsViewModel(int id)
         {
-            _artist = artist;
+            _artist = _db.Artists.Find(id);
+            Releases = GetReleases(id);
         }
 
         private Artist _artist;
@@ -21,6 +23,30 @@ namespace AquavitBEAT.ViewModels
             get { return _artist; }
             set { _artist = value; }
         }
+
+        public IEnumerable<Release> Releases { get; set; }
+
+        public IEnumerable<Release> GetReleases(int id)
+        {
+           var artistSongs = _db.SongToArtists.Where(s => s.ArtistId == id).Select(s => s.Song).ToList();
+            
+            var list = new List<Release>();
+
+            foreach (var release in _db.Releases.ToList())
+            {
+                foreach (var song in release.HasSongs)
+                {
+                    if (artistSongs.Contains(song) && !list.Contains(release))
+                    {
+                        list.Add(release);
+                    }
+                }
+            }
+            return list;
+        }
+
+        
+
 
         public List<string> GetSocialMediaIcons()
         {

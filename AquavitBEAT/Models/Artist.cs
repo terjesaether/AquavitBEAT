@@ -51,7 +51,7 @@ namespace AquavitBEAT.Models
         public virtual List<Release> HasReleases { get; set; }
         public virtual ICollection<Artwork> HasArtworks { get; set; }
 
-        //public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; }
+        public virtual ICollection<ReleaseToArtist> ReleasesToArtists { get; set; }
         public virtual ICollection<SongToArtist> SongsToArtists { get; set; }
         //public virtual ICollection<ArtistToSocialMedia> ArtistToSocialMedias { get; set; } Fjernes
 

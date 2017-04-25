@@ -1,4 +1,4 @@
-﻿@using AquavitBEAT.Models
+﻿
 @model AquavitBEAT.Models.ArtistViewModel
 
 @{
@@ -85,9 +85,9 @@
 
     <div class="col-md-3">
         <h4>@Model.Artist.ArtistName has these releases:</h4>
-        @foreach (var item in Model.ReleaseToArtists)
+        @foreach (var item in Model.Releases)
         {
-            <p>@Html.ActionLink(item.Release.Title, "ReleaseDetails", "Releases", new {id = item.ReleaseId}, null)</p>
+            <p>@Html.ActionLink(item.Title, "ReleaseDetails", "Releases", new {id = item.ReleaseId}, null)</p>
         }
     </div>
 

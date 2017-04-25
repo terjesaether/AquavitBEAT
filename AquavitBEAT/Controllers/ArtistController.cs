@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web.Mvc;
 using System;
 using AquavitBEAT.DbServices;
+using System.Data.Entity;
+using AquavitBEAT.ViewModels;
 
 namespace AquavitBEAT.Controllers
 {
@@ -62,13 +64,11 @@ namespace AquavitBEAT.Controllers
 
         [HttpGet]
         [Route("Artist/Edit/{id}")]
-        public ActionResult EditArtist(int id)
+        public ActionResult EditArtist(int? id)
         {
-            var artist = _dbService.GetArtistById(id);
-            ArtistViewModel vm = new ArtistViewModel(artist);
-
-            //ViewBag.SocialMedia = new SelectList(_db.SocialMedias, "SocialMediaId", "Name");
-
+            //var artist = _dbService.GetArtistById(id.Value);
+            ArtistViewModel vm = new ArtistViewModel(id.Value);
+            
             return View(vm);
         }
 
@@ -117,13 +117,64 @@ namespace AquavitBEAT.Controllers
                 return HttpNotFound();
             }
 
-            var vm = new ArtistViewModel();
-            var artist = _db.Artists.Find(id);
-            vm.Artist = artist;
+            var vm = new ArtistViewModel(id.Value);           
             vm.SongToArtists = _db.SongToArtists.Where(s => s.ArtistId == id.Value).ToList();
-            vm.ReleaseToArtists = _db.ReleaseToArtist.Where(r => r.ArtistId == id.Value).ToList();
+            //vm.ReleaseToArtists = _db.ReleaseToArtist.Where(r => r.ArtistId == id.Value).ToList();
 
             return View(vm);
+        }
+
+        [HttpPost]
+        [Route("Artist/Delete/{id}")]
+        public ActionResult DeleteArtist(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            MyJson json = _dbService.DeleteArtist(id.Value);
+           
+            return Json(new { status = json.Status, message = json.Message });
+
+           
+
+            
+            
+            //var artist = _db.Artists.Find(id.Value);
+            //var socMedias = _db.ArtistSocialMedias.Where(d => d.ArtistId == id.Value).ToList();
+
+            //if (artist.SongsToArtists.Count() == 0 && artist.HasReleases.Count() == 0)
+            //{
+                
+                //try
+                //{
+                //    foreach (var socMedia in socMedias)
+                //    {
+                        
+                //        _db.ArtistSocialMedias.Remove(socMedia);
+                //    }
+                    
+                //    _db.Artists.Remove(artist);
+                //    _db.SaveChanges();
+                //}
+                //catch (Exception e)
+                //{
+                //    var error = e.Message;
+                //    throw;
+                //}
+                
+                //return Json(new { status = "success", message = "Deleted"});
+            //}
+
+            //var songs = "";
+            //foreach (var song in artist.SongsToArtists)
+            //{
+            //    songs += song.Song.Title + " ";
+            //}
+            //return Json(new { status = "error", message = "Can't delete artist. Artist has these songs: " + songs });
+
+            
         }
     }
 }

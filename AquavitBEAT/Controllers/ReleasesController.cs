@@ -76,6 +76,7 @@ namespace AquavitBEAT.Controllers
 
         public ActionResult AddRelease(ReleaseViewModel vm, int[] SongId, int[] FormatTypeId, string ReleaseTypeId)
         {
+            var showOnFrontpage = "on";
             try
             {
 
@@ -97,7 +98,7 @@ namespace AquavitBEAT.Controllers
 
                 var httpRequest = System.Web.HttpContext.Current;
 
-                var success = _addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, null, false, true);
+                var success = _addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId,showOnFrontpage, null, false, true);
 
                 if (success)
                 {
@@ -205,9 +206,10 @@ namespace AquavitBEAT.Controllers
             string storagePath = "/images/releases/" + vm.Release.Title.ToString();
 
             string deleteCovers = Request.Form["deleteCovers"];
+            string showOnFrontpage = Request.Form["showOnFrontpage"];
 
             // Kjører UpdateAndCreate-metode:
-            var success = _addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, deleteCovers, true, false);
+            var success = _addAndEdit.AddOrUpdateRelease(vm, httpRequest, SongId, FormatTypeId, ReleaseTypeId, deleteCovers, showOnFrontpage, true, false);
 
             if (success)
             {
