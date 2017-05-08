@@ -128,6 +128,7 @@ namespace AquavitBEAT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var myId = id.Value;
             var vm = new ReleaseViewModel
             {
                 Release = _dbService.GetReleaseById(id.Value)
@@ -138,12 +139,12 @@ namespace AquavitBEAT.Controllers
             {
                 return HttpNotFound();
             }
+
             if (from != null)
             {
                 vm.RequestFrom = from;
             }
-
-
+            
             var allSongs = _dbService.GetAllSongs()
                 .Select(r => new
                 {

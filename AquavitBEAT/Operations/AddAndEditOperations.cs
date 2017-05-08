@@ -77,6 +77,7 @@ namespace AquavitBEAT.Operations
             //}
 
             // BUY OR STREAM
+            
             foreach (var b in vm.ListOfAllBuyOrStreamSites)
             {
                 var newB = new BuyOrStreamLink
@@ -102,7 +103,7 @@ namespace AquavitBEAT.Operations
                 }
             }
 
-            //// OBS NY!
+            // OBS NY!
             //foreach (var item in _db.ReleaseToArtist)
             //{
             //    if (item.ReleaseId == release.ReleaseId)
@@ -213,8 +214,9 @@ namespace AquavitBEAT.Operations
                         return true;
                     }
                 }
-                catch (Exception /*e*/)
+                catch (Exception e)
                 {
+                    var message = e.Message;
                     throw;
                 }
             }

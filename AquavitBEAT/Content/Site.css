@@ -6090,6 +6090,8 @@ textarea {
 .release-page {
   background-image: url(/images/ab_frontpage_bgr_w_logo.jpg);
   background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
   background-color: lightBlue;
   padding-top: 20px; }
 

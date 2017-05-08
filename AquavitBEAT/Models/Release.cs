@@ -86,7 +86,7 @@ namespace AquavitBEAT.Models
         public virtual ICollection<SongToRelease> SongToReleases { get; set; }
 
         // Kanskje fjernes? Bedre å regne ut i ViewModel:
-        [Required, Display(Name = "Releases(s)")]
+        [Display(Name = "Releases(s)")]
         public virtual ICollection<ReleaseToArtist> ReleaseToArtist { get; set; }
 
         private IEnumerable<ReleaseFormat> FillFormatsList()
