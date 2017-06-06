@@ -17,22 +17,33 @@ namespace AquavitBEAT.Controllers
         private AquavitBeatContext _db = new AquavitBeatContext();
         private AddAndEditOperations _addAndEdit = new AddAndEditOperations();
         private AquavitDbService _dbService = new AquavitDbService();
+        private SortOperations _sortOperations = new SortOperations();
 
         // GET: Releases
         public ActionResult Index()
         {
-            //var vm = new List<ReleaseIndexViewModel>();
-            //foreach (var item in _db.Releases.ToList())
-            //{
-            //    var newRelease = new ReleaseIndexViewModel(item);
-            //    vm.Add(newRelease);
-            //}
+            
+            //return View(_dbService.GetAllReleases());
 
-            return View(_dbService.GetAllReleases());
+            var vm = new AllReleasesPublicViewmodel()
+            {
+                
+                AllReleases = _dbService.GetAllReleases()
+            };
+            
+            return View(vm);
         }
 
-
-
+        [HttpPost]
+        public ActionResult Index(string AllReleases)
+        {
+            var vm = new AllReleasesPublicViewmodel();
+            
+            vm.AllReleases = _sortOperations.SortReleases(AllReleases);
+            
+            return View(vm);
+        }
+        
         // GET: Releases/Details/5
         [HttpGet]
         [Route("Releases/{id}")]
@@ -245,12 +256,20 @@ namespace AquavitBEAT.Controllers
         // POST: Releases/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
-            Release release = _dbService.GetReleaseById(id);
-            _db.Releases.Remove(release);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            
+            if (_dbService.DeleteRelease(id))
+            {
+                return RedirectToAction("Index");
+            }
+            // Noe gikk galt, redir til error
+            return RedirectToAction("Error");
+        }
+
+        public ActionResult Error()
+        {
+            return View();
         }
 
         protected override void Dispose(bool disposing)

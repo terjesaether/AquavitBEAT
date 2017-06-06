@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Collections;
+using System.Data.Entity;
 
 namespace AquavitBEAT.DbServices
 {
@@ -82,6 +83,8 @@ namespace AquavitBEAT.DbServices
             _db.SaveChanges();
         }
 
+
+
         // RELEASES
 
         public Release GetReleaseById(int id)
@@ -92,6 +95,64 @@ namespace AquavitBEAT.DbServices
         public List<Release> GetAllReleases()
         {
             return _db.Releases.ToList();
+        }
+
+        public bool DeleteRelease(int? id)
+        {
+            if (id != null)
+            {
+                Release release = _db.Releases.Find(id);
+
+                foreach (var songToRelease in _db.SongToReleases)
+                {
+                    if (songToRelease.ReleaseId == id.Value)
+                    {
+                        _db.Entry(songToRelease).State = EntityState.Deleted;
+                    }
+                }
+
+                foreach (var releaseToArtist in _db.ReleaseToArtist)
+                {
+                    if (releaseToArtist.ReleaseId == id.Value)
+                    {
+                        _db.Entry(releaseToArtist).State = EntityState.Deleted;
+                    }
+                }
+
+                var boslist = _db.BuyOrStreamLinks.Where(b => b.Release.ReleaseId == release.ReleaseId);
+
+                foreach (var item in boslist)
+                {
+                    _db.BuyOrStreamLinks.Remove(item);
+                }
+
+                var formats = _db.ReleaseFormats.Where(f => f.Release.ReleaseId == release.ReleaseId);
+                foreach (var item in formats)
+                {
+                    _db.ReleaseFormats.Remove(item);
+                }
+
+                var upImg = _db.UploadedImages.Where(i => i.Release.ReleaseId == release.ReleaseId);
+                foreach (var item in upImg)
+                {
+                    _db.UploadedImages.Remove(item);
+                }
+                
+                if (release != null) _db.Releases.Remove(release);
+                try
+                {
+                    _db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    var error = e.Message;
+                    return false;
+                }
+                
+            }
+            return true;
+            
+            
         }
 
         public List<Release> OrderReleasesByTitle()

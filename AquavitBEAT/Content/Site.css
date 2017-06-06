@@ -5946,6 +5946,10 @@ h4 {
 a {
   color: #ca2e2e; }
 
+.float-left {
+  float: left;
+  display: inline; }
+
 .list-no-bullets {
   list-style: none; }
 
@@ -5969,6 +5973,18 @@ a {
 .bottom-air-2 {
   margin-bottom: 40px; }
 
+.error-message {
+  width: 100%;
+  height: 40px;
+  opacity: 0;
+  background: red;
+  font-size: 30px;
+  text-transform: uppercase;
+  color: #fff; }
+
+.error-message-fadeout {
+  opacity: 0; }
+
 .btn-aquavit {
   background: #6298b2; }
 
@@ -5989,7 +6005,7 @@ a {
   /*background: #2c2c2c;*/ }
 
 .scroll-box {
-  max-height: 600px;
+  max-height: 1200px;
   overflow: auto; }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -6013,6 +6029,20 @@ textarea {
 .fixed-textarea {
   resize: none;
   min-height: 200px; }
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 45px; }
+
+.max-width {
+  max-width: 100%; }
+
+.short-audio-player {
+  max-width: 100%; }
+
+footer {
+  padding-top: 30px; }
 
 /* Fancy input */
 .inputfile {
@@ -6086,6 +6116,12 @@ textarea {
 .artist-chbox-list:hover {
   background: #e5e5e5;
   cursor: pointer; }
+
+.header-and-sort {
+  background: #000;
+  height: 125px;
+  z-index: 300;
+  opacity: 0.9; }
 
 .release-page {
   background-image: url(/images/ab_frontpage_bgr_w_logo.jpg);

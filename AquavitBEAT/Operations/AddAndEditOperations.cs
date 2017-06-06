@@ -16,9 +16,14 @@ namespace AquavitBEAT.Operations
         {
             var httpRequest = context.Request;
             Release release;
+            // Edit:
             if (vm.Release.ReleaseId > 0)
             {
-                release = _db.Releases.Find(vm.Release.ReleaseId);
+                release = _db.Releases
+                .Where(r => r.ReleaseId == vm.Release.ReleaseId)
+                .Include("BuyOrStreamLinks")
+                .Single();
+
                 release.Title = vm.Release.Title;
                 release.Price = vm.Release.Price;
                 release.ReleaseDate = vm.Release.ReleaseDate;
@@ -77,7 +82,15 @@ namespace AquavitBEAT.Operations
             //}
 
             // BUY OR STREAM
-            
+
+            // Hvis update!
+            var boslist = _db.BuyOrStreamLinks.Where(b => b.Release.ReleaseId == release.ReleaseId);
+
+            foreach (var item in boslist)
+            {
+                _db.BuyOrStreamLinks.Remove(item);
+            }
+
             foreach (var b in vm.ListOfAllBuyOrStreamSites)
             {
                 var newB = new BuyOrStreamLink
@@ -89,12 +102,12 @@ namespace AquavitBEAT.Operations
                 };
                 release.BuyOrStreamLinks.Add(newB);
             }
-
+            
             string storagePath = "/images/releases/" + release.Title.ToString().Replace(" ", "_") + "/";
             List<string> formattedFilenames = new List<string>();
             bool isSavedSuccessfully = true;
             var fileOps = new FileOperations();
-
+            
             foreach (var item in _db.SongToReleases)
             {
                 if (item.ReleaseId == release.ReleaseId)
@@ -189,7 +202,8 @@ namespace AquavitBEAT.Operations
                     release.Images.Add(new UploadedImage
                     {
                         ImgUrl = storagePath + formattedFilenames[i],
-                        Title = release.Title + "_" + i
+                        Title = release.Title + "_" + i,
+                        Release = release
                     });
                     imgIndex++;
                 }
@@ -234,8 +248,7 @@ namespace AquavitBEAT.Operations
                 .Where(a => a.ArtistId == vm.Artist.ArtistId)
                 .Include("ArtistSocialMedias")
                 .Single();
-
-
+                
                 artist.FirstName = vm.Artist.FirstName;
                 artist.LastName = vm.Artist.LastName;
                 artist.ArtistName = vm.Artist.ArtistName;

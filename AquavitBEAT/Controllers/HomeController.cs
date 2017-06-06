@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using AquavitBEAT.ViewModels;
 using AquavitBEAT.DbServices;
+using AquavitBEAT.Operations;
 
 namespace AquavitBEAT.Controllers
 {
@@ -11,6 +12,7 @@ namespace AquavitBEAT.Controllers
     {
         //private AquavitBeatContext _db = new AquavitBeatContext();
         private AquavitDbService _dbService = new AquavitDbService();
+        private SortOperations _sortOperations = new SortOperations();
 
         public ActionResult Index()
         {
@@ -22,7 +24,7 @@ namespace AquavitBEAT.Controllers
             
             var releases = _dbService.GetAllReleases()
                 .Where(r => r.ShowOnFrontpage == true)
-                .Take(6)
+                .Take(8)
                 .OrderByDescending(d => d.ReleaseDate)
                 .ToList();
 
@@ -54,26 +56,8 @@ namespace AquavitBEAT.Controllers
         public ActionResult AllReleases(string AllReleases)
         {
             var vm = new AllReleasesPublicViewmodel();
-            var sortedReleases = new List<Release>();
-
-            switch (AllReleases)
-            {
-                case "1":
-                    sortedReleases = _dbService.OrderReleasesByTitle();
-                    break;
-                case "2":                  
-                    sortedReleases = _dbService.OrderReleasesByTitleDecending();
-                    break;
-                case "3":                  
-                    sortedReleases = _dbService.OrderByReleaseDate();
-                    break;
-                case "4":
-                    sortedReleases = _dbService.OrderByReleaseDateDecending();
-                    break;
-                default:
-                    break;
-            }
-            vm.AllReleases = sortedReleases;
+           
+            vm.AllReleases = _sortOperations.SortReleases(AllReleases);
 
             ViewBag.Bodyclass = "front-page";
             return View(vm);

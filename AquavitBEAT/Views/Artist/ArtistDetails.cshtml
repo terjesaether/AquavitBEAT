@@ -77,7 +77,7 @@
         @foreach (var item in Model.SongToArtists)
             {
             <p>@Html.ActionLink(item.Song.Title, "SongDetails", "Songs", new { id = item.SongId }, null)</p>
-            <audio controls>
+            <audio controls class="max-width">
                 <source src="@item.Song.AudioUrl" />
             </audio>
         }
@@ -87,7 +87,7 @@
         <h4>@Model.Artist.ArtistName has these releases:</h4>
         @foreach (var item in Model.Releases)
         {
-            <p>@Html.ActionLink(item.Title, "ReleaseDetails", "Releases", new {id = item.ReleaseId}, null)</p>
+            <p>@Html.ActionLink(item.Title, "ReleaseDetails", "Releases", new {id = item.ReleaseId}, new { @class="max-width"})</p>
         }
     </div>
 

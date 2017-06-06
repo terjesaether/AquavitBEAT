@@ -41,38 +41,13 @@ namespace AquavitBEAT.Models
 
         [Required, Display(Name = "Release type")]
         public virtual ReleaseType ReleaseType { get; set; }
-
-        public string FrontImageUrl
-        {
-            get
-            {
-                if (Images.Count > 0 && Images[0] != null)
-                {
-                    return Images[0].ImgUrl;
-                };
-                return "";
-            }
-        }
-
-        public string BackImageUrl
-        {
-            get
-            {
-                if (Images.Count > 1 && Images[1] != null)
-                {
-                    return Images[1].ImgUrl;
-                };
-                return "";
-            }
-
-        }
-
-
+        
         [Required, Display(Name = "Format type(s)")]
         public virtual List<ReleaseFormat> FormatTypes { get; set; }
         
         [Display(Name = "Artist(s)")]
         public virtual List<Artist> Artists { get; set; }
+
         public virtual List<UploadedImage> Images { get; set; }
 
         [Display(Name = "Contains song(s)")]
@@ -110,12 +85,34 @@ namespace AquavitBEAT.Models
                 .Distinct().ToList();
         }
 
+        public string FrontImageUrl
+        {
+            get
+            {
+                if (Images.Count > 0 && Images[0] != null)
+                {
+                    return Images[0].ImgUrl;
+                };
+                return "";
+            }
+        }
+
+        public string BackImageUrl
+        {
+            get
+            {
+                if (Images.Count > 1 && Images[1] != null)
+                {
+                    return Images[1].ImgUrl;
+                };
+                return "";
+            }
+
+        }
+
     }
 
-
-
-
-
+    
 
     public class Artwork
     {
@@ -152,6 +149,7 @@ namespace AquavitBEAT.Models
         public int UploadedImageId { get; set; }
         public string ImgUrl { get; set; }
         public string Title { get; set; }
+        public virtual Release Release { get; set; }
     }
 
 

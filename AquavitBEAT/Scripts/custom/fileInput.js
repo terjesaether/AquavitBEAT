@@ -2,11 +2,16 @@
     var output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);
     //$('.file-upload-text').text("");
+    var size = document.getElementById('file').files[0].size;
+    console.log(size);
+    if (size > 31457280) {
+        alert("File too big!");
+    }
 };
 
 var inputs = document.querySelectorAll('.inputfile');
 Array.prototype.forEach.call(inputs, function (input) {
-   //var label = input.nextElementSibling,
+   
     var label = findElementById('file-upload-text'),
     //var label = document.getElementsByClassName('file-upload-text'),
         labelVal = label.innerHTML;

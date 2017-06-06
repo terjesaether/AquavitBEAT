@@ -22,7 +22,7 @@ namespace AquavitBEAT.Models
         [Required, Display(Name = "Format type (Streaming, Vinyl, CD")]
         public virtual FormatType Format { get; set; }
         public virtual int FormatTypeId { get; set; } // Tydeligvis viktig med referanser! 
-        //public virtual Release Release { get; set; } // Tydeligvis viktig med referanser.
+        public virtual Release Release { get; set; } // Tydeligvis viktig med referanser!
     }
 
     public class BuyOrStreamLink

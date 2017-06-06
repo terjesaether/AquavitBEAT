@@ -255,12 +255,29 @@
     <Compile Include="Migrations\201704252045392_AddedReleasesToArtists in Release.Designer.cs">
       <DependentUpon>201704252045392_AddedReleasesToArtists in Release.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706061542515_AddedBuyOrStreamLinks DbSet.cs" />
+    <Compile Include="Migrations\201706061542515_AddedBuyOrStreamLinks DbSet.Designer.cs">
+      <DependentUpon>201706061542515_AddedBuyOrStreamLinks DbSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706061844196_Added Relaese on Releaseformat.cs" />
+    <Compile Include="Migrations\201706061844196_Added Relaese on Releaseformat.Designer.cs">
+      <DependentUpon>201706061844196_Added Relaese on Releaseformat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706061857126_Added Release on Images.cs" />
+    <Compile Include="Migrations\201706061857126_Added Release on Images.Designer.cs">
+      <DependentUpon>201706061857126_Added Release on Images.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706061859538_Added Uploaded Images Dbset.cs" />
+    <Compile Include="Migrations\201706061859538_Added Uploaded Images Dbset.Designer.cs">
+      <DependentUpon>201706061859538_Added Uploaded Images Dbset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AquavitBEATDbInit.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AquavitBeatContext.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\ArtistRepository.cs" />
+    <Compile Include="Models\BuyLink.cs" />
     <Compile Include="Models\JoinClasses.cs" />
     <Compile Include="Models\SocialMedia.cs" />
     <Compile Include="Operations\FileOperations.cs" />
@@ -273,6 +290,7 @@
     <Compile Include="Models\Song.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Operations\AddAndEditOperations.cs" />
+    <Compile Include="Operations\SortOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ArtistDetailsViewModel.cs" />
@@ -518,6 +536,7 @@
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="Content\abeat-front-page.scss" />
     <Content Include="Content\abeat-dropfile.scss" />
+    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\aquavitbeat.com - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\AquavitBeat.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
@@ -817,6 +836,7 @@
     <Content Include="Views\Home\Artist.cshtml" />
     <Content Include="Views\Songs\DeleteSong.cshtml" />
     <Content Include="Views\Home\_SMPlayerSingle.cshtml" />
+    <Content Include="Views\Releases\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -876,6 +896,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704252045392_AddedReleasesToArtists in Release.resx">
       <DependentUpon>201704252045392_AddedReleasesToArtists in Release.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706061542515_AddedBuyOrStreamLinks DbSet.resx">
+      <DependentUpon>201706061542515_AddedBuyOrStreamLinks DbSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706061844196_Added Relaese on Releaseformat.resx">
+      <DependentUpon>201706061844196_Added Relaese on Releaseformat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706061857126_Added Release on Images.resx">
+      <DependentUpon>201706061857126_Added Release on Images.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706061859538_Added Uploaded Images Dbset.resx">
+      <DependentUpon>201706061859538_Added Uploaded Images Dbset.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

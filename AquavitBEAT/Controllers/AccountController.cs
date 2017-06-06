@@ -55,6 +55,7 @@ namespace AquavitBEAT.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
+        [Route("Login")]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -66,6 +67,7 @@ namespace AquavitBEAT.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [Route("Login")]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
